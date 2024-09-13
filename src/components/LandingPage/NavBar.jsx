@@ -30,12 +30,14 @@ function NavBar() {
                         <LanguageIcon/> English-UK
                     </div>
                     <div className='mr-2 hover:cursor-pointer md:hover:text-slate-400'>
-                        <PersonIcon/> Sign in
+                        <Link to='/login'>
+                            <PersonIcon/> Sign in
+                        </Link>
                     </div>
                     <div className='mr-2'>
                         <Link to='/signup'>
                             <p className='py-2 px-3 border-2 hover:cursor-pointer
-                            hover:p-3 rounded-lg border-sky-800 bg-sky-800'>Sign up</p>
+                             md:hover:p-3 rounded-lg border-sky-800 bg-sky-800'>Sign up</p>
                         </Link>
                     </div>
                 </div>
@@ -53,12 +55,14 @@ function NavBar() {
                         <LanguageIcon/> English-UK
                     </div>
                     <div className='my-2 hover:cursor-pointer'>
-                        <PersonIcon/> Sign in
+                        <Link to='/login'>
+                            <PersonIcon/> Sign in
+                        </Link>
                     </div>
-                    <div className='my-2'>
+                    <Link to='/signup'>
                         <p className='py-2 px-3 border-2 hover:cursor-pointer
-                        hover:p-3 rounded-lg border-sky-800 bg-sky-800'>Sign up</p>
-                    </div>
+                            md:hover:p-3 rounded-lg border-sky-800 bg-sky-800'>Sign up</p>
+                    </Link>
                 </div>
             )}
         </div>
