@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Signup = () => {
   const [profiles, setProfiles] = useState({
@@ -145,13 +146,16 @@ const Signup = () => {
 
           {/* Submit Button */}
           <div className="flex justify-center">
-            <button
-              type="submit"
-              className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-md"
-              disabled={passwordMatch === false}
-            >
-              Sign Up
-            </button>
+            <Link to='/login'>
+              <button
+                type="submit"
+                className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-md"
+                disabled={passwordMatch === false}
+              >
+                Sign Up
+              </button>
+            </Link>
+            
           </div>
         </form>
       </div>

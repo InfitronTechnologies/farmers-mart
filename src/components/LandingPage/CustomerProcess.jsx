@@ -20,7 +20,9 @@ const CustomerProcess = () => {
                 </p>
             </div>          
             <div className="transition-opacity duration-300 hover:underline cursor-pointer"> 
-                <span>Get your fresh produce</span>
+                <Link to='/signup'>    
+                    <span>Get your fresh produce</span>
+                </Link>
             </div>
         </div>
 
