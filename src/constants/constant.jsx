@@ -54,6 +54,51 @@ export const fromFarms = [
 ]
 
 
+export const CustomerOperations = [
+  { 
+    id: 1, 
+    title: 'Research Farmer', 
+    videoSrc: 'https://www.w3schools.com/html/mov_bbb.webm' 
+  },
+  { 
+    id: 2, 
+    title: 'Select Produce', 
+    videoSrc: 'https://youtube.com/shorts/0OnXenA98kE?si=fPc3F7g_Q372LxlR' 
+  },
+  { 
+    id: 3, 
+    title: 'Checkout', 
+    videoSrc: 'http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_30fps_normal.mp4' 
+  },
+  { 
+    id: 4, 
+    title: 'Produce Delivery', 
+    videoSrc: 'https://www.w3schools.com/html/mov_bbb.webm' },
+];
+
+
+export const FarmersOperations = [
+  { 
+    id: 1, 
+    title: 'Upload Produce', 
+    videoSrc: 'https://www.w3schools.com/html/mov_bbb.webm' 
+  },
+  { 
+    id: 2, 
+    title: 'Engage Consumer', 
+    videoSrc: 'https://youtube.com/shorts/0OnXenA98kE?si=fPc3F7g_Q372LxlR' 
+  },
+  { 
+    id: 3, 
+    title: 'Make Sales', 
+    videoSrc: 'http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_30fps_normal.mp4' 
+  },
+  { 
+    id: 4, 
+    title: 'Produce Delivery', 
+    videoSrc: 'https://www.w3schools.com/html/mov_bbb.webm' },
+];
+
 
 // I am tasked with creating the frontend of a farm tech solution called Farmersmart you can check it out at
 //  farmersmart.ng, the plan is that the current web app doesn't allow you to choose more than one category

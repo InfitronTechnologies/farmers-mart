@@ -11,8 +11,14 @@ import Footer from './components/LandingPage/Footer'
 import JoinUs from './components/LandingPage/JoinUs'
 import Signup from './components/Signup/Signup'
 import Login from './components/Login/Login'
+import CustomerProcess from './components/LandingPage/CustomerProcess'
+import FarmerProcess from './components/LandingPage/FarmerProcess'
+
 
 function App() {
+
+  // Assignment
+  // Categories> Subcategories> Products
   return (
     <div className='font-roboto'>
       <DealsAds/>
@@ -23,7 +29,9 @@ function App() {
             <HeroSection/>
             <WhatWeStandFor/>
             <FarmCategories/>
+            <CustomerProcess/>
             <Deals/>
+            <FarmerProcess/>
             <DirectFromFarm/>
             <JoinUs/>
           </>
