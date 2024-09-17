@@ -1,6 +1,5 @@
 import React from 'react'
 import {Routes, Route} from "react-router-dom"
-import DealsAds from './components/LandingPage/DealsAds'
 import NavBar from './components/LandingPage/NavBar'
 import HeroSection from './components/LandingPage/HeroSection'
 import WhatWeStandFor from './components/LandingPage/WhatWeStandFor'
@@ -13,6 +12,7 @@ import Signup from './components/Signup/Signup'
 import Login from './components/Login/Login'
 import CustomerProcess from './components/LandingPage/CustomerProcess'
 import FarmerProcess from './components/LandingPage/FarmerProcess'
+import Assistance from './components/LandingPage/Assistance'
 
 
 function App() {
@@ -21,16 +21,16 @@ function App() {
   // Categories> Subcategories> Products
   return (
     <div className='font-roboto'>
-      <DealsAds/>
       <NavBar/>    
       <Routes>
         <Route path='/' element={
           <>
             <HeroSection/>
             <WhatWeStandFor/>
+            <Deals/>
             <FarmCategories/>
             <CustomerProcess/>
-            <Deals/>
+            <Assistance/>
             <FarmerProcess/>
             <DirectFromFarm/>
             <JoinUs/>

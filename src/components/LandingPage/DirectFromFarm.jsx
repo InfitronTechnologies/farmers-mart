@@ -20,7 +20,7 @@ const DirectFromFarm = () => {
               className="object-cover w-full h-40 md:h-64"
             />
             {/* Text Overlay */}
-            <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-30 flex items-start p-4">
+            <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-start p-4">
               <h3 className="text-white font-bold text-lg ">{item.title}</h3>
             </div>
 

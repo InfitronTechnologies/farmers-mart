@@ -49,7 +49,7 @@ const FarmerProcess = () => {
                     <h3 className="text-lg font-semibold text-gray-900">{operation.title}</h3>
                 </div>
                 ))}
-            </div>git 
+            </div>
         </div>
     </div>
   );

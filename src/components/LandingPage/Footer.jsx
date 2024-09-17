@@ -15,19 +15,19 @@ const Footer = () => {
           {/* Social Media Icons */}
           <div className="flex space-x-4 mt-4">
             <a href="#" aria-label="Facebook">
-              <Facebook className="text-gray-500 hover:text-gray-800" />
+              <Facebook className="hover:text-farmersmartGreen text-farmersmartDarkGreen" />
             </a>
             <a href="#" aria-label="Instagram">
-              <Instagram className="text-gray-500 hover:text-gray-800" />
+              <Instagram className="hover:text-farmersmartGreen text-farmersmartDarkGreen" />
             </a>
             <a href="#" aria-label="Twitter">
-              <Twitter className="text-gray-500 hover:text-gray-800" />
+              <Twitter className="hover:text-farmersmartGreen text-farmersmartDarkGreen" />
             </a>
             <a href="#" aria-label="Pinterest">
-              <Pinterest className="text-gray-500 hover:text-gray-800" />
+              <Pinterest className="hover:text-farmersmartGreen  text-farmersmartDarkGreen" />
             </a>
             <a href="#" aria-label="LinkedIn">
-              <LinkedIn className="text-gray-500 hover:text-gray-800" />
+              <LinkedIn className="hover:text-farmersmartGreen text-farmersmartDarkGreen" />
             </a>
           </div>
         </div>

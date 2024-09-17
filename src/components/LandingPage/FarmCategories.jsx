@@ -24,31 +24,31 @@ const FarmCategories = () => {
     });
   };
   return(
-    <div className='md:w-4/5 mx-auto py-2 md:py-8'>
-        <section className="flex flex-col md:mb-8 md:flex-row items-center justify-between px-6 py-8 md:py-12 bg-white">
+    <div className='mx-auto py-2 md:py-8'>
+        <section className="flex flex-col mx-auto md:w-5/6 md:mb-8 md:flex-row items-center justify-between px-6 py-8 md:py-12 bg-white">
             {/* Left Side - Heading */}
-            <div className="md:w-1/2 mb-8 md:mb-0">
-                <h1 className="text-xl md:text-4xl font-semibold leading-snug">
+            <div className="md:w-2/5 mb-8 md:mb-0">
+                <h1 className="text-xl md:text-3xl font-semibold leading-snug">
                 Explore the sumptous offers tailored for your consumption needs
                 </h1>
             </div>
 
             {/* Right Side - Stats */}
-            <div className="flex flex-wrap gap-6 md:gap-12">
+            <div className="flex flex-wrap md-ml:12 gap-6 md:gap-12">
                 <div className="flex flex-col md:w-1/3 items-start">
-                    <h2 className="text-gray-600 text-2xl md:text-4xl font-bold">500+</h2>
+                    <h2 className="text-farmersmartDarkGreen text-2xl md:text-4xl font-bold">500+</h2>
                     <p className="text-sm md:text-base">Farmers</p>
                 </div>
                 <div className="flex flex-col md:w-1/3 items-start">
-                    <h2 className="text-gray-600 text-2xl md:text-4xl font-bold">754+</h2>
+                    <h2 className="text-farmersmartDarkGreen text-2xl md:text-4xl font-bold">754+</h2>
                     <p className="text-sm md:text-base">Farms</p>
                 </div>
                 <div className="flex flex-col md:w-1/3 items-start">
-                    <h2 className="text-gray-600 text-2xl md:text-4xl font-bold">2500+</h2>
+                    <h2 className="text-farmersmartDarkGreen text-2xl md:text-4xl font-bold">2500+</h2>
                     <p className="text-sm md:text-base">Farm produce</p>
                 </div>
                 <div className="flex flex-col md:w-1/3 items-start">
-                    <h2 className="text-gray-600 text-2xl md:text-4xl font-bold">200+</h2>
+                    <h2 className="text-farmersmartDarkGreen text-2xl md:text-4xl font-bold">200+</h2>
                     <p className="text-sm md:text-base">Regions and location</p>
                 </div>
             </div>
