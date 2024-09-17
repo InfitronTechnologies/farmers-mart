@@ -176,7 +176,6 @@ function NavBar() {
                     </Link>
                     </div>
                 </div>
-            {/* </div> */}
           </div>
         )}
       </div>

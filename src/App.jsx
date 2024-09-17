@@ -21,10 +21,10 @@ function App() {
   // Categories> Subcategories> Products
   return (
     <div className='font-roboto'>
-      <NavBar/>    
       <Routes>
         <Route path='/' element={
           <>
+            <NavBar/>   
             <HeroSection/>
             <WhatWeStandFor/>
             <Deals/>

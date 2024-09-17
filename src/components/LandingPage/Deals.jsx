@@ -156,12 +156,12 @@ function Deals() {
                   <img
                     src={onion}
                     alt="Onion"
-                    className="w-full h-24 md: h-40 object-cover rounded-lg"
+                    className="w-full h-24 md:h-40 object-cover rounded-lg"
                   />
                   <img
                     src={pepper}
                     alt="Pepper"
-                    className="w-full h-24 md: h-40 object-cover rounded-lg"
+                    className="w-full h-24 md:h-40 object-cover rounded-lg"
                   />
                 </div>
                 <img
