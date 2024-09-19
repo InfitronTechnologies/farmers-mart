@@ -15,6 +15,7 @@ export default {
         farmersmartLightGreen: '#c1e849',
         farmersmartGreen: '#007d29',
         farmersmartDarkGreen: '#0d4e25',
+        farmersmartPaleGreen: '#F6FFDA',
       },
     },
   },

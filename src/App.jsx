@@ -29,9 +29,9 @@ function App() {
             <WhatWeStandFor/>
             <Deals/>
             <FarmCategories/>
-            <CustomerProcess/>
+            {/* <CustomerProcess/> */}
             <Assistance/>
-            <FarmerProcess/>
+            {/* <FarmerProcess/> */}
             <DirectFromFarm/>
             <JoinUs/>
           </>
