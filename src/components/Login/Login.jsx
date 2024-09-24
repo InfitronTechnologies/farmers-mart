@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import logo from '../../assets/farmersmartlogo.png'
 import bgImage from '../../assets/login-bg.png'
 import MenuIcon from '@mui/icons-material/Menu';
+import Footer from '../LandingPage/Footer';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -22,36 +23,16 @@ const Login = () => {
 
   return (
     <div>
-      {/* <nav className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 bg-farmersmartYellow`}>    
-        <div className='container py-2 relative'>
+      <nav className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 bg-farmersmartYellow`}>    
+        <div className='container py-2 relative md:w-4/5 mx-auto'>
           <div className='flex justify-between items-center'>
             <div className='flex items-center w-2/5 md:w-1/5'>
               <Link to='/'>
                 <img src={logo} alt="" />
               </Link>
-            </div>        
-              <div className='flex flex-row items-center'>
-                  <div className='mr-4 px-5 py-3 border-2 hover:cursor-pointer bg-farmersmartGreen rounded-3xl
-                      md:hover:text-neutral-300 text-neutral-200'>
-                  <Link to='/signup'>
-                      <p className=''> SIGN UP</p>
-                  </Link>
-                  </div>
-              </div>
-          </div>
-        </div>
-      </nav> */}
-
-<nav className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 bg-farmersmartYellow`}>    
-      <div className='container py-2 relative md:w-4/5 mx-auto'>
-        <div className='flex justify-between items-center'>
-          <div className='flex items-center w-2/5 md:w-1/5'>
-            <Link to='/'>
-              <img src={logo} alt="" />
-            </Link>
-          </div>
-          <div className='hidden lg:flex justify-between w-4/5 space-x-12 items-center'>
-           <div className='flex flex-row text-sm md:ml-12 text-white font-semibold'>
+            </div>
+            <div className='hidden lg:flex justify-between w-4/5 space-x-12 items-center'>
+              <div className='flex flex-row text-sm md:ml-12 text-white font-semibold'>
                 <div className='mx-4 hover:cursor-pointer'>
                     Home
                 </div>
@@ -64,25 +45,25 @@ const Login = () => {
                 <div className='mx-4 hover:cursor-pointer'>
                     What's New?
                 </div>
-           </div>
-            <div className='flex flex-row items-center font-semibold'>
+              </div>
+              <div className='flex flex-row items-center font-semibold'>
                 <div className='mr-4 p-2 hover:cursor-pointer border-2 text-farmersmartDarkGreen border-farmersmartYellow rounded-3xl md:hover:text-farmersmartGreen'>
-                <Link to='/login'>
-                    LOGIN
-                </Link>
+                  <Link to='/login'>
+                      LOGIN
+                  </Link>
                 </div>
                 <div className='mr-4 px-4 py-2 border-2 hover:cursor-pointer text-white border-farmersmartDarkGreen bg-farmersmartDarkGreen rounded-3xl
                     md:hover:text-neutral-300'>
-                <Link to='/signup'>
-                    <p className=''> SIGN UP</p>
-                </Link>
+                  <Link to='/signup'>
+                      <p className=''> SIGN UP</p>
+                  </Link>
                 </div>
+              </div>
+            </div>
+            <div className='lg:hidden md:flex flex-col justify-end'>
+              <MenuIcon onClick={toggleMenu} className="text-white cursor-pointer" />
             </div>
           </div>
-          <div className='lg:hidden md:flex flex-col justify-end'>
-            <MenuIcon onClick={toggleMenu} className="text-white cursor-pointer" />
-          </div>
-        </div>
 
         {isMenuOpen && (
           <div className='fixed top-14 right-0 z-20 w-full bg-farmersmartYellow
@@ -167,14 +148,15 @@ const Login = () => {
                 type="submit"
                 className="bg-farmersmartDarkGreen text-white font-semibold py-2 px-6 rounded-md"
               >
-                  <Link to='/'>
-                      Sign In
-                  </Link>
+                <Link to='/user'>
+                  Sign In
+                </Link>
               </button>
             </div>
           </form>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

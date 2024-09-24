@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import logo from '../../assets/farmersmartlogo.png'
 import MenuIcon from '@mui/icons-material/Menu';
 import bgImage from '../../assets/login-bg.png'
+import Footer from '../LandingPage/Footer';
 
 const Signup = () => {
   const [profiles, setProfiles] = useState({
@@ -42,26 +43,6 @@ const Signup = () => {
 
   return (
     <div>
-       {/* <nav className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 bg-farmersmartDarkGreen`}>    
-        <div className='container py-2 relative'>
-          <div className='flex justify-between items-center'>
-            <div className='flex items-center w-2/5 md:w-1/5'>
-              <Link to='/'>
-                <img src={logo} alt="" />
-              </Link>
-            </div>        
-              <div className='flex flex-row items-center'>
-                <div className='mr-4 px-5 py-3 border-2 hover:cursor-pointer bg-farmersmartGreen rounded-3xl
-                    md:hover:text-neutral-300 text-neutral-200'>
-                    <Link to='/login'>
-                      <p className=''> SIGN IN</p>
-                    </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </nav>  */}
-
       <nav className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 bg-farmersmartYellow`}>    
         <div className='container py-2 relative md:w-4/5 mx-auto'>
           <div className='flex justify-between items-center'>
@@ -273,6 +254,7 @@ const Signup = () => {
             </form>
           </div>
         </div>
+        <Footer/>
     </div>
   );
 };
