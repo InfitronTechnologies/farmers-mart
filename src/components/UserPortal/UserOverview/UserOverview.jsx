@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from './Card';
-// import Chart from './Chart';
+import Chart from './Chart';
 
 function UserOverview() {
   return (
@@ -10,7 +10,7 @@ function UserOverview() {
         <Card title="Revenue | This Month" amount="₦0" icon="attach_money" percentage="8" trend="increase" />
         <Card title="Revenue | This Year" amount="₦0" icon="money_off" percentage="12" trend="decrease" />
       </div>
-      {/* <Chart /> */}
+      <Chart/>
     </div>
   );
 }

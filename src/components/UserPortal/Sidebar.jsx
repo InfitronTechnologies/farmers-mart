@@ -1,10 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
 import { Link, Route, Routes } from "react-router-dom";
-import { Dashboard, Login, Menu, Person2, Storefront } from '@mui/icons-material';
+import { Agriculture, Dashboard, Handshake, LocalShipping, Login, Logout, Menu, Person, Person2, Storefront, SupportAgent } from '@mui/icons-material';
 import FarmerMenu from './FarmerMenu/FarmerMenu';
 import LogisticsMenu from './LogisticsMenu/LogisticsMenu';
 import UserOverview from './UserOverview/UserOverview';
+import ProfileMenu from './Profile/Profile';
+import Partners from './PartnerMenu/Partners';
 
 function Sidebar() {
 
@@ -18,7 +20,7 @@ function Sidebar() {
     <div>
       <div
         className={`fixed top-0 left-0 h-full bg-white shadow-lg transition-all duration-300 border-green-300
-        ${isOpen ? "w-full md:w-52" : "w-12"} flex flex-col items-start`}
+        ${isOpen ? "w-full md:w-1/6" : "w-12"} flex flex-col items-start`}
       >
         <button
           className="mt-4 ml-2 text-gray-800 focus:outline-none"
@@ -36,7 +38,7 @@ function Sidebar() {
           </div>
         )}
 
-        <div className="mt-8 w-full">
+        <div className="mt-8 w-full justify-around">
           <div className="flex items-center text-gray-800 p-4 hover:bg-gray-100 w-full">
               <Link to="/user/overview">
                   <Person2 className="mr-3" />
@@ -62,14 +64,39 @@ function Sidebar() {
               </Link>
           </div>
           <div className="flex items-center text-gray-800 p-4 hover:bg-gray-100 w-full">
-              {isOpen && <FarmerMenu />}
+            {!isOpen && <Agriculture/>}
+            {isOpen && <FarmerMenu />}
           </div>
           <div className="flex items-center text-gray-800 p-4 hover:bg-gray-100 w-full">
-              {isOpen && <LogisticsMenu />}
+            {!isOpen && <LocalShipping/>}
+            {isOpen && <LogisticsMenu />}
+          </div>
+          <div className="flex items-center text-gray-800 p-4 hover:bg-gray-100 w-full">
+            {!isOpen && <Handshake/>}
+            {isOpen && <Partners/>}
+          </div>
+          <div className='text-center font-bold text-gray-900 mt-8'>
+            {isOpen && 'USER MANAGEMENT'}
+          </div>
+          <div className="flex items-center text-gray-800 p-4 hover:bg-gray-100 w-full">
+            {!isOpen && <Person/>}
+            {isOpen && <ProfileMenu/>}
+          </div>
+          <div className="flex items-center text-gray-800 p-4 hover:bg-gray-100 w-full">
+              <Link to="/">
+                  <SupportAgent className="mr-3" />
+                  {isOpen && <span className="font-semibold">Customer Support</span>}
+              </Link>
+          </div>
+          <div className="flex items-center text-gray-800 p-4 hover:bg-gray-100 w-full">
+              <Link to="/">
+                  <Logout className="mr-3" />
+                  {isOpen && <span className="font-semibold">Logout</span>}
+              </Link>
           </div>
         </div>
       </div>
-      <div className={`flex-1 transition-all duration-300 p-4 ${isOpen ? 'ml-52' : 'ml-12'}`}>
+      <div className={`flex-1 transition-all duration-300 p-4 ${isOpen ? 'ml-64' : 'ml-12'}`}>
             <Routes>
               <Route path='overview' element={<UserOverview/>} />
             </Routes>

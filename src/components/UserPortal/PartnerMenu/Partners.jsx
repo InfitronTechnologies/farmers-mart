@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { ExpandLess, ExpandMore, Agriculture } from '@mui/icons-material';
+import { ExpandLess, ExpandMore, Handshake } from '@mui/icons-material';
 
-const FarmerMenu = () => {
+const Partners = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   const toggleMenu = () => {
@@ -15,8 +15,8 @@ const FarmerMenu = () => {
         onClick={toggleMenu}
       >
         <div className="flex items-center">
-          <Agriculture className="" />
-          <span className="ml-2 font-medium">Farmer</span>
+          <Handshake className="" />
+          <span className="ml-2 font-medium">Partners</span>
         </div>
         {isOpen ? <ExpandLess className="" /> : <ExpandMore className="" />}
       </div>
@@ -35,4 +35,4 @@ const FarmerMenu = () => {
   );
 };
 
-export default FarmerMenu;
+export default Partners;

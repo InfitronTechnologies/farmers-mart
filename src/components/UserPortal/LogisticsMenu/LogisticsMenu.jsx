@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ExpandLess, ExpandMore, LocalShipping } from '@mui/icons-material';
 
 const LogisticsMenu = () => {
-  const [isOpen, setIsOpen] = useState(true); // Initially open, like in your screenshot
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -23,7 +23,7 @@ const LogisticsMenu = () => {
 
       {/* Collapsible Menu */}
       {isOpen && (
-        <ul className="mt-2 space-y-2 pl-2">
+        <ul className="mt-2 space-y-4 pl-2">
           <li className="text-gray-600 cursor-pointer">Dashboard</li>
           <li className="text-gray-600 cursor-pointer">Farm Management</li>
           <li className="text-gray-600 cursor-pointer">Available Produces</li>
