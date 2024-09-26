@@ -10,7 +10,7 @@ function App() {
   const location = useLocation();
   
   return (
-    <div className='font-roboto'>
+    <div className='font-roboto lg:w-[1024px] mx-auto'>
       <Routes>
         <Route path='/' element={<Home/>} />
         <Route path='/signup' element={<Signup/>}/>
