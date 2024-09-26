@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ExpandLess, ExpandMore, Person } from '@mui/icons-material';
+import { Routes, Route, Link } from 'react-router-dom';
 
 const ProfileMenu = () => {
   const [isOpen, setIsOpen] = useState(false); 
@@ -24,11 +25,16 @@ const ProfileMenu = () => {
       {/* Collapsible Menu */}
       {isOpen && (
         <ul className="mt-2 space-y-4 pl-2">
-          <li className="text-gray-600 cursor-pointer">Overview</li>
-          <li className="text-gray-600 cursor-pointer">Edit Profile</li>
-          <li className="text-gray-600 cursor-pointer">Bank Details</li>
-          <li className="text-gray-600 cursor-pointer">Upload Profile Image</li>
-          <li className="text-gray-600 cursor-pointer">Reset Password</li>
+          <Link to='/user/profile'>
+            <li className="text-gray-600 cursor-pointer">Overview</li>
+          </Link>
+          <Link to='/user/profile/bank'>
+            <li className="text-gray-600 cursor-pointer">Bank Details</li>
+          </Link>
+          {/* <li className="text-gray-600 cursor-pointer">Upload Profile Image</li> */}
+          <Link to='/user/password_reset'>
+            <li className="text-gray-600 cursor-pointer">Reset Password</li>
+          </Link>
         </ul>
       )}
     </div>

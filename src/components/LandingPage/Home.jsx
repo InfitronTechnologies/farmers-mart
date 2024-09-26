@@ -13,7 +13,7 @@ import Assistance from './Assistance'
 
 function Home() {
   return (
-    <div>
+    <div className=''>
         <NavBar/>   
         <HeroSection/>
         <WhatWeStandFor/>

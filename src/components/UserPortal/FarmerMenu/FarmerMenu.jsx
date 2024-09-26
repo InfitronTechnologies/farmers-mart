@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ExpandLess, ExpandMore, Agriculture } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
 const FarmerMenu = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -25,7 +26,9 @@ const FarmerMenu = () => {
       {isOpen && (
         <ul className="mt-2 space-y-4 pl-2">
           <li className="text-gray-600 cursor-pointer">Dashboard</li>
-          <li className="text-gray-600 cursor-pointer">Farm Management</li>
+          <Link to='/user/farm'>
+            <li className="text-gray-600 cursor-pointer">Farm Management</li>
+          </Link>
           <li className="text-gray-600 cursor-pointer">Available Produces</li>
           <li className="text-gray-600 cursor-pointer">Product Managment</li>
           <li className="text-gray-600 cursor-pointer">Orders</li>

@@ -28,7 +28,7 @@ function NavBar() {
   }, []);
 
   return (
-    <nav className={`fixed top-0  w-full lg:w-[1024px] z-50 transition-colors duration-300 ${scroll ? 'bg-farmersmartDarkGreen text-white' : 'bg-transparent text-white'}`}>    
+    <nav className={`fixed top-0 w-full z-50 transition-colors duration-300 ${scroll ? 'bg-farmersmartDarkGreen text-white' : 'bg-transparent text-white'}`}>    
       <div className='container py-2 relative'>
         <div className='flex justify-between items-center'>
           <div className='flex items-center w-2/5 md:w-1/5'>

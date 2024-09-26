@@ -7,6 +7,10 @@ import LogisticsMenu from './LogisticsMenu/LogisticsMenu';
 import UserOverview from './UserOverview/UserOverview';
 import ProfileMenu from './Profile/Profile';
 import Partners from './PartnerMenu/Partners';
+import ProfileOverview from './Profile/ProfileOverview';
+import BankDetails from './Profile/BankDetails';
+import PasswordReset from './Profile/PasswordReset';
+import FarmInfo from './FarmerMenu/FarmInfo';
 
 function Sidebar() {
 
@@ -20,7 +24,7 @@ function Sidebar() {
     <div>
       <div
         className={`fixed top-0 left-0 h-full bg-white shadow-lg transition-all duration-300 border-green-300
-        ${isOpen ? "w-full md:w-1/6" : "w-12"} flex flex-col items-start`}
+        ${isOpen ? "w-full md:w-1/6" : "w-12"} flex flex-col items-start overflow-y-auto scrollbar-hide`}
       >
         <button
           className="mt-4 ml-2 text-gray-800 focus:outline-none"
@@ -79,8 +83,10 @@ function Sidebar() {
             {isOpen && 'USER MANAGEMENT'}
           </div>
           <div className="flex items-center text-gray-800 p-4 hover:bg-gray-100 w-full">
-            {!isOpen && <Person/>}
-            {isOpen && <ProfileMenu/>}
+            {/* <Link to='user/profile' className='w-full'> */}
+              {!isOpen && <Person/>}
+              {isOpen && <ProfileMenu/>}
+            {/* </Link> */}
           </div>
           <div className="flex items-center text-gray-800 p-4 hover:bg-gray-100 w-full">
               <Link to="/">
@@ -99,6 +105,10 @@ function Sidebar() {
       <div className={`flex-1 transition-all duration-300 p-4 ${isOpen ? 'ml-64' : 'ml-12'}`}>
             <Routes>
               <Route path='overview' element={<UserOverview/>} />
+              <Route path='profile' element={<ProfileOverview/>} />
+              <Route path='/profile/bank' element={<BankDetails/>} />
+              <Route path='password_reset' element={<PasswordReset/>} />
+              <Route path='farm' element={<FarmInfo/>} />
             </Routes>
       </div>
     </div>
