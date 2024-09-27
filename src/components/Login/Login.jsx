@@ -107,30 +107,32 @@ const Login = () => {
           }}>
         </div>
         <div className=" relative w-full max-w-md mt-8 py-12 bg-farmersmartPaleGreen p-8 rounded-3xl shadow-lg">
-          <h2 className="text-3xl font-bold mb-6 text-center text-farmersmartOrange">LOGIN</h2>
+          <h2 className="text-4xl font-extrabold mb-6 text-center text-black">LOGIN</h2>
           {/* Login Form */}
           <form onSubmit={handleSubmit}>
             {/* Email Input */}
             <div className="mb-4 text-center">
-              {/* <label className="block text-white mb-2" htmlFor="email">
-                Email
-              </label> */}
-              <input
-                className=" w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-gray-300 bg-white focus:outline-none"
-                type="email"
-                id="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
+              <div className='relative'>
+                <input
+                  className=" w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-black font-medium bg-white focus:outline-none"
+                  type="email"
+                  id="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+                <span className="absolute inset-y-0 right-4 top-2 md:right-16 md:top-2">
+                  <Person className='text-black'/>
+                </span>
+            </div>
             </div>
 
             {/* Password Input */}
             <div className="mb-6 text-center">
               <div className='relative'>
                 <input
-                  className="w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-gray-300 bg-white focus:outline-none"
+                  className="w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-black font-medium bg-white focus:outline-none"
                   type="password"
                   id="password"
                   placeholder="Enter your password"
@@ -148,10 +150,10 @@ const Login = () => {
             <div className="flex justify-center mt-8">
               <button
                 type="submit"
-                className="bg-farmersmartDarkGreen text-white text-xl font-semibold py-2 px-8 rounded-md"
+                className="bg-farmersmartDarkGreen text-white text-xl font-semibold py-3 px-10 rounded-full"
               >
                 <Link to='/user'>
-                  Sign In
+                  Log In
                 </Link>
               </button>
             </div>

@@ -135,9 +135,9 @@ const Signup = () => {
               <div className="mb-4">
                 <div className='relative'>
                   <input
-                    className="w-full md:w-4/5 px-4 py-2 pr-16 border-2 border-farmersmartDarkGreen rounded-3xl text-gray-300 bg-white focus:outline-none"
+                    className="w-full md:w-4/5 px-4 py-2 pr-16 border-2 border-farmersmartDarkGreen rounded-3xl text-black font-medium bg-white focus:outline-none"
                     type="text"
-                    id="username"
+                    id="firstname"
                     placeholder="First Name"
                     required
                   />
@@ -150,9 +150,9 @@ const Signup = () => {
               <div className="mb-4">
                 <div className='relative'>
                   <input
-                    className="w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-gray-300 bg-white focus:outline-none"
+                    className="w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-black font-medium bg-white focus:outline-none"
                     type="text"
-                    id="username"
+                    id="lastname"
                     placeholder="Last Name"
                     required
                   />
@@ -165,7 +165,7 @@ const Signup = () => {
               <div className="mb-4">
                 <div className='relative'>
                   <input
-                    className="w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-gray-300 bg-white focus:outline-none"
+                    className="w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-black font-medium bg-white focus:outline-none"
                     type="email"
                     id="email"
                     placeholder="Email"
@@ -181,7 +181,7 @@ const Signup = () => {
               <div className="mb-4">
                 <div className='relative'>
                   <input
-                    className="w-full md:w-4/5 px-4 py-2 pr-16 border-2 border-farmersmartDarkGreen rounded-3xl text-gray-300 bg-white focus:outline-none"
+                    className="w-full md:w-4/5 px-4 py-2 pr-16 border-2 border-farmersmartDarkGreen rounded-3xl text-black font-medium bg-white focus:outline-none"
                     type="password"
                     id="password"
                     placeholder="Password"
@@ -202,7 +202,7 @@ const Signup = () => {
               <div className="mb-4">
                 <div className='relative'>
                   <input
-                    className={`w-full md:w-4/5 px-4 py-2 pr-16 border-2 border-farmersmartDarkGreen rounded-3xl text-gray-300 bg-white focus:outline-none 
+                    className={`w-full md:w-4/5 px-4 py-2 pr-16 border-2 border-farmersmartDarkGreen rounded-3xl text-black font-medium bg-white focus:outline-none 
                       ${passwordMatch === false ? 'border-2 border-red-600' : ''} 
                       ${passwordMatch === true ? 'border-2 border-green-600' : ''}`}
                     type="password"
