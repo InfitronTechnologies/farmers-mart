@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/farmersmartlogo.png'
 import bgImage from '../../assets/login-bg.png'
-import MenuIcon from '@mui/icons-material/Menu';
+import {Menu, Visibility, Pers} from '@mui/icons-material';
 import Footer from '../LandingPage/Footer';
 
 const Login = () => {
@@ -61,7 +61,7 @@ const Login = () => {
               </div>
             </div>
             <div className='lg:hidden md:flex flex-col justify-end'>
-              <MenuIcon onClick={toggleMenu} className="text-white cursor-pointer" />
+              <Menu onClick={toggleMenu} className="text-white cursor-pointer" />
             </div>
           </div>
 
@@ -128,25 +128,27 @@ const Login = () => {
 
             {/* Password Input */}
             <div className="mb-6 text-center">
-              {/* <label className="block text-white mb-2" htmlFor="password">
-                Password
-              </label> */}
-              <input
-                className="w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-gray-300 bg-white focus:outline-none"
-                type="password"
-                id="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+              <div className='relative'>
+                <input
+                  className="w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-gray-300 bg-white focus:outline-none"
+                  type="password"
+                  id="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <span className="absolute inset-y-0 right-4 top-2 md:right-16 md:top-2">
+                  <Visibility className='text-black'/>
+                </span>
+              </div>
             </div>
 
             {/* Submit Button */}
             <div className="flex justify-center mt-8">
               <button
                 type="submit"
-                className="bg-farmersmartDarkGreen text-white font-semibold py-2 px-6 rounded-md"
+                className="bg-farmersmartDarkGreen text-white text-xl font-semibold py-2 px-8 rounded-md"
               >
                 <Link to='/user'>
                   Sign In

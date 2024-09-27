@@ -4,7 +4,7 @@ import logo from '../../assets/farmersmartlogo.png'
 import MenuIcon from '@mui/icons-material/Menu';
 import bgImage from '../../assets/login-bg.png'
 import Footer from '../LandingPage/Footer';
-import { Visibility } from '@mui/icons-material';
+import { AlternateEmail, Person, Person2, Visibility } from '@mui/icons-material';
 
 const Signup = () => {
   const [profiles, setProfiles] = useState({
@@ -133,60 +133,65 @@ const Signup = () => {
             {/* Form */}
             <form className='text-center'>
               <div className="mb-4">
-                {/* <label className='block mb-2' htmlFor="username">
-                  Username
-                </label> */}
-                <input
-                  className="w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-gray-300 bg-white focus:outline-none"
-                  type="text"
-                  id="username"
-                  placeholder="First Name"
-                  required
-                />
+                <div className='relative'>
+                  <input
+                    className="w-full md:w-4/5 px-4 py-2 pr-16 border-2 border-farmersmartDarkGreen rounded-3xl text-gray-300 bg-white focus:outline-none"
+                    type="text"
+                    id="username"
+                    placeholder="First Name"
+                    required
+                  />
+                  <span className="absolute inset-y-0 right-4 top-2 md:right-16 md:top-2">
+                    <Person className='text-black'/>
+                  </span>
+                </div>
               </div>
 
               <div className="mb-4">
-                {/* <label className='block mb-2' htmlFor="username">
-                  Username
-                </label> */}
-                <input
-                  className="w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-gray-300 bg-white focus:outline-none"
-                  type="text"
-                  id="username"
-                  placeholder="Last Name"
-                  required
-                />
+                <div className='relative'>
+                  <input
+                    className="w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-gray-300 bg-white focus:outline-none"
+                    type="text"
+                    id="username"
+                    placeholder="Last Name"
+                    required
+                  />
+                  <span className="absolute inset-y-0 right-4 top-2 md:right-16 md:top-2">
+                    <Person className='text-black'/>
+                  </span>
+                </div>
               </div>
 
               <div className="mb-4">
-                {/* <label className="block mb-2" htmlFor="email">
-                  Email
-                </label> */}
-                <input
-                  className="w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-gray-300 bg-white focus:outline-none"
-                  type="email"
-                  id="email"
-                  placeholder="Email"
-                  required
-                />
+                <div className='relative'>
+                  <input
+                    className="w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-gray-300 bg-white focus:outline-none"
+                    type="email"
+                    id="email"
+                    placeholder="Email"
+                    required
+                  />
+                  <span className="absolute inset-y-0 right-4 top-2 md:right-16 md:top-2">
+                    <AlternateEmail className='text-black'/>
+                  </span>
+                </div>
               </div>
 
               {/* Password Field */}
               <div className="mb-4">
                 <div className='relative'>
-
-                <input
-                  className="w-full md:w-4/5 px-4 py-2 pr-16 border-2 border-farmersmartDarkGreen rounded-3xl text-gray-300 bg-white focus:outline-none"
-                  type="password"
-                  id="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={handlePasswordChange}
-                  required
-                />
-                <span className="absolute inset-y-0 right-4 top-2 md:right-16 md:top-2">
-                  <Visibility className='text-black'/>
-                </span>
+                  <input
+                    className="w-full md:w-4/5 px-4 py-2 pr-16 border-2 border-farmersmartDarkGreen rounded-3xl text-gray-300 bg-white focus:outline-none"
+                    type="password"
+                    id="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    required
+                 />
+                  <span className="absolute inset-y-0 right-4 top-2 md:right-16 md:top-2">
+                    <Visibility className='text-black'/>
+                  </span>
                 </div>
 
               </div>
@@ -195,20 +200,22 @@ const Signup = () => {
 
               {/* Confirm Password Field */}
               <div className="mb-4">
-                {/* <label className="block mb-2" htmlFor="confirmPassword">
-                  Confirm Password
-                </label> */}
-                <input
-                  className={`w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-gray-300 bg-white focus:outline-none 
-                    ${passwordMatch === false ? 'border-2 border-red-600' : ''} 
-                    ${passwordMatch === true ? 'border-2 border-green-600' : ''}`}
-                  type="password"
-                  id="confirmPassword"
-                  placeholder="Confirm password"
-                  value={confirmPassword}
-                  onChange={handleConfirmPasswordChange}
-                  required
-                />
+                <div className='relative'>
+                  <input
+                    className={`w-full md:w-4/5 px-4 py-2 pr-16 border-2 border-farmersmartDarkGreen rounded-3xl text-gray-300 bg-white focus:outline-none 
+                      ${passwordMatch === false ? 'border-2 border-red-600' : ''} 
+                      ${passwordMatch === true ? 'border-2 border-green-600' : ''}`}
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm password"
+                    value={confirmPassword}
+                    onChange={handleConfirmPasswordChange}
+                    required
+                  />
+                  <span className="absolute inset-y-0 right-4 top-2 md:right-16 md:top-2">
+                    <Visibility className='text-black'/>
+                  </span>
+                </div>
               </div>
 
               {/* Profile Checkboxes */}
@@ -263,7 +270,7 @@ const Signup = () => {
                 <Link to='/login'>
                   <button
                     type="submit"
-                    className="bg-farmersmartDarkGreen text-white font-semibold py-2 px-6 rounded-full mt-8"
+                    className="bg-farmersmartDarkGreen text-white text-xl font-semibold py-2 px-8 rounded-full mt-4"
                     disabled={passwordMatch === false}
                   >
                     Sign Up
