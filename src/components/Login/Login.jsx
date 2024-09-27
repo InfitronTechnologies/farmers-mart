@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/farmersmartlogo.png'
 import bgImage from '../../assets/login-bg.png'
-import {Menu, Visibility, Pers} from '@mui/icons-material';
+import {Menu, Visibility, Person} from '@mui/icons-material';
 import Footer from '../LandingPage/Footer';
 
 const Login = () => {
