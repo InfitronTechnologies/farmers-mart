@@ -55,16 +55,24 @@ const Signup = () => {
             <div className='hidden lg:flex justify-between w-4/5 space-x-12 items-center'>
               <div className='flex flex-row text-sm md:ml-12 text-white font-semibold'>
                 <div className='mx-4 hover:cursor-pointer'>
-                  Home
+                  <Link to='/about'>
+                    About
+                  </Link>
                 </div>
                 <div className='mx-4 hover:cursor-pointer'>
-                  About
+                  <Link to='/services'>
+                    Services
+                  </Link>
                 </div>
                 <div className='mx-4 hover:cursor-pointer'>
-                  Services
+                  <Link to='/faq'>
+                    FAQ
+                  </Link>
                 </div>
                 <div className='mx-4 hover:cursor-pointer'>
-                  What's New?
+                  <Link to='/updates'>
+                    What's New?
+                  </Link>
                 </div>
               </div>
               <div className='flex flex-row items-center font-semibold'>
@@ -91,18 +99,26 @@ const Signup = () => {
             flex flex-col justify-center items-center lg:hidden'>
               {/* <div className='hidden lg:flex justify-between w-4/5 space-x-12 items-center'> */}
                   <div className='flex flex-col justify-center items-center text-sm text-white font-semibold md:ml-12'>
-                      <div className='my-2 hover:cursor-pointer'>
-                          Home
-                      </div>
-                      <div className='my-2 hover:cursor-pointer'>
-                          About
-                      </div>
-                      <div className='my-2 hover:cursor-pointer'>
-                          Services
-                      </div>
-                      <div className='my-2 hover:cursor-pointer'>
-                          What's New?
-                      </div>
+                    <div className='my-2 hover:cursor-pointer'>
+                      <Link to='/about'>
+                        About
+                      </Link>
+                    </div>
+                    <div className='my-2 hover:cursor-pointer'>
+                      <Link to='/services'>
+                        Services
+                      </Link>
+                    </div>
+                    <div className='my-2 hover:cursor-pointer'>
+                      <Link to='/faq'>
+                        FAQ
+                      </Link>
+                    </div>
+                    <div className='my-2 hover:cursor-pointer'>
+                      <Link to='/updates'>
+                        What's New?
+                      </Link>
+                    </div>
                   </div>
                   <div className='flex flex-col items-center '>
                       <div className='my-2 p-2 hover:cursor-pointer font-semibold text-farmersmartDarkGreen rounded-3xl md:hover:text-farmersmartGreen'>

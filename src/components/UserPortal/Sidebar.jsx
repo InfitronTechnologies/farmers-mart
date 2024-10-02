@@ -27,7 +27,7 @@ function SideBar() {
                 </Sidebar.Item>
               </Sidebar.ItemGroup>
               <Sidebar.ItemGroup>
-                <Sidebar.Item href="/user/overview" icon={Person2}>
+                <Sidebar.Item href="/user" icon={Person2}>
                   User Overview
                 </Sidebar.Item>
                 <Sidebar.Item href="#" icon={Login}>
@@ -75,7 +75,7 @@ function SideBar() {
         </div> 
         <div className={`flex-1 w-full xl:w-[960px] ${collapsed ? '' : 'sm:ml-64'}`}>
           <Routes>
-            <Route path='overview' element={<UserOverview/>} />
+            <Route path='' element={<UserOverview/>} />
             <Route path='profile' element={<ProfileOverview/>} />
             <Route path='/profile/bank' element={<BankDetails/>} />
             <Route path='password_reset' element={<PasswordReset/>} />
