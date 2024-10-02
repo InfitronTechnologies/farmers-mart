@@ -8,6 +8,7 @@ import About from './components/SubPages/About'
 import Services from './components/SubPages/Services'
 import News from './components/SubPages/News'
 import Faq from './components/SubPages/Faq'
+import Marketplace from './components/Marketplace/Marketplace'
 
 function App() {
   const location = useLocation();
@@ -23,6 +24,7 @@ function App() {
         <Route path='/services' element={<Services/>}/>
         <Route path='/updates' element={<News/>}/>
         <Route path='/faq' element={<Faq/>}/>
+        <Route path='/marketplace' element={<Marketplace/>}/>
       </Routes>
     </div>
   )

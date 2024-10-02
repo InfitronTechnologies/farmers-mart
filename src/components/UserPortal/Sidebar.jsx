@@ -33,7 +33,7 @@ function SideBar() {
                 <Sidebar.Item href="#" icon={Login}>
                   Login History
                 </Sidebar.Item>
-                <Sidebar.Item href="/" icon={Storefront}>
+                <Sidebar.Item href="/marketplace" icon={Storefront}>
                   Marketplace
                 </Sidebar.Item>
               </Sidebar.ItemGroup>

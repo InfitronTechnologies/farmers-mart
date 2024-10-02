@@ -100,6 +100,67 @@ export const FarmersOperations = [
 ];
 
 
+export const dummyProducts = [
+  {
+    id: 1,
+    name: 'Fresh Milk',
+    shortDescription: 'Organic fresh milk from local farms.',
+    longDescription: 'This is fresh, organic milk sourced from our local farms. It’s processed with utmost care to ensure the best quality and freshness.',
+    image: 'https://via.placeholder.com/200', // Placeholder image URL
+    price: 3.50,
+    category: 'Dairy',
+  },
+  {
+    id: 2,
+    name: 'Red Apples',
+    shortDescription: 'Juicy and sweet red apples.',
+    longDescription: 'Our apples are freshly picked and naturally grown without chemicals. They are packed with vitamins and perfect for snacking.',
+    image: 'https://via.placeholder.com/200', // Placeholder image URL
+    price: 1.20,
+    category: 'Fruits',
+  },
+  {
+    id: 3,
+    name: 'Carrots',
+    shortDescription: 'Fresh organic carrots, rich in beta-carotene.',
+    longDescription: 'These organic carrots are perfect for salads, stews, and more. Rich in nutrients and naturally grown without chemicals.',
+    image: 'https://via.placeholder.com/200', // Placeholder image URL
+    price: 2.00,
+    category: 'Vegetables',
+  },
+  {
+    id: 4,
+    name: 'Free-Range Eggs',
+    shortDescription: 'Organic free-range eggs from healthy chickens.',
+    longDescription: 'Our eggs come from chickens that roam freely and are fed a natural diet. They are packed with nutrients and taste amazing.',
+    image: 'https://via.placeholder.com/200', // Placeholder image URL
+    price: 4.00,
+    category: 'Dairy',
+  },
+  {
+    id: 5,
+    name: 'Bananas',
+    shortDescription: 'Fresh and ripe bananas.',
+    longDescription: 'These bananas are sourced directly from local farms. They are sweet, full of energy, and perfect for a quick snack.',
+    image: 'https://via.placeholder.com/200', // Placeholder image URL
+    price: 0.80,
+    category: 'Fruits',
+  },
+  {
+    id: 6,
+    name: 'Broccoli',
+    shortDescription: 'Fresh organic broccoli.',
+    longDescription: 'Rich in vitamins and antioxidants, our broccoli is perfect for a variety of meals. Organically grown with care.',
+    image: 'https://via.placeholder.com/200', // Placeholder image URL
+    price: 3.00,
+    category: 'Vegetables',
+  },
+  // Add more products as needed
+];
+
+export default dummyProducts;
+
+
 // I am tasked with creating the frontend of a farm tech solution called Farmersmart you can check it out at
 //  farmersmart.ng, the plan is that the current web app doesn't allow you to choose more than one category
 //  ie buyer, farmer, logistics or partners so the new one is to solve that issue. enough with the talk so I 
