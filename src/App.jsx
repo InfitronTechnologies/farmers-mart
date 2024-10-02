@@ -4,7 +4,10 @@ import Signup from './components/Signup/Signup'
 import Login from './components/Login/Login'
 import Home from './components/LandingPage/Home'
 import Sidebar from './components/UserPortal/Sidebar'
-import UserOverview from './components/UserPortal/UserOverview/UserOverview'
+import About from './components/SubPages/About'
+import Services from './components/SubPages/Services'
+import News from './components/SubPages/News'
+import Faq from './components/SubPages/Faq'
 
 function App() {
   const location = useLocation();
@@ -16,6 +19,10 @@ function App() {
         <Route path='/signup' element={<Signup/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/user/*' element={<Sidebar/>}/>
+        <Route path='/about' element={<About/>}/>
+        <Route path='/services' element={<Services/>}/>
+        <Route path='/updates' element={<News/>}/>
+        <Route path='/faq' element={<Faq/>}/>
       </Routes>
     </div>
   )

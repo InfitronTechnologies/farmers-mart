@@ -1,118 +1,93 @@
-import React from 'react';
-import { useState } from 'react';
-import { Link, Route, Routes } from "react-router-dom";
+import React, { useState } from "react";
+import { Sidebar } from "flowbite-react";
 import { Agriculture, Dashboard, Handshake, LocalShipping, Login, Logout, Menu, Person, Person2, Storefront, SupportAgent } from '@mui/icons-material';
-import FarmerMenu from './FarmerMenu/FarmerMenu';
+import { Link, Route, Routes } from "react-router-dom";
 import LogisticsMenu from './LogisticsMenu/LogisticsMenu';
 import UserOverview from './UserOverview/UserOverview';
-import ProfileMenu from './Profile/Profile';
 import Partners from './PartnerMenu/Partners';
 import ProfileOverview from './Profile/ProfileOverview';
 import BankDetails from './Profile/BankDetails';
 import PasswordReset from './Profile/PasswordReset';
 import FarmInfo from './FarmerMenu/FarmInfo';
+import FarmerDashboard from "./FarmerMenu/FarmerDashboard";
 
-function Sidebar() {
-
-    const [isOpen, setIsOpen] = useState(false)
-
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen); // Toggle sidebar open/close
-  };
+function SideBar() {
+  const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <div>
-      <div
-        className={`fixed top-0 left-0 h-full bg-white shadow-lg transition-all duration-300 border-green-300
-        ${isOpen ? "w-full md:w-1/6" : "w-12"} flex flex-col items-start overflow-y-auto scrollbar-hide`}
-      >
-        <button
-          className="mt-4 ml-2 text-gray-800 focus:outline-none"
-          onClick={toggleSidebar}
-        >
-          {isOpen ? <Menu /> : <Menu />}
-        </button>
-
-        {isOpen && (
-          <div className="flex flex-row w-full items-center mt-6 px-4">
-            <div>
-              <p className="text-gray-700 font-semibold">Adam</p>
-              <p className="text-gray-400 text-sm">Farmer</p>
-            </div>
-          </div>
-        )}
-
-        <div className="mt-8 w-full justify-around">
-          <div className="flex items-center text-gray-800 p-4 hover:bg-gray-100 w-full">
-              <Link to="/user/overview">
-                  <Person2 className="mr-3" />
-                  {isOpen && <span className="font-semibold">User Overview</span>}
-              </Link>
-          </div>
-          <div className="flex items-center text-gray-800 p-4 hover:bg-gray-100 w-full">
-              <Link to="">
-                  <Login className="mr-3" />
-                  {isOpen && <span className="font-semibold">Login History</span>}
-              </Link>
-          </div>
-          {/* <div className="flex items-center text-gray-800 p-4 hover:bg-gray-100 w-full">
-              <Link to="/">
-                  <Dashboard className="mr-3" />
-                  {isOpen && <span className="font-semibold">Dashboard</span>}
-              </Link>
-          </div> */}
-          <div className="flex items-center text-gray-800 p-4 hover:bg-gray-100 w-full">
-              <Link to="/">
-                  <Storefront className="mr-3" />
-                  {isOpen && <span className="font-semibold">Marketplace</span>}
-              </Link>
-          </div>
-          <div className="flex items-center text-gray-800 p-4 hover:bg-gray-100 w-full">
-            {!isOpen && <Agriculture/>}
-            {isOpen && <FarmerMenu />}
-          </div>
-          <div className="flex items-center text-gray-800 p-4 hover:bg-gray-100 w-full">
-            {!isOpen && <LocalShipping/>}
-            {isOpen && <LogisticsMenu />}
-          </div>
-          <div className="flex items-center text-gray-800 p-4 hover:bg-gray-100 w-full">
-            {!isOpen && <Handshake/>}
-            {isOpen && <Partners/>}
-          </div>
-          <div className='text-center font-bold text-gray-900 mt-8'>
-            {isOpen && 'USER MANAGEMENT'}
-          </div>
-          <div className="flex items-center text-gray-800 p-4 hover:bg-gray-100 w-full">
-            {/* <Link to='user/profile' className='w-full'> */}
-              {!isOpen && <Person/>}
-              {isOpen && <ProfileMenu/>}
-            {/* </Link> */}
-          </div>
-          <div className="flex items-center text-gray-800 p-4 hover:bg-gray-100 w-full">
-              <Link to="/">
-                  <SupportAgent className="mr-3" />
-                  {isOpen && <span className="font-semibold">Customer Support</span>}
-              </Link>
-          </div>
-          <div className="flex items-center text-gray-800 p-4 hover:bg-gray-100 w-full">
-              <Link to="/">
-                  <Logout className="mr-3" />
-                  {isOpen && <span className="font-semibold">Logout</span>}
-              </Link>
-          </div>
+    <div className="">
+      <Menu className="fixed mb-8" onClick={() => setCollapsed(!collapsed)} />
+      <div className="flex flex-row">
+        <div className={collapsed ? 'hidden' : 'block'}>          
+          <Sidebar className="fixed h-screen mt-8" collapsed={collapsed}>
+            <Sidebar.Items>
+              <Sidebar.ItemGroup>
+                <Sidebar.Item href="#">
+                  Adam Adam
+                </Sidebar.Item>
+              </Sidebar.ItemGroup>
+              <Sidebar.ItemGroup>
+                <Sidebar.Item href="/user/overview" icon={Person2}>
+                  User Overview
+                </Sidebar.Item>
+                <Sidebar.Item href="#" icon={Login}>
+                  Login History
+                </Sidebar.Item>
+                <Sidebar.Item href="/" icon={Storefront}>
+                  Marketplace
+                </Sidebar.Item>
+              </Sidebar.ItemGroup>
+              <Sidebar.ItemGroup>              
+                <Sidebar.Collapse icon={Agriculture} label="Farmer">
+                  <Sidebar.Item href="/user/farm-dashboard">Dashboard </Sidebar.Item>
+                  <Sidebar.Item href="/user/farm">Farm Management </Sidebar.Item>
+                  <Sidebar.Item href="#">Available Produces </Sidebar.Item>
+                  <Sidebar.Item href="#">Orders </Sidebar.Item>
+                </Sidebar.Collapse>
+                <Sidebar.Collapse icon={LocalShipping} label="Logistics">
+                  <Sidebar.Item href="#">Dashboard </Sidebar.Item>
+                  <Sidebar.Item href="#">Order Management </Sidebar.Item>
+                  <Sidebar.Item href="#">Revenue </Sidebar.Item>
+                  <Sidebar.Item href="#"> Insurance Cases </Sidebar.Item>
+                </Sidebar.Collapse>
+                <Sidebar.Collapse icon={Handshake} label="Partner">
+                  <Sidebar.Item href="#"> Dashboard </Sidebar.Item>
+                  <Sidebar.Item href="#"> Progress </Sidebar.Item>
+                  <Sidebar.Item href="#"> Reports </Sidebar.Item>
+                </Sidebar.Collapse>
+              </Sidebar.ItemGroup>
+              <Sidebar.ItemGroup>
+                <Sidebar.Collapse icon={Person} label="Profile">
+                  <Sidebar.Item href="/user/profile"> Overview </Sidebar.Item>
+                  <Sidebar.Item href="/user/profile/bank"> Bank Details </Sidebar.Item>
+                  <Sidebar.Item href="/user/password_reset"> Reset Password </Sidebar.Item>
+                  <Sidebar.Item href="#"> Profile Picture </Sidebar.Item>
+                </Sidebar.Collapse>
+                <Sidebar.Item href="#" icon={SupportAgent}>
+                  Customer Support
+                </Sidebar.Item>
+                <Sidebar.Item href="/" icon={Logout}>
+                  Logout
+                </Sidebar.Item>
+              </Sidebar.ItemGroup>
+            </Sidebar.Items>
+          </Sidebar>
+        </div> 
+        <div className={`flex-1 w-full xl:w-[960px] ${collapsed ? '' : 'sm:ml-64'}`}>
+          <Routes>
+            <Route path='overview' element={<UserOverview/>} />
+            <Route path='profile' element={<ProfileOverview/>} />
+            <Route path='/profile/bank' element={<BankDetails/>} />
+            <Route path='password_reset' element={<PasswordReset/>} />
+            <Route path='farm' element={<FarmInfo/>} />
+            <Route path='farm-dashboard' element={<FarmerDashboard/>} />
+          </Routes>  
         </div>
-      </div>
-      <div className={`flex-1 transition-all duration-300 p-4 ${isOpen ? 'ml-64' : 'ml-12'}`}>
-            <Routes>
-              <Route path='overview' element={<UserOverview/>} />
-              <Route path='profile' element={<ProfileOverview/>} />
-              <Route path='/profile/bank' element={<BankDetails/>} />
-              <Route path='password_reset' element={<PasswordReset/>} />
-              <Route path='farm' element={<FarmInfo/>} />
-            </Routes>
-      </div>
+      </div> 
     </div>
-  );
+  )
 }
 
-export default Sidebar;
+export default SideBar
+      
+     

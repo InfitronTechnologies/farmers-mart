@@ -1,18 +1,20 @@
 import React from 'react';
-import Card from './Card';
-import Chart from './Chart';
+import ProfileSummary from './ProfileSummary';
+import AccountStatistics from './AccountStatistics';
+import RecentActivity from './RecentActivity';
+// import QuickActions from './QuickActions';
+import Notifications from './Notifications';
 
-function UserOverview() {
+const UserOverview = () => {
   return (
-    <div className="p-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-        <Card title="Sales | Today" amount="0" icon="shopping_cart" percentage="12" trend="increase" />
-        <Card title="Revenue | This Month" amount="₦0" icon="attach_money" percentage="8" trend="increase" />
-        <Card title="Revenue | This Year" amount="₦0" icon="money_off" percentage="12" trend="decrease" />
-      </div>
-      <Chart/>
+    <div className="p-4">
+      <ProfileSummary userName="Adam Adam" userImage="/path/to/image.jpg" />
+      <AccountStatistics />
+      <RecentActivity />
+      {/* <QuickActions /> */}
+      <Notifications />
     </div>
   );
-}
+};
 
 export default UserOverview;

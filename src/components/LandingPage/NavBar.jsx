@@ -39,16 +39,24 @@ function NavBar() {
           <div className='hidden lg:flex justify-between w-4/5 space-x-12 items-center ml-auto'>
            <div className='flex flex-row text-sm md:ml-12'>
                 <div className='mx-4 hover:cursor-pointer'>
-                    Home
-                </div>
-                <div className='mx-4 hover:cursor-pointer'>
+                  <Link to='/about'>
                     About
+                  </Link>
                 </div>
                 <div className='mx-4 hover:cursor-pointer'>
+                  <Link to='/services'>
                     Services
+                  </Link>  
                 </div>
                 <div className='mx-4 hover:cursor-pointer'>
+                  <Link to='/faq'>  
+                    FAQ
+                  </Link>
+                </div>
+                <div className='mx-4 hover:cursor-pointer'>
+                  <Link to='/updates'>
                     What's New?
+                  </Link>  
                 </div>
            </div>
             <div className='flex flex-row items-center ml-auto'>

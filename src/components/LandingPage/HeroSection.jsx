@@ -20,13 +20,13 @@ const HeroSection = () => {
         </h1>
 
         {/* Responsive input field */}
-        <div class="relative">
+        <div className="relative">
           <input 
             type="text" 
-            class="border rounded-full pl-4 pr-10 py-2 w-full" 
+            className="border rounded-full pl-4 pr-10 py-2 w-full" 
             placeholder="Search..." 
           />
-          <button class="absolute right-2 top-1/2 transform -translate-y-1/2">
+          <button className="absolute right-2 top-1/2 transform -translate-y-1/2">
             <SearchIcon className='text-farmersmartDarkGreen'/>
           </button>
         </div>
