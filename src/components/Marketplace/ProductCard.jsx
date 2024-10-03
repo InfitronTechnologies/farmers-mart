@@ -33,7 +33,7 @@ const ProductCard = ({ product }) => {
       <span className="text-farmersmartDarkGreen font-bold">${product.price.toFixed(2)}</span>
       <Link
         to={`/products/${product.id}`}
-        className="mt-4 inline-block bg-farmersmartDarkGreen text-white px-4 py-2 rounded"
+        className="mt-4 inline-block bg-farmersmartDarkGreen text-white ml-2 px-4 py-2 rounded"
       >
         View Details
       </Link>

@@ -25,11 +25,11 @@
 // ProductDetails.js
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import dummyProducts from '../data/products'; // Import dummy data
+import dummyProducts from '../data/products'; 
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const product = dummyProducts.find((p) => p.id === parseInt(id)); // Find product by ID
+  const product = dummyProducts.find((p) => p.id === parseInt(id));
 
   if (!product) {
     return <div>Product not found.</div>;

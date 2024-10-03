@@ -8,12 +8,12 @@ const CategoryFilter = ({ setFilteredProducts }) => {
   };
 
   return (
-    <div className="flex justify-center items-center mb-8">
+    <div className="flex flex-wrap space-x-2 space-y-2 justify-center mb-8">
       {categories.map((category, index) => (
         <button
           key={index}
           onClick={() => handleFilter(category)}
-          className="mx-2 px-4 py-2 bg-farmersmartGreen text-white rounded"
+          className=" px-4 py-2 bg-farmersmartGreen text-white rounded"
         >
           {category}
         </button>
