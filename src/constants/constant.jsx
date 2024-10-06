@@ -158,7 +158,30 @@ export const dummyProducts = [
   // Add more products as needed
 ];
 
-export default dummyProducts;
+export const kycConfig = {
+  Farmer: [
+    { name: 'farmer', label: 'Farm Name', type: 'text', required: true },
+    { name: 'farmSize', label: 'Farm Size (in acres)', type: 'number', required: true },
+    { name: 'cropType', label: 'Type of Crops', type: 'text', required: true },
+  ],
+  Buyer: [
+    { name: 'buyer', label: 'Business Name', type: 'text', required: true },
+    { name: 'businessAddress', label: 'Business Address', type: 'text', required: true },
+  ],
+  Logistics: [
+    { name: 'logistics', label: 'Vehicle Type', type: 'text', required: true },
+    { name: 'licenseNumber', label: 'License Number', type: 'text', required: true },
+  ],
+  Partner: [
+    { name: 'partner', label: 'Company Name', type: 'text', required: true },
+    { name: 'companyRegNumber', label: 'Company Registration Number', type: 'text', required: true },
+  ],
+  Agent: [
+    { name: 'agent', label: 'Company Name', type: 'text', required: true },
+    { name: 'companyRegNumber', label: 'Company Registration Number', type: 'text', required: true },
+  ],
+};
+
 
 
 // I am tasked with creating the frontend of a farm tech solution called Farmersmart you can check it out at

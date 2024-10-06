@@ -283,7 +283,7 @@ const Signup = () => {
 
               {/* Submit Button */}
               <div className="flex justify-center">
-                <Link to='/login'>
+                <Link to='/select_profile'>
                   <button
                     type="submit"
                     className="bg-farmersmartDarkGreen text-white text-xl font-semibold py-2 px-8 rounded-full mt-4"
