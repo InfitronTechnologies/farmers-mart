@@ -25,7 +25,7 @@ const ProfileSelection = ({ onNext }) => {
             <div className="p-6 bg-white shadow-lg rounded-lg max-w-md mx-auto  my-auto mt-12">
                 <h2 className="text-2xl font-semibold text-center mb-6">Select Profiles</h2>
                 <div className="space-y-4">
-                    {['Farmer', 'Buyer', 'Logistics', 'Partner', 'Agent'].map((profile) => (
+                    {['Farmer', 'Buyer', 'Logistics', 'Partner'].map((profile) => (
                     <div key={profile} className="flex items-center">
                         <Checkbox
                         checked={selectedProfiles.includes(profile)}

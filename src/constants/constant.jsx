@@ -176,10 +176,6 @@ export const kycConfig = {
     { name: 'partner', label: 'Company Name', type: 'text', required: true },
     { name: 'companyRegNumber', label: 'Company Registration Number', type: 'text', required: true },
   ],
-  Agent: [
-    { name: 'agent', label: 'Company Name', type: 'text', required: true },
-    { name: 'companyRegNumber', label: 'Company Registration Number', type: 'text', required: true },
-  ],
 };
 
 
