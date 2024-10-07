@@ -5,6 +5,9 @@ import sample from '../assets/rice.jpg'
 import sample2 from '../assets/farm.jpg'
 import sample1 from '../assets/farmers.jpeg'
 import sample3 from '../assets/logistics.jpeg'
+import brocolli from '../assets/broccoli.png'
+import tomatoes from '../assets/tomato.jpg'
+import rice from '../assets/ricebag.png'
 
 export const farmcategories = [
     { name: 'Agriculture', icon: <AgricultureIcon /> },
@@ -106,8 +109,8 @@ export const dummyProducts = [
     name: 'Fresh Milk',
     shortDescription: 'Organic fresh milk from local farms.',
     longDescription: 'This is fresh, organic milk sourced from our local farms. It’s processed with utmost care to ensure the best quality and freshness.',
-    image: 'https://via.placeholder.com/200', // Placeholder image URL
-    price: 3.50,
+    image: brocolli, // Placeholder image URL
+    price: 25000,
     category: 'Dairy',
   },
   {
@@ -115,7 +118,7 @@ export const dummyProducts = [
     name: 'Red Apples',
     shortDescription: 'Juicy and sweet red apples.',
     longDescription: 'Our apples are freshly picked and naturally grown without chemicals. They are packed with vitamins and perfect for snacking.',
-    image: 'https://via.placeholder.com/200', // Placeholder image URL
+    image: tomatoes, // Placeholder image URL
     price: 1.20,
     category: 'Fruits',
   },
@@ -124,7 +127,7 @@ export const dummyProducts = [
     name: 'Carrots',
     shortDescription: 'Fresh organic carrots, rich in beta-carotene.',
     longDescription: 'These organic carrots are perfect for salads, stews, and more. Rich in nutrients and naturally grown without chemicals.',
-    image: 'https://via.placeholder.com/200', // Placeholder image URL
+    image: rice, // Placeholder image URL
     price: 2.00,
     category: 'Vegetables',
   },
@@ -133,7 +136,7 @@ export const dummyProducts = [
     name: 'Free-Range Eggs',
     shortDescription: 'Organic free-range eggs from healthy chickens.',
     longDescription: 'Our eggs come from chickens that roam freely and are fed a natural diet. They are packed with nutrients and taste amazing.',
-    image: 'https://via.placeholder.com/200', // Placeholder image URL
+    image: brocolli, // Placeholder image URL
     price: 4.00,
     category: 'Dairy',
   },
@@ -142,7 +145,7 @@ export const dummyProducts = [
     name: 'Bananas',
     shortDescription: 'Fresh and ripe bananas.',
     longDescription: 'These bananas are sourced directly from local farms. They are sweet, full of energy, and perfect for a quick snack.',
-    image: 'https://via.placeholder.com/200', // Placeholder image URL
+    image: tomatoes, // Placeholder image URL
     price: 0.80,
     category: 'Fruits',
   },
@@ -151,10 +154,37 @@ export const dummyProducts = [
     name: 'Broccoli',
     shortDescription: 'Fresh organic broccoli.',
     longDescription: 'Rich in vitamins and antioxidants, our broccoli is perfect for a variety of meals. Organically grown with care.',
-    image: 'https://via.placeholder.com/200', // Placeholder image URL
+    image: rice, // Placeholder image URL
     price: 3.00,
     category: 'Vegetables',
   },
+  {
+    id: 7,
+    name: 'Free-Range Eggs',
+    shortDescription: 'Organic free-range eggs from healthy chickens.',
+    longDescription: 'Our eggs come from chickens that roam freely and are fed a natural diet. They are packed with nutrients and taste amazing.',
+    image: brocolli, // Placeholder image URL
+    price: 4.00,
+    category: 'Dairy',
+  },
+  {
+    id: 8,
+    name: 'Bananas',
+    shortDescription: 'Fresh and ripe bananas.',
+    longDescription: 'These bananas are sourced directly from local farms. They are sweet, full of energy, and perfect for a quick snack.',
+    image: tomatoes, // Placeholder image URL
+    price: 0.80,
+    category: 'Fruits',
+  },
+  {
+    id: 9,
+    name: 'Broccoli',
+    shortDescription: 'Fresh organic broccoli.',
+    longDescription: 'Rich in vitamins and antioxidants, our broccoli is perfect for a variety of meals. Organically grown with care.',
+    image: rice, // Placeholder image URL
+    price: 3.00,
+    category: 'Vegetables',
+  }
   // Add more products as needed
 ];
 
