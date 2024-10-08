@@ -11,6 +11,7 @@ export default {
     extend: {
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
+        montserrat: ["Montserrat", "sans-serif"],
       },
       colors: {
         farmersmartYellow: '#dabe78',

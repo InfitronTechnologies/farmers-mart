@@ -78,7 +78,12 @@ const MarketNav = () => {
         <Dropdown
           arrowIcon={false}
           inline
-          label={<Person className="text-gray-800 text-2xl cursor-pointer" />} // MUI Person icon
+          label={
+            <div className=' flex items-center justify-center'>
+              <Person className="text-gray-800 text-2xl cursor-pointer" />
+              <span className='my-auto ml-2'>Account</span>
+            </div>
+        }
         >
           <Dropdown.Header>
             <span className="block text-sm font-semibold">Adam Adam</span>

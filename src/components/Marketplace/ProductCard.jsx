@@ -49,13 +49,13 @@ import { Link } from 'react-router-dom';
 
 const ProductCard = ({ product }) => {
   return (
-  <div className="border rounded-lg shadow-sm hover:shadow-lg transition-shadow bg-white flex flex-col justify-between h-full">
+  <div className="border rounded-2xl shadow-sm hover:shadow-lg transition-shadow bg-white flex flex-col justify-between h-full">
     <div>
       <div className="relative">
         <img
           src={product.image}
           alt={product.name}
-          className="relative w-full h-40 object-cover mb-4 rounded-t-lg"
+          className="relative w-full h-40 object-cover mb-4 rounded-t-2xl"
         />
         <button className="absolute right-4 bottom-1 text-gray-400 hover:text-gray-600">
           <FavoriteBorderOutlined />
@@ -75,7 +75,7 @@ const ProductCard = ({ product }) => {
 
     <Link
       to={`/products/${product.id}`}
-      className="block text-center text-black w-1/2 mx-auto bg-[#A9D158] font-semibold py-2 rounded-lg hover:bg-[#8BBB4D] transition-colors mb-4"
+      className="block text-center text-black w-1/2 mx-auto bg-[#A9D158] font-semibold py-2 rounded-2xl hover:bg-[#8BBB4D] transition-colors mb-4"
     >
       View
     </Link>
