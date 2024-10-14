@@ -89,8 +89,8 @@ const MarketNav = () => {
             <span className="block text-sm font-semibold">Adam Adam</span>
             <span className="block truncate text-sm font-medium">adamfarm@gmail.com</span>
           </Dropdown.Header>
-          <Dropdown.Item>Dashboard</Dropdown.Item>
-          <Dropdown.Item>Profile</Dropdown.Item>
+          <Dropdown.Item href='/user'>Dashboard</Dropdown.Item>
+          <Dropdown.Item href='/user/profile'>Profile</Dropdown.Item>
           <Dropdown.Item>Earnings</Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item>Sign out</Dropdown.Item>

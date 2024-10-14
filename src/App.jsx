@@ -53,7 +53,6 @@ function App() {
         <Route path='/marketplace' element={<Marketplace addToCart={addToCart} cartItems={cartItems}/>}/>
         <Route path="/products/:id" element={<ProductDetails addToCart={addToCart}/>} />
         <Route path='/cart' element={<Cart cartItems={cartItems}/>}/>
-        {/* <Route path='/register' element={<ProfileSelection/>}/> */}
         <Route path='/select_profile' element={<ProfileCompletion/>}/>
       </Routes>
     </div>

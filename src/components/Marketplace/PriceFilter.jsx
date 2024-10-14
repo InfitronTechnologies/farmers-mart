@@ -12,7 +12,17 @@ const PriceFilter = ({ setFilteredProducts }) => {
 
   return (
     <div>
-      <h3 className="text-lg font-bold mb-4">Price (₦)</h3>
+      <div className='flex flex-row justify-between mb-3'>
+        <h3 className="text-lg font-bold">Price (₦)</h3>
+        <button
+          className="font-semibold text-orange-500"
+          onClick={() => {
+            // Implement price filtering logic here
+          }}
+        >
+          APPLY
+        </button>
+      </div>
       <div className="flex items-center justify-between">
         <input
           type="number"
@@ -28,14 +38,7 @@ const PriceFilter = ({ setFilteredProducts }) => {
           className="border px-2 py-1 w-24"
         />
       </div>
-      <button
-        className="mt-4 px-4 py-2 bg-farmersmartGreen text-white rounded"
-        onClick={() => {
-          // Implement price filtering logic here
-        }}
-      >
-        Apply
-      </button>
+
     </div>
   );
 };

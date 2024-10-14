@@ -42,7 +42,7 @@ const ProfileSelection = ({ onNext }) => {
                     className="w-full mt-6"
                     onClick={handleSubmit}
                 >
-                    Continue to KYC
+                    Join Us
                 </Button>
             </div>
         </div>

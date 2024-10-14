@@ -1,18 +1,35 @@
 import React, { useState } from "react";
 import { Sidebar } from "flowbite-react";
-import { Agriculture, Dashboard, Handshake, LocalShipping, Login, Logout, Menu, Person, Person2, Storefront, SupportAgent } from '@mui/icons-material';
+import { Agriculture, Dashboard, Handshake, LocalShipping, Login, Logout, Menu, Person, Person2, ShoppingBag, Storefront, SupportAgent } from '@mui/icons-material';
 import { Link, Route, Routes } from "react-router-dom";
-import LogisticsMenu from './LogisticsMenu/LogisticsMenu';
 import UserOverview from './UserOverview/UserOverview';
-import Partners from './PartnerMenu/Partners';
 import ProfileOverview from './Profile/ProfileOverview';
 import BankDetails from './Profile/BankDetails';
 import PasswordReset from './Profile/PasswordReset';
 import FarmInfo from './FarmerMenu/FarmInfo';
 import FarmerDashboard from "./FarmerMenu/FarmerDashboard";
+import ProductForm from "./FarmerMenu/ProductForm";
+import AvailableProduce from "./FarmerMenu/AvailableProduce";
+import LogisticsDashboard from "./LogisticsMenu/LogisticsDashboard";
+import OrderDetails from "./LogisticsMenu/OrdersDetails";
+import OrdersPage from "./LogisticsMenu/OrdersPage";
+import InsuranceCases from "./LogisticsMenu/InsurnaceCases";
+import LogisticsRevenue from "./LogisticsMenu/LogisticsRevenue";
+import PartnerDashboard from "./PartnerMenu/PartnerDashboard";
+import PartnerServices from "./PartnerMenu/PartnerServices";
+import FarmerPartnerMatching from "./PartnerMenu/FarmerPartnerMatching";
+import FarmerProfiles from "./ConsumerMenu/FarmersProfile";
+import Orders from "./ConsumerMenu/Orders";
+import ConsumerDashboard from "./ConsumerMenu/ConsumerDashboard";
 
 function SideBar() {
   const [collapsed, setCollapsed] = useState(false);
+
+  const [products, setProducts] = useState([]);
+
+  const addProduct = (product) => {
+    setProducts([...products, product]);
+  };
 
   return (
     <div className="">
@@ -44,16 +61,21 @@ function SideBar() {
                   <Sidebar.Item href="#">Available Produces </Sidebar.Item>
                   <Sidebar.Item href="#">Orders </Sidebar.Item>
                 </Sidebar.Collapse>
+                <Sidebar.Collapse icon={ShoppingBag} label="Buyer">
+                  <Sidebar.Item href="/user/buyer">Dashboard </Sidebar.Item>
+                  <Sidebar.Item href="/user/buyer/orders">Orders </Sidebar.Item>
+                  <Sidebar.Item href="/user/buyer/farmers-profile">Farmers Profile </Sidebar.Item>
+                </Sidebar.Collapse>
                 <Sidebar.Collapse icon={LocalShipping} label="Logistics">
-                  <Sidebar.Item href="#">Dashboard </Sidebar.Item>
-                  <Sidebar.Item href="#">Order Management </Sidebar.Item>
-                  <Sidebar.Item href="#">Revenue </Sidebar.Item>
-                  <Sidebar.Item href="#"> Insurance Cases </Sidebar.Item>
+                  <Sidebar.Item href="/user/logistics">Dashboard </Sidebar.Item>
+                  <Sidebar.Item href="/user/logistics/orders">Order Management </Sidebar.Item>
+                  <Sidebar.Item href="/user/logistics/revenue">Revenue </Sidebar.Item>
+                  <Sidebar.Item href="/user/logistics/insurance"> Insurance Cases </Sidebar.Item>
                 </Sidebar.Collapse>
                 <Sidebar.Collapse icon={Handshake} label="Partner">
-                  <Sidebar.Item href="#"> Dashboard </Sidebar.Item>
-                  <Sidebar.Item href="#"> Progress </Sidebar.Item>
-                  <Sidebar.Item href="#"> Reports </Sidebar.Item>
+                  <Sidebar.Item href="/user/partner"> Dashboard </Sidebar.Item>
+                  <Sidebar.Item href="/user/partner/services"> Services </Sidebar.Item>
+                  <Sidebar.Item href="/user/partner/offers"> Farmer Offers</Sidebar.Item>
                 </Sidebar.Collapse>
               </Sidebar.ItemGroup>
               <Sidebar.ItemGroup>
@@ -81,6 +103,19 @@ function SideBar() {
             <Route path='password_reset' element={<PasswordReset/>} />
             <Route path='farm' element={<FarmInfo/>} />
             <Route path='farm-dashboard' element={<FarmerDashboard/>} />
+            <Route path="add-product" element={<ProductForm addProduct={addProduct} />} />
+            <Route path="available-produce" element={<AvailableProduce products={products} />}/>
+            <Route path='logistics' element={<LogisticsDashboard/>} />
+            <Route path='logistics/orders' element={<OrdersPage/>} />
+            <Route path='logistics/orders/:orderId' element={<OrderDetails />} /> 
+            <Route path='logistics/insurance' element={<InsuranceCases/>} /> 
+            <Route path='logistics/revenue' element={<LogisticsRevenue/>} /> 
+            <Route path='partner/' element={<PartnerDashboard/>} /> 
+            <Route path='partner/services' element={<PartnerServices/>} /> 
+            <Route path='partner/offers' element={<FarmerPartnerMatching/>} /> 
+            <Route path='buyer/' element={<ConsumerDashboard/>} /> 
+            <Route path='buyer/orders' element={<Orders/>} /> 
+            <Route path='buyer/farmers-profile' element={<FarmerProfiles/>} /> 
           </Routes>  
         </div>
       </div> 
