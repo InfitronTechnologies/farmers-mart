@@ -26,7 +26,7 @@ const LogisticsDashboard = () => {
 
         {/* Vehicle Tracking */}
         <div className="bg-white p-4 shadow rounded-md">
-          <h2 className="text-lg font-semibold mb-2">Vehicle Tracking</h2>
+          <h2 className="text-lg font-semibold mb-2">Order Tracking</h2>
           <Button variant="contained" startIcon={<Map/>} className="w-full">
             Track Deliveries
           </Button>

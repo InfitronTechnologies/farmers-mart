@@ -191,7 +191,7 @@ function NavBar({ bgColor }) {
                   <PersonIcon /> SIGN IN
                 </Link>
               </div>
-              <div className='mr-4 px-5 py-3 border-2 hover:cursor-pointer border-farmersmartDarkGreen bg-farmersmartDarkGreen rounded-3xl md:hover:text-neutral-300'>
+              <div className='px-5 py-3 border-2 hover:cursor-pointer border-farmersmartDarkGreen bg-farmersmartDarkGreen rounded-3xl md:hover:text-neutral-300'>
                 <Link to='/signup'>
                   <p className=''> SIGN UP</p>
                 </Link>

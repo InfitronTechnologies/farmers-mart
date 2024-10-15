@@ -35,7 +35,7 @@ function SideBar() {
     <div className="">
       <Menu className="fixed mb-8" onClick={() => setCollapsed(!collapsed)} />
       <div className="flex flex-row">
-        <div className={collapsed ? 'hidden' : 'block'}>          
+        <div className={`z-10 ${collapsed ? 'hidden' : 'block'}`}>          
           <Sidebar className="fixed h-screen mt-8" collapsed={collapsed}>
             <Sidebar.Items>
               <Sidebar.ItemGroup>

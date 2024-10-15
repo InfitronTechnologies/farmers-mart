@@ -107,7 +107,7 @@ import { Menu } from '@mui/icons-material'; // Material UI Menu Icon
 const Marketplace = ({ addToCart, cartItems }) => {
   const [filteredProducts, setFilteredProducts] = useState(dummyProducts);
   const [sortOption, setSortOption] = useState(''); // To track the selected sort option
-  const [isSidebarVisible, setIsSidebarVisible] = useState(false); // Sidebar visibility state
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true); // Sidebar visibility state
 
   const handleSort = (e) => {
     const sortBy = e.target.value;
