@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
+import LogisticsNewOrders from './LogisticsNewOrders';
 
 const orders = [
   { id: '001', customer: 'John Doe', farm: 'Green Acres', status: 'In Transit' },
@@ -15,7 +16,7 @@ const OrdersPage = () => {
   return (
     <div className="p-4 bg-white shadow rounded-md">
       <h1 className="text-xl font-bold mb-4">All Orders</h1>
-      <table className="min-w-full table-auto">
+      <table className="min-w-full table-auto mb-8">
         <thead>
           <tr className="bg-gray-200">
             <th className="px-4 py-2">Order ID</th>
@@ -41,6 +42,7 @@ const OrdersPage = () => {
           ))}
         </tbody>
       </table>
+      <LogisticsNewOrders/>
     </div>
   );
 };

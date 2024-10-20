@@ -21,6 +21,7 @@ import FarmerPartnerMatching from "./PartnerMenu/FarmerPartnerMatching";
 import FarmerProfiles from "./ConsumerMenu/FarmersProfile";
 import Orders from "./ConsumerMenu/Orders";
 import ConsumerDashboard from "./ConsumerMenu/ConsumerDashboard";
+import PartnerServiceUpload from "./PartnerMenu/PartnerServiceUpload";
 
 function SideBar() {
   const [collapsed, setCollapsed] = useState(false);
@@ -75,6 +76,7 @@ function SideBar() {
                 <Sidebar.Collapse icon={Handshake} label="Partner">
                   <Sidebar.Item href="/user/partner"> Dashboard </Sidebar.Item>
                   <Sidebar.Item href="/user/partner/services"> Services </Sidebar.Item>
+                  <Sidebar.Item href="/user/partner/add-service"> Add Services </Sidebar.Item>
                   <Sidebar.Item href="/user/partner/offers"> Farmer Offers</Sidebar.Item>
                 </Sidebar.Collapse>
               </Sidebar.ItemGroup>
@@ -112,6 +114,7 @@ function SideBar() {
             <Route path='logistics/revenue' element={<LogisticsRevenue/>} /> 
             <Route path='partner/' element={<PartnerDashboard/>} /> 
             <Route path='partner/services' element={<PartnerServices/>} /> 
+            <Route path='partner/add-service' element={<PartnerServiceUpload/>} /> 
             <Route path='partner/offers' element={<FarmerPartnerMatching/>} /> 
             <Route path='buyer/' element={<ConsumerDashboard/>} /> 
             <Route path='buyer/orders' element={<Orders/>} /> 

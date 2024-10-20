@@ -1,22 +1,29 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import logo from '../../assets/farmersmartlogo.png'
 import MenuIcon from '@mui/icons-material/Menu';
 import bgImage from '../../assets/login-bg.png'
 import Footer from '../LandingPage/Footer';
+import { nigerianStates } from '../../constants/constant';
 import { AlternateEmail, Person, Person2, Visibility } from '@mui/icons-material';
 
 const Signup = () => {
-  const [profiles, setProfiles] = useState({
-    Farmer: false,
-    Consumer: false,
-    Logistics: false,
-    Partner: false,
+  const [formData, setFormData] = useState({
+    firstname: '',
+    lastname: '',
+    othername: '',
+    phone: '',
+    stateId: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
   });
-  
-  const [password, setPassword] = useState('');
+
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordMatch, setPasswordMatch] = useState(null);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);   
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -24,11 +31,9 @@ const Signup = () => {
     setIsMenuOpen(!isMenuOpen);
   }
 
-
-  // Function to handle checkbox change
-  const handleProfileChange = (e) => {
-    const { name, checked } = e.target;
-    setProfiles({ ...profiles, [name]: checked });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   // Function to handle password input
@@ -39,7 +44,30 @@ const Signup = () => {
   // Function to handle confirm password and check if they match
   const handleConfirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
-    setPasswordMatch(e.target.value === password);
+    setPasswordMatch(e.target.value === formData.password);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (passwordMatch === false) {
+      setError("Passwords do not match");
+      return;
+    }
+    try {
+      // Make the API request using Axios
+      const response = await axios.post('https://ourservicestech.com.ng/farmmart_api/v2/account/create_account', formData);
+      
+      if (response.status === 201) {
+        // Handle successful signup
+        setSuccess(true);
+        setError('');
+        console.log('true')
+        // Redirect or perform other actions on success
+      }
+    } catch (error) {
+      // Handle errors, such as API validation errors or network issues
+      setError(error.response?.data?.message || 'Something went wrong');
+    }
   };
 
   return (
@@ -147,14 +175,17 @@ const Signup = () => {
             <h2 className="text-4xl font-extrabold mb-6 text-center text-black">Sign Up</h2>
 
             {/* Form */}
-            <form className='text-center'>
+            <form onSubmit={handleSubmit} className='text-center'>
               <div className="mb-4">
                 <div className='relative'>
                   <input
                     className="w-full md:w-4/5 px-4 py-2 pr-16 border-2 border-farmersmartDarkGreen rounded-3xl text-black font-medium bg-white focus:outline-none"
                     type="text"
                     id="firstname"
+                    name="firstname"
                     placeholder="First Name"
+                    value={formData.firstname}
+                    onChange={handleChange}
                     required
                   />
                   <span className="absolute inset-y-0 right-4 top-2 md:right-16 md:top-2">
@@ -169,7 +200,10 @@ const Signup = () => {
                     className="w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-black font-medium bg-white focus:outline-none"
                     type="text"
                     id="lastname"
+                    name="lastname"
                     placeholder="Last Name"
+                    value={formData.lastname}
+                    onChange={handleChange}
                     required
                   />
                   <span className="absolute inset-y-0 right-4 top-2 md:right-16 md:top-2">
@@ -182,9 +216,47 @@ const Signup = () => {
                 <div className='relative'>
                   <input
                     className="w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-black font-medium bg-white focus:outline-none"
+                    type="text"
+                    id="othername"
+                    name="othername"
+                    placeholder="Other Name"
+                    value={formData.othername}
+                    onChange={handleChange}
+                    required
+                  />
+                  <span className="absolute inset-y-0 right-4 top-2 md:right-16 md:top-2">
+                    <Person className='text-black'/>
+                  </span>
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <div className='relative'>
+                  <select
+                    className="w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-black font-medium bg-white focus:outline-none"
+                    name="stateId"
+                    value={formData.stateId}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="">Select State</option>
+                    {nigerianStates.map((state) => (
+                      <option key={state.id} value={state.id}>{state.state}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <div className='relative'>
+                  <input
+                    className="w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-black font-medium bg-white focus:outline-none"
                     type="email"
                     id="email"
+                    name="email"
                     placeholder="Email"
+                    value={formData.email}
+                    onChange={handleChange}
                     required
                   />
                   <span className="absolute inset-y-0 right-4 top-2 md:right-16 md:top-2">
@@ -200,9 +272,10 @@ const Signup = () => {
                     className="w-full md:w-4/5 px-4 py-2 pr-16 border-2 border-farmersmartDarkGreen rounded-3xl text-black font-medium bg-white focus:outline-none"
                     type="password"
                     id="password"
+                    name="password"
                     placeholder="Password"
-                    value={password}
-                    onChange={handlePasswordChange}
+                    value={formData.password}
+                    onChange={handleChange}
                     required
                  />
                   <span className="absolute inset-y-0 right-4 top-2 md:right-16 md:top-2">
@@ -234,56 +307,9 @@ const Signup = () => {
                 </div>
               </div>
 
-              {/* Profile Checkboxes */}
-              {/* <div className="mb-6">
-                <p className="block mb-2">Choose your profile(s):</p>
-                <div className="flex flex-wrap gap-4">
-                  <label className="flex items-center">
-                    <input
-                      type="checkbox"
-                      name="Farmer"
-                      checked={profiles.Farmer}
-                      onChange={handleProfileChange}
-                      className="form-checkbox text-blue-600"
-                    />
-                    <span className="ml-2">Farmer</span>
-                  </label>
-                  <label className="flex items-center">
-                    <input
-                      type="checkbox"
-                      name="Consumer"
-                      checked={profiles.Consumer}
-                      onChange={handleProfileChange}
-                      className="form-checkbox text-blue-600"
-                    />
-                    <span className="ml-2">Consumer</span>
-                  </label>
-                  <label className="flex items-center">
-                    <input
-                      type="checkbox"
-                      name="Logistics"
-                      checked={profiles.Logistics}
-                      onChange={handleProfileChange}
-                      className="form-checkbox text-blue-600"
-                    />
-                    <span className="ml-2">Logistics</span>
-                  </label>
-                  <label className="flex items-center">
-                    <input
-                      type="checkbox"
-                      name="Partner"
-                      checked={profiles.Partner}
-                      onChange={handleProfileChange}
-                      className="form-checkbox text-farmersmartLightGreen"
-                    />
-                    <span className="ml-2">Partner</span>
-                  </label>
-                </div>
-              </div> */}
-
               {/* Submit Button */}
               <div className="flex justify-center">
-                <Link to='/select_profile'>
+                {/* <Link to='/select_profile'> */}
                   <button
                     type="submit"
                     className="bg-farmersmartDarkGreen text-white text-xl font-semibold py-2 px-8 rounded-full mt-4"
@@ -291,7 +317,7 @@ const Signup = () => {
                   >
                     Sign Up
                   </button>
-                </Link>
+                {/* </Link> */}
                 
               </div>
             </form>
