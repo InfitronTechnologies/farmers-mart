@@ -24,6 +24,7 @@ const Signup = () => {
   const [passwordMatch, setPasswordMatch] = useState(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);   
+  const [loading, setLoading] = useState(false);  // Loading state
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -49,26 +50,28 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (passwordMatch === false) {
+  
+    if (!passwordMatch) {
       setError("Passwords do not match");
       return;
     }
+  
+    setLoading(true);  // Start loading
     try {
-      // Make the API request using Axios
       const response = await axios.post('https://ourservicestech.com.ng/farmmart_api/v2/account/create_account', formData);
-      
+  
       if (response.status === 201) {
-        // Handle successful signup
         setSuccess(true);
         setError('');
-        console.log('true')
-        // Redirect or perform other actions on success
+        // Handle redirect or further actions on success
       }
     } catch (error) {
-      // Handle errors, such as API validation errors or network issues
       setError(error.response?.data?.message || 'Something went wrong');
+    } finally {
+      setLoading(false);  // End loading
     }
   };
+  
 
   return (
     <div>
@@ -173,6 +176,9 @@ const Signup = () => {
           </div>
           <div className="relative w-full max-w-lg bg-farmersmartPaleGreen p-8 rounded-3xl shadow-lg mt-20 text-white">
             <h2 className="text-4xl font-extrabold mb-6 text-center text-black">Sign Up</h2>
+
+            {error && <p className="text-red-600">{error}</p>}
+            {success && <p className="text-green-600">Signup successful!</p>}
 
             {/* Form */}
             <form onSubmit={handleSubmit} className='text-center'>
@@ -309,16 +315,13 @@ const Signup = () => {
 
               {/* Submit Button */}
               <div className="flex justify-center">
-                {/* <Link to='/select_profile'> */}
-                  <button
-                    type="submit"
-                    className="bg-farmersmartDarkGreen text-white text-xl font-semibold py-2 px-8 rounded-full mt-4"
-                    disabled={passwordMatch === false}
-                  >
-                    Sign Up
-                  </button>
-                {/* </Link> */}
-                
+                <button
+                  type="submit"
+                  className="bg-farmersmartDarkGreen text-white text-xl font-semibold py-2 px-8 rounded-full mt-4"
+                  disabled={!passwordMatch || loading}  // Disable button during loading or if passwords don't match
+                >
+                  {loading ? 'Signing Up...' : 'Sign Up'}
+                </button>                
               </div>
             </form>
           </div>
