@@ -39,8 +39,11 @@ const Signup = () => {
 
   // Function to handle password input
   const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
+    const password = e.target.value;
+    setFormData({ ...formData, password });
+    setPasswordMatch(password === confirmPassword);
   };
+  
 
   // Function to handle confirm password and check if they match
   const handleConfirmPasswordChange = (e) => {
@@ -60,8 +63,9 @@ const Signup = () => {
     try {
       const response = await axios.post('https://ourservicestech.com.ng/farmmart_api/v2/account/create_account', formData);
   
-      if (response.status === 201) {
+      if (response.status === 200) {
         setSuccess(true);
+        console.log(response.data)
         setError('');
         // Handle redirect or further actions on success
       }
@@ -290,8 +294,6 @@ const Signup = () => {
                 </div>
 
               </div>
-
-
 
               {/* Confirm Password Field */}
               <div className="mb-4">
