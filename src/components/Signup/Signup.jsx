@@ -1,32 +1,51 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import logo from '../../assets/farmersmartlogo.png'
 import MenuIcon from '@mui/icons-material/Menu';
 import bgImage from '../../assets/login-bg.png'
 import Footer from '../LandingPage/Footer';
-import { nigerianStates } from '../../constants/constant';
-import { AlternateEmail, Person, Person2, Visibility } from '@mui/icons-material';
+import { AlternateEmail, Person, Phone, Visibility } from '@mui/icons-material';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    firstname: '',
-    lastname: '',
-    othername: '',
-    phone: '',
-    stateId: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
+	users_fn 			:  "",
+	users_ln 			:  "",
+	users_on 			:  "",
+	users_phone 		:  "",
+	users_email 		:  "",
+	users_password  	:  "",
+	users_retp_password :  "",
+	state_id 			: ""
+
+	});
 
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordMatch, setPasswordMatch] = useState(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);   
-  const [loading, setLoading] = useState(false);  // Loading state
-
+  const [loading, setLoading] = useState(false);
+  const [states, setStates] = useState([])
+  
+  const navigate = useNavigate();  // Hook to navigate between pages
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+
+  useEffect(() => {
+    const apiUrl = process.env.NODE_ENV === 'production' 
+    ? 'https://ourservicestech.com.ng/farmmart_api/v2/select_list_state'
+    : '/farmmart_api/v2/select_list_state';
+
+    const fetchStates = async () => {
+      try {
+        const response = await axios.get('https://ourservicestech.com.ng/farmmart_api/v2/select_list_state'); // Replace with actual endpoint
+        setStates(response.data.data); // Assuming response contains array of states
+      } catch (error) {
+        console.error("Error fetching states", error);
+      }
+    };
+    fetchStates();
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -40,7 +59,6 @@ const Signup = () => {
   // Function to handle password input
   const handlePasswordChange = (e) => {
     const password = e.target.value;
-    setFormData({ ...formData, password });
     setPasswordMatch(password === confirmPassword);
   };
   
@@ -48,34 +66,49 @@ const Signup = () => {
   // Function to handle confirm password and check if they match
   const handleConfirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
-    setPasswordMatch(e.target.value === formData.password);
+    setPasswordMatch(e.target.value === formData.users_password);
+    setFormData({ ...formData, users_retp_password: e.target.value });
+
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!passwordMatch) {
-      setError("Passwords do not match");
+      setError('Passwords do not match');
       return;
     }
-  
-    setLoading(true);  // Start loading
+
+    const apiUrl = process.env.NODE_ENV === 'production' 
+      ? 'https://ourservicestech.com.ng/farmmart_api/v2/account/create_account'
+      : '/farmmart_api/v2/account/create_account';
+
+    setLoading(true);
     try {
-      const response = await axios.post('https://ourservicestech.com.ng/farmmart_api/v2/account/create_account', formData);
-  
-      if (response.status === 200) {
-        setSuccess(true);
-        console.log(response.data)
-        setError('');
-        // Handle redirect or further actions on success
+      const response = await axios.post(apiUrl, formData);
+
+      // Extract JSON portion from the response
+      const responseDataString = response.data;
+      const jsonStartIndex = responseDataString.lastIndexOf('{');
+      const jsonResponseString = responseDataString.slice(jsonStartIndex);
+
+      const jsonResponse = JSON.parse(jsonResponseString); // Parse the JSON portion
+
+      if (jsonResponse.status === 1) {
+        localStorage.setItem("userId", jsonResponse.users_id);
+        console.log("User ID:", jsonResponse.users_id);
+
+        navigate('/account-activation');
+      } else {
+        setError(jsonResponse.message || 'Signup failed');
       }
     } catch (error) {
       setError(error.response?.data?.message || 'Something went wrong');
     } finally {
-      setLoading(false);  // End loading
+      setLoading(false);
     }
   };
-  
+ 
 
   return (
     <div>
@@ -191,10 +224,10 @@ const Signup = () => {
                   <input
                     className="w-full md:w-4/5 px-4 py-2 pr-16 border-2 border-farmersmartDarkGreen rounded-3xl text-black font-medium bg-white focus:outline-none"
                     type="text"
-                    id="firstname"
-                    name="firstname"
+                    id="users_fn"
+                    name="users_fn"
                     placeholder="First Name"
-                    value={formData.firstname}
+                    value={formData.users_fn }
                     onChange={handleChange}
                     required
                   />
@@ -209,10 +242,10 @@ const Signup = () => {
                   <input
                     className="w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-black font-medium bg-white focus:outline-none"
                     type="text"
-                    id="lastname"
-                    name="lastname"
+                    id="users_ln"
+                    name="users_ln"
                     placeholder="Last Name"
-                    value={formData.lastname}
+                    value={formData.users_ln}
                     onChange={handleChange}
                     required
                   />
@@ -227,10 +260,10 @@ const Signup = () => {
                   <input
                     className="w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-black font-medium bg-white focus:outline-none"
                     type="text"
-                    id="othername"
-                    name="othername"
+                    id="users_on"
+                    name="users_on"
                     placeholder="Other Name"
-                    value={formData.othername}
+                    value={formData.users_on}
                     onChange={handleChange}
                     required
                   />
@@ -239,6 +272,25 @@ const Signup = () => {
                   </span>
                 </div>
               </div>
+
+              <div className="mb-4">
+                <div className='relative'>
+                  <input
+                    className="w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-black font-medium bg-white focus:outline-none"
+                    type="tel"
+                    id="users_phone"
+                    name="users_phone"
+                    placeholder="Phone Number"
+                    value={formData.users_phone}
+                    onChange={handleChange}
+                    required
+                  />
+                  <span className="absolute inset-y-0 right-4 top-2 md:right-16 md:top-2">
+                    <Phone className='text-black' />
+                  </span>
+                </div>
+              </div>
+
 
               <div className="mb-4">
                 <div className='relative'>
@@ -250,8 +302,8 @@ const Signup = () => {
                     required
                   >
                     <option value="">Select State</option>
-                    {nigerianStates.map((state) => (
-                      <option key={state.id} value={state.id}>{state.state}</option>
+                    {states.map((state) => (
+                      <option key={state.id} value={state.id}>{state.state_name}</option>
                     ))}
                   </select>
                 </div>
@@ -262,10 +314,10 @@ const Signup = () => {
                   <input
                     className="w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-black font-medium bg-white focus:outline-none"
                     type="email"
-                    id="email"
-                    name="email"
+                    id="users_email"
+                    name="users_email"
                     placeholder="Email"
-                    value={formData.email}
+                    value={formData.users_email}
                     onChange={handleChange}
                     required
                   />
@@ -281,10 +333,10 @@ const Signup = () => {
                   <input
                     className="w-full md:w-4/5 px-4 py-2 pr-16 border-2 border-farmersmartDarkGreen rounded-3xl text-black font-medium bg-white focus:outline-none"
                     type="password"
-                    id="password"
-                    name="password"
+                    id="users_password"
+                    name="users_password"
                     placeholder="Password"
-                    value={formData.password}
+                    value={formData.users_password}
                     onChange={handleChange}
                     required
                  />
@@ -303,9 +355,9 @@ const Signup = () => {
                       ${passwordMatch === false ? 'border-2 border-red-600' : ''} 
                       ${passwordMatch === true ? 'border-2 border-green-600' : ''}`}
                     type="password"
-                    id="confirmPassword"
+                    id="users_retp_password"
                     placeholder="Confirm password"
-                    value={confirmPassword}
+                    value={formData.users_retp_password}
                     onChange={handleConfirmPasswordChange}
                     required
                   />

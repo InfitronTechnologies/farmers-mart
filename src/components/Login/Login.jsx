@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import logo from '../../assets/farmersmartlogo.png'
 import bgImage from '../../assets/login-bg.png'
 import {Menu, Visibility, Person} from '@mui/icons-material';
@@ -8,18 +9,87 @@ import Footer from '../LandingPage/Footer';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   }
 
-  // Handle form submission
-  const handleSubmit = (e) => {
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const loginData = {
+  //     email,
+  //     password,
+  //   };
+
+  //   const apiUrl = process.env.NODE_ENV === 'production'
+  //     ? 'https://yourProductionUrl.com/farmmart_api/v2/account/login_account'
+  //     : '/farmmart_api/v2/account/login_account';
+
+  //   try {
+  //     const response = await axios.post(apiUrl, loginData);
+
+  //     // Check if login was successful by status or a field in response
+  //     if (response.data.status === 1) {
+  //       // Store user ID, token, and profile information in localStorage
+  //       const { id, users_token, profile } = response.data.data;
+  //       console.log(profile)
+        
+  //       localStorage.setItem("userId", id);
+  //       localStorage.setItem("userToken", users_token);
+  //       localStorage.setItem("selectedProfiles", JSON.stringify(profile));
+
+  //       // Navigate to the user dashboard or home
+  //       navigate('/user');
+  //     } else {
+  //       setError('Invalid email or password');
+  //     }
+  //   } catch (err) {
+  //     setError(err.response?.data?.message || 'Login failed. Please try again.');
+  //   }
+  // };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Email:', email, 'Password:', password);
+  
+    const loginData = {
+      email,
+      password,
+    };
+  
+    const apiUrl = process.env.NODE_ENV === 'production'
+      ? 'https://yourProductionUrl.com/farmmart_api/v2/account/login_account'
+      : '/farmmart_api/v2/account/login_account';
+  
+    try {
+      const response = await axios.post(apiUrl, loginData);
+  
+      if (response.data.status === 1) {
+        const { id, users_token, profile } = response.data.data;
+  
+        // Store user information in localStorage
+        localStorage.setItem("userId", id);
+        localStorage.setItem("userToken", users_token);
+        localStorage.setItem("selectedProfiles", JSON.stringify(profile));
+
+
+        console.log(localStorage.getItem("selectedProfiles"))
+  
+        // Navigate to the user dashboard or home
+        // navigate('/user', {setSelectedProfiles: profile});
+        navigate('/user', { state: { selectedProfiles: profile } });
+      } else {
+        setError('Invalid email or password');
+      }
+    } catch (err) {
+      console.error('Login error:', err);
+      setError(err.response?.data?.message || 'Login failed. Please try again.');
+    }
   };
+  
 
   return (
     <div>
@@ -124,6 +194,13 @@ const Login = () => {
         </div>
         <div className=" relative w-full max-w-md mt-8 py-12 bg-farmersmartPaleGreen p-8 rounded-3xl shadow-lg">
           <h2 className="text-4xl font-extrabold mb-6 text-center text-black">LOGIN</h2>
+
+          {error && (
+            <div className="text-center text-red-600 font-semibold my-4">
+              {error}
+            </div>
+          )}
+
           {/* Login Form */}
           <form onSubmit={handleSubmit}>
             {/* Email Input */}
@@ -168,9 +245,7 @@ const Login = () => {
                 type="submit"
                 className="bg-farmersmartDarkGreen text-white text-xl font-semibold py-3 px-10 rounded-full"
               >
-                <Link to='/user'>
                   Log In
-                </Link>
               </button>
             </div>
           </form>

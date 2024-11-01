@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Sidebar } from "flowbite-react";
 import { Agriculture, Dashboard, Handshake, LocalShipping, Login, Logout, Menu, Person, Person2, ShoppingBag, Storefront, SupportAgent } from '@mui/icons-material';
-import { Link, Route, Routes } from "react-router-dom";
+import { Link, Route, Routes, useLocation } from "react-router-dom";
 import UserOverview from './UserOverview/UserOverview';
 import ProfileOverview from './Profile/ProfileOverview';
 import BankDetails from './Profile/BankDetails';
@@ -25,13 +25,26 @@ import PartnerServiceUpload from "./PartnerMenu/PartnerServiceUpload";
 
 function SideBar() {
   const [collapsed, setCollapsed] = useState(false);
-
   const [products, setProducts] = useState([]);
+  const location = useLocation();
+  const [selectedProfiles, setSelectedProfiles] = useState(location.state?.selectedProfiles || []);
 
   const addProduct = (product) => {
     setProducts([...products, product]);
   };
-
+  
+  useEffect(() => {
+      if (selectedProfiles.length > 0) {
+          localStorage.setItem("selectedProfiles", JSON.stringify(selectedProfiles));
+      } else {
+          // Fallback to retrieve from localStorage if navigated without state
+          const storedProfiles = JSON.parse(localStorage.getItem("selectedProfiles"));
+          if (storedProfiles) {
+              setSelectedProfiles(storedProfiles);
+          }
+      }
+      console.log("Selected Profiles:", selectedProfiles);
+  }, [selectedProfiles]);
   return (
     <div className="">
       <Menu className="fixed mb-8" onClick={() => setCollapsed(!collapsed)} />
@@ -56,29 +69,37 @@ function SideBar() {
                 </Sidebar.Item>
               </Sidebar.ItemGroup>
               <Sidebar.ItemGroup>              
+               {(selectedProfiles.farmer  == "1")&&(
                 <Sidebar.Collapse icon={Agriculture} label="Farmer">
                   <Sidebar.Item href="/user/farm-dashboard">Dashboard </Sidebar.Item>
                   <Sidebar.Item href="/user/farm">Farm Management </Sidebar.Item>
                   <Sidebar.Item href="#">Available Produces </Sidebar.Item>
                   <Sidebar.Item href="#">Orders </Sidebar.Item>
                 </Sidebar.Collapse>
+                )}
+                {(selectedProfiles.buyer  == "1") &&(
                 <Sidebar.Collapse icon={ShoppingBag} label="Buyer">
                   <Sidebar.Item href="/user/buyer">Dashboard </Sidebar.Item>
                   <Sidebar.Item href="/user/buyer/orders">Orders </Sidebar.Item>
                   <Sidebar.Item href="/user/buyer/farmers-profile">Farmers Profile </Sidebar.Item>
                 </Sidebar.Collapse>
+                )}
+                {(selectedProfiles.logistic  == "1") &&(
                 <Sidebar.Collapse icon={LocalShipping} label="Logistics">
                   <Sidebar.Item href="/user/logistics">Dashboard </Sidebar.Item>
                   <Sidebar.Item href="/user/logistics/orders">Order Management </Sidebar.Item>
                   <Sidebar.Item href="/user/logistics/revenue">Revenue </Sidebar.Item>
                   <Sidebar.Item href="/user/logistics/insurance"> Insurance Cases </Sidebar.Item>
                 </Sidebar.Collapse>
+                )}
+                {(selectedProfiles.partner  == "1") &&(
                 <Sidebar.Collapse icon={Handshake} label="Partner">
                   <Sidebar.Item href="/user/partner"> Dashboard </Sidebar.Item>
                   <Sidebar.Item href="/user/partner/services"> Services </Sidebar.Item>
                   <Sidebar.Item href="/user/partner/add-service"> Add Services </Sidebar.Item>
                   <Sidebar.Item href="/user/partner/offers"> Farmer Offers</Sidebar.Item>
                 </Sidebar.Collapse>
+                )}
               </Sidebar.ItemGroup>
               <Sidebar.ItemGroup>
                 <Sidebar.Collapse icon={Person} label="Profile">
@@ -90,7 +111,7 @@ function SideBar() {
                 <Sidebar.Item href="#" icon={SupportAgent}>
                   Customer Support
                 </Sidebar.Item>
-                <Sidebar.Item href="/" icon={Logout}>
+                <Sidebar.Item href="/login" onClick={localStorage.clear()} icon={Logout}>
                   Logout
                 </Sidebar.Item>
               </Sidebar.ItemGroup>

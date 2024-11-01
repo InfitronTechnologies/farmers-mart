@@ -13,6 +13,7 @@ import ProductDetails from './components/Marketplace/ProductDetails'
 import Cart from './components/Marketplace/Cart'
 import ProfileSelection from './components/Validation/ProfileSelection'
 import ProfileCompletion from './components/Validation/ProfileCompletion'
+import AccountActivation from './components/Validation/AccountActivation';
 
 function App() {
   const location = useLocation();
@@ -22,9 +23,9 @@ function App() {
   });
 
   // Save cart to localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  }, [cartItems]);
+  // useEffect(() => {
+  //   localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  // }, [cartItems]);
 
   const addToCart = (product, quantity) => {
     const existingItem = cartItems.find((item) => item.id === product.id);
@@ -37,7 +38,6 @@ function App() {
       setCartItems([...cartItems, { ...product, quantity }]);
     }
   };
-  console.log(cartItems)
   
   return (
     <div className='font-roboto'>
@@ -51,9 +51,10 @@ function App() {
         <Route path='/updates' element={<News/>}/>
         <Route path='/faq' element={<Faq/>}/>
         <Route path='/marketplace' element={<Marketplace addToCart={addToCart} cartItems={cartItems}/>}/>
-        <Route path="/products/:id" element={<ProductDetails addToCart={addToCart}/>} />
+        {/* <Route path="/products/:id" element={<ProductDetails addToCart={addToCart}/>} /> */}
         <Route path='/cart' element={<Cart cartItems={cartItems}/>}/>
         <Route path='/select_profile' element={<ProfileCompletion/>}/>
+        <Route path="/account-activation" element={<AccountActivation />} />
       </Routes>
     </div>
   )
