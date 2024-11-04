@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useProfile } from '../ProfileContext/ProfileContext';
 import axios from 'axios';
 import logo from '../../assets/farmersmartlogo.png'
 import bgImage from '../../assets/login-bg.png'
@@ -12,6 +13,7 @@ const Login = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const {setSelectedProfiles, setUserId, setUserToken, setUserEmail}  = useProfile()
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -61,32 +63,29 @@ const Login = () => {
     };
   
     const apiUrl = process.env.NODE_ENV === 'production'
-      ? 'https://yourProductionUrl.com/farmmart_api/v2/account/login_account'
+      ? 'https://ourservicestech.com.ng/farmmart_api/v2/account/login_account'
       : '/farmmart_api/v2/account/login_account';
   
     try {
       const response = await axios.post(apiUrl, loginData);
   
       if (response.data.status === 1) {
-        const { id, users_token, profile } = response.data.data;
+        const { id, users_token, profile, users_email } = response.data.data;
   
         // Store user information in localStorage
-        localStorage.setItem("userId", id);
-        localStorage.setItem("userToken", users_token);
-        localStorage.setItem("selectedProfiles", JSON.stringify(profile));
+        setUserId(id)
+        setUserToken(users_token)
+        setUserEmail(users_email)
+        setSelectedProfiles(profile);
 
-
-        console.log(localStorage.getItem("selectedProfiles"))
-  
         // Navigate to the user dashboard or home
-        // navigate('/user', {setSelectedProfiles: profile});
         navigate('/user', { state: { selectedProfiles: profile } });
       } else {
         setError('Invalid email or password');
       }
     } catch (err) {
       console.error('Login error:', err);
-      setError(err.response?.data?.message || 'Login failed. Please try again.');
+      setError('Invalid email or password' || 'Login failed. Please try again.');
     }
   };
   
@@ -241,12 +240,17 @@ const Login = () => {
 
             {/* Submit Button */}
             <div className="flex justify-center mt-8">
-              <button
-                type="submit"
-                className="bg-farmersmartDarkGreen text-white text-xl font-semibold py-3 px-10 rounded-full"
-              >
-                  Log In
-              </button>
+              <div>
+                <button
+                  type="submit"
+                  className="bg-farmersmartDarkGreen text-white text-xl font-semibold py-3 px-10 rounded-full"
+                >
+                    Log In
+                </button>
+                <Link to='/forgot_password'>
+                  <p className="text-farmersmartDarkGreen underline mt-2 mx-auto">Forgot Password</p>                
+                </Link>
+              </div>
             </div>
           </form>
         </div>

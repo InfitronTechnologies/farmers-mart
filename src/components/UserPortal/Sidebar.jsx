@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Sidebar } from "flowbite-react";
+import { useProfile } from "../ProfileContext/ProfileContext";
 import { Agriculture, Dashboard, Handshake, LocalShipping, Login, Logout, Menu, Person, Person2, ShoppingBag, Storefront, SupportAgent } from '@mui/icons-material';
 import { Link, Route, Routes, useLocation } from "react-router-dom";
 import UserOverview from './UserOverview/UserOverview';
@@ -27,24 +28,25 @@ function SideBar() {
   const [collapsed, setCollapsed] = useState(false);
   const [products, setProducts] = useState([]);
   const location = useLocation();
-  const [selectedProfiles, setSelectedProfiles] = useState(location.state?.selectedProfiles || []);
+  const {selectedProfiles} = useProfile()
 
   const addProduct = (product) => {
     setProducts([...products, product]);
   };
   
-  useEffect(() => {
-      if (selectedProfiles.length > 0) {
-          localStorage.setItem("selectedProfiles", JSON.stringify(selectedProfiles));
-      } else {
-          // Fallback to retrieve from localStorage if navigated without state
-          const storedProfiles = JSON.parse(localStorage.getItem("selectedProfiles"));
-          if (storedProfiles) {
-              setSelectedProfiles(storedProfiles);
-          }
-      }
-      console.log("Selected Profiles:", selectedProfiles);
-  }, [selectedProfiles]);
+  // useEffect(() => {
+  //     if (selectedProfiles.length > 0) {
+  //         localStorage.setItem("selectedProfiles", JSON.stringify(selectedProfiles));
+  //     } else {
+  //         // Fallback to retrieve from localStorage if navigated without state
+  //         const storedProfiles = JSON.parse(localStorage.getItem("selectedProfiles"));
+  //         if (storedProfiles) {
+  //             setSelectedProfiles(storedProfiles);
+  //         }
+  //     }
+  //     console.log("Selected Profiles:", selectedProfiles);
+  // }, [selectedProfiles]);
+
   return (
     <div className="">
       <Menu className="fixed mb-8" onClick={() => setCollapsed(!collapsed)} />
