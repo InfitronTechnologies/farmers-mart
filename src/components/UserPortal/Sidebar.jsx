@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Sidebar } from "flowbite-react";
 import { useProfile } from "../ProfileContext/ProfileContext";
-import { Agriculture, Dashboard, Handshake, LocalShipping, Login, Logout, Menu, Person, Person2, ShoppingBag, Storefront, SupportAgent } from '@mui/icons-material';
+import { Agriculture, Dashboard, Handshake, LocalShipping, Login, Logout, Menu, Person, Person2, ShoppingBag, Storefront, SupportAgent, Forum } from '@mui/icons-material';
 import { Link, Route, Routes, useLocation } from "react-router-dom";
 import UserOverview from './UserOverview/UserOverview';
 import ProfileOverview from './Profile/ProfileOverview';
@@ -23,6 +23,7 @@ import FarmerProfiles from "./ConsumerMenu/FarmersProfile";
 import Orders from "./ConsumerMenu/Orders";
 import ConsumerDashboard from "./ConsumerMenu/ConsumerDashboard";
 import PartnerServiceUpload from "./PartnerMenu/PartnerServiceUpload";
+import UserForum from "./UserForum/UserForum";
 
 function SideBar() {
   const [collapsed, setCollapsed] = useState(false);
@@ -113,6 +114,10 @@ function SideBar() {
                 <Sidebar.Item href="#" icon={SupportAgent}>
                   Customer Support
                 </Sidebar.Item>
+                <Sidebar.Item href="/user/forum" icon={Forum}>
+                  Forum
+                </Sidebar.Item>
+
                 <Sidebar.Item href="/login" onClick={localStorage.clear()} icon={Logout}>
                   Logout
                 </Sidebar.Item>
@@ -142,6 +147,7 @@ function SideBar() {
             <Route path='buyer/' element={<ConsumerDashboard/>} /> 
             <Route path='buyer/orders' element={<Orders/>} /> 
             <Route path='buyer/farmers-profile' element={<FarmerProfiles/>} /> 
+            <Route path='forum' element={<UserForum/>} />
           </Routes>  
         </div>
       </div> 

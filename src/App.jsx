@@ -60,8 +60,11 @@ function App() {
         <Route path='/faq' element={<Faq/>}/>
         <Route path='/marketplace' element={<Marketplace addToCart={addToCart} cartItems={cartItems}/>}/>
         <Route path='/cart' element={<Cart cartItems={cartItems}/>}/>
-        <Route path='/select_profile' element={<ProfileCompletion/>}/>
+        <Route path='/select_profile' element={<ProfileSelection/>}/>
         <Route path="/account-activation" element={<AccountActivation />} />
+        <Route path='/products/:id'  element={<ProductDetails/>} 
+        
+/>
       </Routes>
     </div>
   )

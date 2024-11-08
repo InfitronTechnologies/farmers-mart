@@ -38,7 +38,7 @@ function Deals() {
           <div className="relative rounded-lg bg-white shadow-lg flex flex-col">
             <div className="flex flex-row justify-between items-center text-sm p-2">
               <p>Top Ranking</p>
-              <button className="bg-farmersmartOrange py-1 px-3 rounded-lg">
+              <button className="bg-farmersmartOrange text-white font-semibold py-1 px-3 rounded-lg">
                 Check out!
               </button>
             </div>
@@ -71,7 +71,7 @@ function Deals() {
           <div className="relative rounded-lg bg-white shadow-lg flex flex-col">
             <div className="flex flex-row justify-between items-center text-sm p-2">
               <p>Deals on best sellers</p>
-              <button className="bg-farmersmartOrange py-1 px-3 rounded-lg">
+              <button className="bg-farmersmartOrange text-white font-semibold py-1 px-3 rounded-lg">
                 Check out!
               </button>
             </div>
@@ -82,7 +82,11 @@ function Deals() {
                   alt="Potatoes"
                   className="w-full h-48 object-cover rounded-lg"
                 />
-                <span className='absolute left-0 top-0 px-4 py-2 bg-orange-400 font-bold text-white rounded-full m-2 text-lg'>10% OFF</span>
+                <span className='absolute left-0 top-0 px-4 py-2 font-bold bg-[#fa7d22] text-white rounded-full m-2 text-lg'
+                style={{backgroundColor: "rgba(250, 125, 34, 1)"}}
+                >
+                  10% OFF
+                </span>
               </div>
               <div className="grid grid-cols-2 gap-1">
                 <div className="space-y-1">
@@ -110,7 +114,7 @@ function Deals() {
           <div className="rounded-lg bg-white shadow-lg flex flex-col">
             <div className="flex flex-row justify-between items-center text-sm p-2">
               <p>Top Deals</p>
-              <button className="bg-farmersmartOrange py-1 px-3 rounded-lg">
+              <button className="bg-farmersmartOrange text-white font-semibold py-1 px-3 rounded-lg">
                 Check out!
               </button>
             </div>

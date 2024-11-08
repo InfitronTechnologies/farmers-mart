@@ -57,9 +57,9 @@ const ProductCard = ({ product }) => {
           alt={product.name}
           className="relative w-full h-40 object-cover mb-4 rounded-t-2xl"
         />
-        <button className="absolute right-4 bottom-1 text-gray-400 hover:text-gray-600">
+        {/* <button className="absolute right-4 bottom-1 text-gray-400 hover:text-gray-600">
           <FavoriteBorderOutlined />
-        </button>
+        </button> */}
       </div>
 
       <div className="p-4">

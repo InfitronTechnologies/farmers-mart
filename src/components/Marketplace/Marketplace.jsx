@@ -140,7 +140,7 @@ const Marketplace = ({ addToCart, cartItems }) => {
           <div
             className={`${
               isSidebarVisible ? 'translate-x-0' : '-translate-x-full'
-            } fixed lg:relative left-0 top-20 md:top-0 z-20 h-full w-64 bg-[#E3F8B1] p-4 rounded-xl`}
+            } fixed lg:relative left-0 top-20 md:top-0 z-20 h-full w-64 bg-[#c1e84991] p-4 rounded-xl`}
           >
             <div className="space-y-8">
               <CategoryFilter setFilteredProducts={setFilteredProducts} />
@@ -152,7 +152,7 @@ const Marketplace = ({ addToCart, cartItems }) => {
           {/* Main content - Takes full width when sidebar is hidden */}
           <div
             className={`${
-              isSidebarVisible ? 'lg:w-3/4' : 'w-full'} bg-[#E3F8B1] p-4 rounded-xl`}
+              isSidebarVisible ? 'lg:w-3/4' : 'w-full'} bg-[#c1e84991] p-4 rounded-xl`}
           >
             {/* Sorting Bar */}
             <div className="flex flex-col md:flex-row justify-between items-center mb-6">
