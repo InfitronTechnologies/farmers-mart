@@ -55,7 +55,7 @@ import logo from '../../assets/farmersmartlogo.png';
 
 const MarketNav = () => {
   return (
-    <Navbar fluid rounded className="bg-[#dabe78] p-4 shadow-md">
+    <Navbar fluid rounded className="bg-[#0B2B17] p-4 shadow-md">
       {/* Left Section - Logo */}
       <Navbar.Brand href="/">
         <img src={logo} className="mr-3 h-8 sm:h-10" alt="Farmers Mart Logo" />
