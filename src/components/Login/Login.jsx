@@ -3,8 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useProfile } from '../ProfileContext/ProfileContext';
 import axios from 'axios';
 import logo from '../../assets/farmersmartlogo.png'
-import bgImage from '../../assets/login-bg.png'
-import {Menu, Visibility, Person} from '@mui/icons-material';
+import bgImage from '../../assets/bg-login.png'
+import {Menu, Visibility} from '@mui/icons-material';
 import Footer from '../LandingPage/Footer';
 
 const Login = () => {
@@ -18,41 +18,6 @@ const Login = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   }
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   const loginData = {
-  //     email,
-  //     password,
-  //   };
-
-  //   const apiUrl = process.env.NODE_ENV === 'production'
-  //     ? 'https://yourProductionUrl.com/farmmart_api/v2/account/login_account'
-  //     : '/farmmart_api/v2/account/login_account';
-
-  //   try {
-  //     const response = await axios.post(apiUrl, loginData);
-
-  //     // Check if login was successful by status or a field in response
-  //     if (response.data.status === 1) {
-  //       // Store user ID, token, and profile information in localStorage
-  //       const { id, users_token, profile } = response.data.data;
-  //       console.log(profile)
-        
-  //       localStorage.setItem("userId", id);
-  //       localStorage.setItem("userToken", users_token);
-  //       localStorage.setItem("selectedProfiles", JSON.stringify(profile));
-
-  //       // Navigate to the user dashboard or home
-  //       navigate('/user');
-  //     } else {
-  //       setError('Invalid email or password');
-  //     }
-  //   } catch (err) {
-  //     setError(err.response?.data?.message || 'Login failed. Please try again.');
-  //   }
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -92,15 +57,15 @@ const Login = () => {
 
   return (
     <div>
-      <nav className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 bg-farmersmartYellow`}>    
-        <div className='container py-2 relative md:w-4/5 mx-auto'>
-          <div className='flex justify-between items-center'>
-            <div className='flex items-center w-2/5 md:w-1/5'>
+      <nav className={`fixed justify-between top-0 left-0 w-full z-50  transition-colors duration-300 bg-transparent`}>    
+        <div className='container py-2 relative w-full'>
+          <div className='flex justify-between w-full'>
+            <div className='flex flex-1 items-center w-2/5 md:w-1/5'>
               <Link to='/'>
                 <img src={logo} alt="" />
               </Link>
             </div>
-            <div className='hidden lg:flex justify-between w-4/5 space-x-12 items-center'>
+            <div className='hidden lg:flex justify-between w-4/5 space-x-12 items-center mt-4'>
               <div className='flex flex-row text-sm md:ml-12 text-white font-semibold'>
                 <div className='mx-4 hover:cursor-pointer'>
                   <Link to='/about'>
@@ -123,13 +88,13 @@ const Login = () => {
                   </Link>
                 </div>
               </div>
-              <div className='flex flex-row items-center font-semibold'>
-                <div className='mr-4 p-2 hover:cursor-pointer border-2 text-farmersmartDarkGreen border-farmersmartYellow rounded-3xl md:hover:text-farmersmartGreen'>
+              <div className='flex flex-row flex-1 justify-end items-center font-semibold mt-4'>
+                <div className='mr-4 py-2 px-4 hover:cursor-pointer border-2 text-farmersmartDarkGreen border-farmersmartYellow rounded-3xl md:hover:text-farmersmartGreen'>
                   <Link to='/login'>
                       LOGIN
                   </Link>
                 </div>
-                <div className='mr-4 px-4 py-2 border-2 hover:cursor-pointer text-white border-farmersmartDarkGreen bg-farmersmartDarkGreen rounded-3xl
+                <div className='px-4 py-2 border-2 hover:cursor-pointer text-white border-farmersmartDarkGreen bg-farmersmartDarkGreen rounded-3xl
                     md:hover:text-neutral-300'>
                   <Link to='/signup'>
                       <p className=''> SIGN UP</p>
@@ -184,75 +149,115 @@ const Login = () => {
           </div>
         )}
       </div>
-    </nav>
+      </nav>
       <div className="relative flex items-center justify-center bg-neutral-200 text-white py-24 md:py-36">
-        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-[#ebf9ab] h-full"
           style={{
-          backgroundImage: `url(${bgImage})`
-          }}>
-        </div>
-        <div className=" relative w-full max-w-md mt-8 py-12 bg-farmersmartPaleGreen p-8 rounded-3xl shadow-lg">
-          <h2 className="text-4xl font-extrabold mb-6 text-center text-black">LOGIN</h2>
+            backgroundImage: `url(${bgImage})`,
+          }}
+        ></div>
 
-          {error && (
-            <div className="text-center text-red-600 font-semibold my-4">
-              {error}
-            </div>
-          )}
+        <div className="relative flex flex-col md:flex-row w-full mt-8 px-4 md:px-0">
+          <div className="w-full md:w-1/2 my-auto text-center md:text-left md:ml-16">
+            <p
+              className="text-2xl md:text-3xl tracking-wider font-semibold text-yellow-400"
+              style={{ fontFamily: "Montserrat" }}
+            >
+              Welcome to
+            </p>
+            <p
+              className="text-4xl md:text-6xl tracking-wide font-extrabold mt-2 md:mt-4"
+              style={{ fontFamily: "Montserrat" }}
+            >
+              FarmersMart
+            </p>
+          </div>
 
-          {/* Login Form */}
-          <form onSubmit={handleSubmit}>
-            {/* Email Input */}
-            <div className="mb-4 text-center">
-              <div className='relative'>
-                <input
-                  className=" w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-black font-medium bg-white focus:outline-none"
-                  type="email"
-                  id="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-                <span className="absolute inset-y-0 right-4 top-2 md:right-16 md:top-2">
-                  <Person className='text-black'/>
-                </span>
-            </div>
-            </div>
+          <div className="w-full md:w-1/2 mt-8 md:mt-0 flex justify-center">
+            <div className="bg-white p-6 md:p-8 rounded-3xl shadow-lg w-full md:w-3/5">
+              <h2 className="text-3xl md:text-4xl font-extrabold mt-4 mb-6 md:mb-8 text-center text-black">
+                Log In
+              </h2>
 
-            {/* Password Input */}
-            <div className="mb-6 text-center">
-              <div className='relative'>
-                <input
-                  className="w-full md:w-4/5 px-4 py-2 border-2 border-farmersmartDarkGreen rounded-3xl text-black font-medium bg-white focus:outline-none"
-                  type="password"
-                  id="password"
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-                <span className="absolute inset-y-0 right-4 top-2 md:right-16 md:top-2">
-                  <Visibility className='text-black'/>
-                </span>
-              </div>
-            </div>
+              {error && (
+                <div className="text-center text-red-600 font-semibold my-4">
+                  {error}
+                </div>
+              )}
 
-            {/* Submit Button */}
-            <div className="flex justify-center mt-8">
-              <div>
-                <button
-                  type="submit"
-                  className="bg-farmersmartDarkGreen text-white text-xl font-semibold py-3 px-10 rounded-full"
-                >
+              {/* Login Form */}
+              <form onSubmit={handleSubmit}>
+                {/* Email Input */}
+                <div className="mb-4 text-center">
+                  <div className="relative">
+                    <input
+                      className="w-full p-2 border-1 rounded-xl text-black bg-white focus:border-farmersmartDarkGreen 
+                      focus:outline-none focus:ring-0 focus:border-2"
+                      type="email"
+                      id="email"
+                      placeholder="Email address"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Password Input */}
+                <div className="mb-3 text-center">
+                  <div className="relative">
+                    <input
+                      className="w-full p-2 border-1 rounded-xl text-black bg-white focus:border-farmersmartDarkGreen 
+                      focus:outline-none focus:ring-0 focus:border-2"
+                      type="password"
+                      id="password"
+                      placeholder="Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                    <span className="absolute inset-y-0 right-1 top-2">
+                      <Visibility className="text-[#6D6969] text-sm" />
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex flex-col md:flex-row justify-between items-center text-sm mt-2">
+                  <div className="text-black tracking-wide mb-2 md:mb-0">
+                    <input
+                      type="checkbox"
+                      id="remember-me"
+                      className="rounded-sm border-2 mr-1"
+                    />
+                    <label htmlFor="remember-me">Remember me</label>
+                  </div>
+                  <div>
+                    <Link to="/forgot_password">
+                      <p className="text-farmersmartDarkGreen font-medium">
+                        Forgot password?
+                      </p>
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Submit Button */}
+                <div className="flex justify-center mt-8 bg-farmersmartDarkGreen w-full py-4 rounded-3xl">
+                  <button
+                    type="submit"
+                    className="text-white text-xl w-full font-semibold rounded-full"
+                  >
                     Log In
-                </button>
-                <Link to='/forgot_password'>
-                  <p className="text-farmersmartDarkGreen underline mt-2 mx-auto">Forgot Password</p>                
-                </Link>
-              </div>
+                  </button>
+                </div>
+
+                <div className="mt-8 text-black text-center text-lg">
+                  Don’t have an account?{" "}
+                  <Link to='/signup' className="font-medium text-yellow-300">Sign up</Link>
+                </div>
+              </form>
             </div>
-          </form>
+          </div>
         </div>
       </div>
       <Footer/>

@@ -79,8 +79,8 @@ const MarketNav = () => {
           arrowIcon={false}
           inline
           label={
-            <div className=' flex items-center justify-center'>
-              <Person className="text-gray-800 text-2xl cursor-pointer" />
+            <div className=' flex text-white items-center justify-center'>
+              <Person className="text-2xl cursor-pointer" />
               <span className='my-auto ml-2'>Account</span>
             </div>
         }

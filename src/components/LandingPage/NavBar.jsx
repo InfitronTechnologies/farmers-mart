@@ -155,15 +155,15 @@ function NavBar({ bgColor }) {
 
   return (
     <nav className={`fixed top-0 w-full z-50 transition-colors duration-300 ${navBarBgColor} text-white`}>
-      <div className='container py-2 relative'>
-        <div className='flex justify-between items-center'>
-          <div className='flex items-center w-2/5 md:w-1/5'>
+      <div className='container py-2 relative w-full'>
+        <div className='flex justify-between w-full'>
+          <div className='flex flex-1 items-center w-2/5 md:w-1/5'>
             <Link to='/'>
               <img src={logo} alt="Farmersmart logo" />
             </Link>
           </div>
-          <div className='hidden lg:flex justify-between w-4/5 space-x-12 items-center ml-auto'>
-            <div className='flex flex-row text-sm md:ml-12'>
+          <div className='hidden lg:flex justify-between w-4/5 space-x-12 items-center'>
+            <div className='flex flex-row text-sm md:ml-12 font-semibold'>
               <div className='mx-4 hover:cursor-pointer'>
                 <Link to='/about'>
                   About
@@ -185,7 +185,7 @@ function NavBar({ bgColor }) {
                 </Link>
               </div>
             </div>
-            <div className='flex flex-row items-center ml-auto'>
+            <div className='flex flex-row flex-1 justify-end items-center'>
               <div className='mr-4 p-2 hover:cursor-pointer border-2 border-farmersmartYellow rounded-3xl md:hover:text-neutral-300'>
                 <Link to='/login'>
                   <PersonIcon /> SIGN IN

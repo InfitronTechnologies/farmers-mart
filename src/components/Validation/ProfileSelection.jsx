@@ -52,11 +52,12 @@ const ProfileSelection = ({ onNext }) => {
 
       if (response.status === 200) {
         localStorage.setItem("selectedProfiles", JSON.stringify(selectedProfiles));
-        onNext(); // Calls onNext if passed as prop
+        // onNext(); // Calls onNext if passed as prop
         navigate('/login'); // Navigates to the next page
       }
     } catch (err) {
       setError('Failed to create profile. Please try again.');
+      console.error(err.response?.data || err.message);
     }
   };
 
