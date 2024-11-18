@@ -78,7 +78,7 @@ const AccountActivation = () => {
           className='mx-auto w-20'  
         />
         </div>
-        <p className="text-gray-600 mx-auto text-base w-2/3 mt-6 mb-8">Please enter the OTP sent to {localStorage.getItem('userEmail')}</p>
+        <p className="text-gray-600 mx-auto text-base w-2/3 mt-6 mb-8">Please enter the OTP sent to your email</p>
 
         {success && <p className="text-green-600 font-semibold">Your account has been activated!</p>}
         {error && <p className="text-red-500 mb-4">{error}</p>}
@@ -94,7 +94,9 @@ const AccountActivation = () => {
                 onChange={(e) => handleOtpChange(e, index)}
                 onKeyDown={(e) => handleKeyDown(e, index)}
                 maxLength="1"
-                className="w-12 h-12 text-center border border-farmersmartDarkGreen rounded-lg text-xl focus:outline-none focus:border-2 focus:border-farmersmartDarkGreen focus:ring-0"
+                className="w-12 h-12 text-center border-2 border-farmersmartDarkGreen rounded-lg text-xl 
+                          focus:outline-none focus:border-3 focus:border-farmersmartDarkGreen focus:ring-0 
+                          shadow-md shadow-gray-400"
                 required
               />
             ))}
@@ -103,10 +105,11 @@ const AccountActivation = () => {
           <button
             type="submit"
             disabled={loading}
-            className="bg-farmersmartDarkGreen text-white text-xl font-semibold py-3 px-10 rounded-full transition duration-300"
+            className="relative bg-farmersmartDarkGreen text-white text-xl font-semibold 
+            py-3 px-10 rounded-full transition duration-300 w-4/5 mx-auto"
           >
             {loading ? 'Verifying...' : 'Verify'}
-            <EastIcon/>
+            <EastIcon className='absolute right-10'/>
           </button>
         </form>
       </div>

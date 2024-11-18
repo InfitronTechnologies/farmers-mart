@@ -14,6 +14,8 @@ export const ProfileProvider = ({ children }) => {
   const [userId, setUserId] = useState(() => sessionStorage.getItem('userId') || null);
   const [userToken, setUserToken] = useState(() => sessionStorage.getItem('userToken') || null);
   const [userEmail, setUserEmail] = useState(() => sessionStorage.getItem('userEmail') || null);
+  const [userFirstName, setUserFirstName] = useState(() => sessionStorage.getItem('userFirstName') || null);
+  const [userLastName, setUserLastName] = useState(() => sessionStorage.getItem('userLastName') || null);
 
   // Persist data in sessionStorage whenever they change
   useEffect(() => {
@@ -21,6 +23,8 @@ export const ProfileProvider = ({ children }) => {
     if (userId) sessionStorage.setItem('userId', userId);
     if (userToken) sessionStorage.setItem('userToken', userToken);
     if (userEmail) sessionStorage.setItem('userEmail', userEmail);
+    if (userFirstName) sessionStorage.setItem('userFirstName', userFirstName);
+    if (userLastName) sessionStorage.setItem('userLastName', userLastName);
 
   }, [selectedProfiles, userId, userToken, userEmail]);
 
@@ -29,7 +33,9 @@ export const ProfileProvider = ({ children }) => {
     setSelectedProfiles({});
     setUserId(null);
     setUserToken(null);
-    setUserEmail(null)
+    setUserEmail(null);
+    setUserFirstName(null);
+    setUserLastName(null)
     sessionStorage.clear();
   };
 
@@ -44,6 +50,10 @@ export const ProfileProvider = ({ children }) => {
         setUserToken,
         userEmail,
         setUserEmail,
+        userFirstName,
+        setUserFirstName,
+        userLastName,
+        setUserLastName,
         clearProfile,  // Add clearProfile to context
       }}
     >

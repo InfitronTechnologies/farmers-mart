@@ -13,7 +13,7 @@ const Login = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const {setSelectedProfiles, setUserId, setUserToken, setUserEmail}  = useProfile()
+  const {setSelectedProfiles, setUserId, setUserToken, setUserEmail, setUserFirstName, setUserLastName}  = useProfile()
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -35,13 +35,15 @@ const Login = () => {
       const response = await axios.post(apiUrl, loginData);
   
       if (response.data.status === 1) {
-        const { id, users_token, profile, users_email } = response.data.data;
+        const { id, users_token, profile, users_email, users_fn, users_ln } = response.data.data;
   
         // Store user information in localStorage
         setUserId(id)
         setUserToken(users_token)
         setUserEmail(users_email)
-        setSelectedProfiles(profile);
+        setSelectedProfiles(profile)
+        setUserFirstName(users_fn)
+        setUserLastName(users_ln);
 
         // Navigate to the user dashboard or home
         navigate('/user', { state: { selectedProfiles: profile } });
@@ -58,7 +60,7 @@ const Login = () => {
   return (
     <div>
       <nav className={`fixed justify-between top-0 left-0 w-full z-50  transition-colors duration-300 bg-transparent`}>    
-        <div className='container py-2 relative w-full'>
+        <div className='py-2 relative w-full'>
           <div className='flex justify-between w-full'>
             <div className='flex flex-1 items-center w-2/5 md:w-1/5'>
               <Link to='/'>

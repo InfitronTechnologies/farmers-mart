@@ -30,6 +30,7 @@ function SideBar() {
   const [products, setProducts] = useState([]);
   const location = useLocation();
   const {selectedProfiles} = useProfile()
+  const { userFirstName, userLastName } = useProfile();
 
   const addProduct = (product) => {
     setProducts([...products, product]);
@@ -57,7 +58,9 @@ function SideBar() {
             <Sidebar.Items>
               <Sidebar.ItemGroup>
                 <Sidebar.Item href="#">
-                  Adam Adam
+                {userFirstName && userLastName ? (
+                `${userFirstName} ${userLastName}!`) : 
+                (`Welcome, Guest!`)}
                 </Sidebar.Item>
               </Sidebar.ItemGroup>
               <Sidebar.ItemGroup>
