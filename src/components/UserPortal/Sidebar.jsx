@@ -23,14 +23,16 @@ import FarmerProfiles from "./ConsumerMenu/FarmersProfile";
 import Orders from "./ConsumerMenu/Orders";
 import ConsumerDashboard from "./ConsumerMenu/ConsumerDashboard";
 import PartnerServiceUpload from "./PartnerMenu/PartnerServiceUpload";
-import UserForum from "./UserForum/UserForum";
+import ForumCategories from "./UserForum/ForumCategories";
+import UserForum from './UserForum/UserForum';
+import SubcategoryForum from "./UserForum/SubcategoryForum";
+import KYC from "./Profile/KYC/KYC";
 
 function SideBar() {
   const [collapsed, setCollapsed] = useState(false);
   const [products, setProducts] = useState([]);
   const location = useLocation();
-  const {selectedProfiles} = useProfile()
-  const { userFirstName, userLastName } = useProfile();
+  const {selectedProfiles, userFirstName, userLastName} = useProfile()
 
   const addProduct = (product) => {
     setProducts([...products, product]);
@@ -111,6 +113,7 @@ function SideBar() {
                 <Sidebar.Collapse icon={Person} label="Profile">
                   <Sidebar.Item href="/user/profile"> Overview </Sidebar.Item>
                   <Sidebar.Item href="/user/profile/bank"> Bank Details </Sidebar.Item>
+                  <Sidebar.Item href="/user/profile/kyc">KYC</Sidebar.Item>
                   <Sidebar.Item href="/user/password_reset"> Reset Password </Sidebar.Item>
                   <Sidebar.Item href="#"> Profile Picture </Sidebar.Item>
                 </Sidebar.Collapse>
@@ -133,6 +136,7 @@ function SideBar() {
             <Route path='' element={<UserOverview/>} />
             <Route path='profile' element={<ProfileOverview/>} />
             <Route path='/profile/bank' element={<BankDetails/>} />
+            <Route path='/profile/kyc' element={<KYC/>} />
             <Route path='password_reset' element={<PasswordReset/>} />
             <Route path='farm' element={<FarmInfo/>} />
             <Route path='farm-dashboard' element={<FarmerDashboard/>} />
@@ -150,7 +154,8 @@ function SideBar() {
             <Route path='buyer/' element={<ConsumerDashboard/>} /> 
             <Route path='buyer/orders' element={<Orders/>} /> 
             <Route path='buyer/farmers-profile' element={<FarmerProfiles/>} /> 
-            <Route path='forum' element={<UserForum/>} />
+            <Route path='forum' element={<ForumCategories/>} />
+            <Route path='forum/:subcategoryId' element={<SubcategoryForum/> } />
           </Routes>  
         </div>
       </div> 

@@ -8,7 +8,11 @@ const HeroSection = () => {
       {/* Background image with gradient */}
       <div className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.7)), url(${hero})`
+          backgroundImage: `linear-gradient(to right, 
+    rgba(0, 0, 0, 1) 40%, 
+    rgba(0, 0, 0, 0.7) 70%, 
+    rgba(0, 0, 0, 0) 100%), 
+    url(${hero})`
         }}>
       </div>
 
@@ -16,7 +20,7 @@ const HeroSection = () => {
       <div className="relative z-10 text-start px-4 w-full md:w-1/2 md:ml-12 tracking-wider">
         {/* Responsive font size */}
         <h1 
-          className="text-2xl text-farmersmartOrange md:text-6xl md:w-4/5 font-bold mb-4 md:mb-6"
+          className="text-2xl text-[#FFB600] md:text-6xl md:w-4/5 font-bold mb-4 md:mb-6"
           style={{ fontFamily: "Montserrat" }}>
           Expanding Market Horizons for Farmers and Buyers.
         </h1>

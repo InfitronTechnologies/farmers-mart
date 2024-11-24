@@ -110,6 +110,7 @@ export const dummyProducts = [
     shortDescription: 'Organic fresh milk from local farms.',
     longDescription: 'This is fresh, organic milk sourced from our local farms. It’s processed with utmost care to ensure the best quality and freshness.',
     image: brocolli, // Placeholder image URL
+    slideImages: [brocolli, tomatoes, rice],
     price: 25000,
     category: 'Dairy',
   },
@@ -119,6 +120,7 @@ export const dummyProducts = [
     shortDescription: 'Juicy and sweet red apples.',
     longDescription: 'Our apples are freshly picked and naturally grown without chemicals. They are packed with vitamins and perfect for snacking.',
     image: tomatoes, // Placeholder image URL
+    slideImages: [brocolli, tomatoes, rice],
     price: 1.20,
     category: 'Fruits',
   },
@@ -128,6 +130,7 @@ export const dummyProducts = [
     shortDescription: 'Fresh organic carrots, rich in beta-carotene.',
     longDescription: 'These organic carrots are perfect for salads, stews, and more. Rich in nutrients and naturally grown without chemicals.',
     image: rice, // Placeholder image URL
+    slideImages: [brocolli, tomatoes, rice],
     price: 2.00,
     category: 'Vegetables',
   },
@@ -137,6 +140,7 @@ export const dummyProducts = [
     shortDescription: 'Organic free-range eggs from healthy chickens.',
     longDescription: 'Our eggs come from chickens that roam freely and are fed a natural diet. They are packed with nutrients and taste amazing.',
     image: brocolli, // Placeholder image URL
+    slideImages: [brocolli, tomatoes, rice],
     price: 4.00,
     category: 'Dairy',
   },
@@ -146,6 +150,7 @@ export const dummyProducts = [
     shortDescription: 'Fresh and ripe bananas.',
     longDescription: 'These bananas are sourced directly from local farms. They are sweet, full of energy, and perfect for a quick snack.',
     image: tomatoes, // Placeholder image URL
+    slideImages: [brocolli, tomatoes, rice],
     price: 0.80,
     category: 'Fruits',
   },
@@ -155,6 +160,7 @@ export const dummyProducts = [
     shortDescription: 'Fresh organic broccoli.',
     longDescription: 'Rich in vitamins and antioxidants, our broccoli is perfect for a variety of meals. Organically grown with care.',
     image: rice, // Placeholder image URL
+    slideImages: [brocolli, tomatoes, rice],
     price: 3.00,
     category: 'Vegetables',
   },
@@ -164,6 +170,7 @@ export const dummyProducts = [
     shortDescription: 'Organic free-range eggs from healthy chickens.',
     longDescription: 'Our eggs come from chickens that roam freely and are fed a natural diet. They are packed with nutrients and taste amazing.',
     image: brocolli, // Placeholder image URL
+    slideImages: [brocolli, tomatoes, rice],
     price: 4.00,
     category: 'Dairy',
   },
@@ -173,6 +180,7 @@ export const dummyProducts = [
     shortDescription: 'Fresh and ripe bananas.',
     longDescription: 'These bananas are sourced directly from local farms. They are sweet, full of energy, and perfect for a quick snack.',
     image: tomatoes, // Placeholder image URL
+    slideImages: [brocolli, tomatoes, rice],
     price: 0.80,
     category: 'Fruits',
   },
@@ -182,6 +190,7 @@ export const dummyProducts = [
     shortDescription: 'Fresh organic broccoli.',
     longDescription: 'Rich in vitamins and antioxidants, our broccoli is perfect for a variety of meals. Organically grown with care.',
     image: rice, // Placeholder image URL
+    slideImages: [brocolli, tomatoes, rice],
     price: 3.00,
     category: 'Vegetables',
   }

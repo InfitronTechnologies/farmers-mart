@@ -182,6 +182,11 @@ const Signup = () => {
             <div className='hidden lg:flex justify-between w-4/5 space-x-12 items-center'>
               <div className='flex flex-row text-sm md:ml-12 text-white font-semibold'>
                 <div className='mx-4 hover:cursor-pointer'>
+                  <Link to='/'>
+                    Home
+                  </Link>
+                </div>
+                <div className='mx-4 hover:cursor-pointer'>
                   <Link to='/about'>
                     About
                   </Link>
@@ -189,11 +194,6 @@ const Signup = () => {
                 <div className='mx-4 hover:cursor-pointer'>
                   <Link to='/services'>
                     Services
-                  </Link>
-                </div>
-                <div className='mx-4 hover:cursor-pointer'>
-                  <Link to='/faq'>
-                    FAQ
                   </Link>
                 </div>
                 <div className='mx-4 hover:cursor-pointer'>
@@ -227,6 +227,11 @@ const Signup = () => {
             {/* <div className='hidden lg:flex justify-between w-4/5 space-x-12 items-center'> */}
                 <div className='flex flex-col justify-center items-center text-sm text-white font-semibold md:ml-12'>
                   <div className='my-2 hover:cursor-pointer'>
+                    <Link to='/'>
+                      Home
+                    </Link>
+                  </div>
+                  <div className='my-2 hover:cursor-pointer'>
                     <Link to='/about'>
                       About
                     </Link>
@@ -234,11 +239,6 @@ const Signup = () => {
                   <div className='my-2 hover:cursor-pointer'>
                     <Link to='/services'>
                       Services
-                    </Link>
-                  </div>
-                  <div className='my-2 hover:cursor-pointer'>
-                    <Link to='/faq'>
-                      FAQ
                     </Link>
                   </div>
                   <div className='my-2 hover:cursor-pointer'>

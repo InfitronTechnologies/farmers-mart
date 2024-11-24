@@ -1,55 +1,5 @@
-// import React from "react";
-// import { Avatar, Dropdown, Navbar } from "flowbite-react";
-// import logo from '../../assets/farmersmartlogo.png';
-// import { Person } from "@mui/icons-material";
-
-
-// const MarketNav = () => {
-//   return (
-//     <Navbar fluid rounded>
-//       <Navbar.Brand href="">
-//         <img src={logo} className="mr-3" alt="Flowbite React Logo" />
-//       </Navbar.Brand>
-//       <div className="flex md:order-2">
-//         <Dropdown
-//           arrowIcon={false}
-//           inline
-//           label={
-//             <Person/>
-//             // <Avatar alt="User settings" img="https://flowbite.com/docs/images/people/profile-picture-5.jpg" rounded />
-//           }
-//         >
-//           <Dropdown.Header>
-//             <span className="block text-sm">Bonnie Green</span>
-//             <span className="block truncate text-sm font-medium">name@flowbite.com</span>
-//           </Dropdown.Header>
-//           <Dropdown.Item>Dashboard</Dropdown.Item>
-//           <Dropdown.Item>Settings</Dropdown.Item>
-//           <Dropdown.Item>Earnings</Dropdown.Item>
-//           <Dropdown.Divider />
-//           <Dropdown.Item>Sign out</Dropdown.Item>
-//         </Dropdown>
-//         <Navbar.Toggle />
-//       </div>
-//       <Navbar.Collapse>
-//         <Navbar.Link href="#" active>
-//           Home
-//         </Navbar.Link>
-//         <Navbar.Link href="#">About</Navbar.Link>
-//         <Navbar.Link href="#">Services</Navbar.Link>
-//         <Navbar.Link href="#">Pricing</Navbar.Link>
-//         <Navbar.Link href="#">Contact</Navbar.Link>
-//       </Navbar.Collapse>
-//     </Navbar>
-//   );
-// }
-
-// export default MarketNav
-
-
-
 import { Navbar, Dropdown } from 'flowbite-react';
-import { Search, Person } from '@mui/icons-material'; // MUI Icons
+import { Search, Person, Menu, AccountCircle } from '@mui/icons-material'; // MUI Icons
 import React from 'react';
 import logo from '../../assets/farmersmartlogo.png';
 
@@ -75,26 +25,42 @@ const MarketNav = () => {
 
       {/* Right Section - Avatar and Dropdown */}
       <div className="flex items-center md:order-2">
-        <Dropdown
-          arrowIcon={false}
-          inline
-          label={
-            <div className=' flex text-white items-center justify-center'>
-              <Person className="text-2xl cursor-pointer" />
-              <span className='my-auto ml-2'>Account</span>
+        <div className='mx-4'>
+          <Dropdown
+            arrowIcon={false}
+            inline
+            label={
+              <div className=' flex text-white items-center justify-center'>
+                <AccountCircle className="text-2xl cursor-pointer" />
+              </div>
+          }
+          >
+            <div className='text-[#0B2B17] border-2 border-[#0d4e25] px-6 py-2 rounded-md mx-4 my-2 font-semibold'>
+             <Dropdown.Item href='/user'>Dashboard</Dropdown.Item>
             </div>
-        }
-        >
-          <Dropdown.Header>
-            <span className="block text-sm font-semibold">Adam Adam</span>
-            <span className="block truncate text-sm font-medium">adamfarm@gmail.com</span>
-          </Dropdown.Header>
-          <Dropdown.Item href='/user'>Dashboard</Dropdown.Item>
-          <Dropdown.Item href='/user/profile'>Profile</Dropdown.Item>
-          <Dropdown.Item>Earnings</Dropdown.Item>
-          <Dropdown.Divider />
-          <Dropdown.Item>Sign out</Dropdown.Item>
-        </Dropdown>
+            <div className='text-[#0B2B17] tracking-wider border-2 border-[#c1e849] bg-[#c1e849] px-6 py-2 rounded-md mx-4 my-2 font-semibold'>
+              <Dropdown.Item href='/login'>Log out</Dropdown.Item>
+            </div>
+          </Dropdown>
+        </div>
+        <div>
+          <Dropdown
+            arrowIcon={false}
+            inline
+            label={
+              <div className=' flex text-white items-center '>
+                <Menu className="text-2xl cursor-pointer" />
+              </div>
+          }
+          >
+            <div className='text-[#0B2B17] border-2 border-[#0d4e25] px-6 py-2 rounded-md font-semibold'>
+              <Dropdown.Item href='/user/forum'>Farmer's Forum</Dropdown.Item>
+            </div>
+            <div className='text-[#0B2B17] tracking-wider border-2 border-[#c1e849] bg-[#c1e849] px-6 py-2 rounded-md font-semibold'>
+              <Dropdown.Item href='/user/news' className='mx-auto'>News</Dropdown.Item>           
+            </div>
+          </Dropdown>
+        </div>
       </div>
     </Navbar>
   );
