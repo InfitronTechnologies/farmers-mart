@@ -104,7 +104,7 @@ const ForumCategories = () => {
                     subcategories.map((subcategory) => (
                       <Dropdown.Item key={subcategory.id}>
                         <Link
-                          to={`/user/forum/${subcategory.id}`}
+                          to={`/user/createforum/${subcategory.id}`}
                           state={{
                             categoryId: forumData.categoryId,
                             categoryName: forumData.categoryName,

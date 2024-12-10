@@ -126,10 +126,10 @@ function SideBar() {
                 <Sidebar.Item href="#" icon={SupportAgent}>
                   Customer Support
                 </Sidebar.Item>
-                <Sidebar.Item href="/user/forum" icon={Forum}>
-                  Forum
-                </Sidebar.Item>
-
+              <Sidebar.Collapse icon={Forum} label='Forum'>
+                <Sidebar.Item href="/user/createforum" >Create Forum </Sidebar.Item>
+                <Sidebar.Item href="/user/forum" >Your Forums </Sidebar.Item>
+              </Sidebar.Collapse>
                 <Sidebar.Item href="" onClick={handleLogout} icon={Logout}>
                   Logout
                 </Sidebar.Item>
@@ -160,8 +160,8 @@ function SideBar() {
             <Route path='buyer/' element={<ConsumerDashboard/>} /> 
             <Route path='buyer/orders' element={<Orders/>} /> 
             <Route path='buyer/farmers-profile' element={<FarmerProfiles/>} /> 
-            <Route path='forum' element={<ForumCategories/>} />
-            <Route path='forum/:subcategoryId' element={<SubcategoryForum/> } />
+            <Route path='createforum' element={<ForumCategories/>} />
+            <Route path='createforum/:subcategoryId' element={<SubcategoryForum/> } />
           </Routes>  
         </div>
       </div> 

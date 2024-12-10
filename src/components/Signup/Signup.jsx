@@ -144,7 +144,14 @@ const Signup = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post(apiUrl, formData);
+      const response = await axios.post(apiUrl, formData, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Allow-Origin': '*',
+          'charset':'UFT-8'
+        }
+      });
 
       // Extract JSON portion from the response
       const responseDataString = response.data;

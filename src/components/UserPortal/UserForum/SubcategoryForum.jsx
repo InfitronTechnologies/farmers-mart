@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useProfile } from "../../ProfileContext/ProfileContext";
 
 const SubcategoryForum = () => {
@@ -99,20 +99,26 @@ const SubcategoryForum = () => {
         console.error("Error uploading image:", error.response?.data || error.message);
       }
 
-
-
-      console.log(forumData)
+      let updatedForumData = {
+        ...forumData,
+        forum_image:picture.name,
+      }
 
       // Step 2: Submit Forum Details    
       const apiUrl = process.env.NODE_ENV === 'production'
       ? 'https://ourservicestech.com.ng/farmmart_api/v2/forum/create_forum'
       : '/farmmart_api/v2/forum/create_forum'
 
-      const response = await axios.post (apiUrl,{
-        ...forumData,
-        forum_image: picture.name
-      })
-      console.log(response.data)
+      console.log(updatedForumData)
+      
+      try{
+        const response = await axios.post (apiUrl, updatedForumData)
+        console.log(updatedForumData)
+        console.log(response.data)
+        useNavigate('/user')
+      }catch(error){
+        console.error("Error creating forum:", error.response.data || error.message)
+      }     
 
     } catch (err) {
       console.error(err);
