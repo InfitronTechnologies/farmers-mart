@@ -1,10 +1,27 @@
 {
   "rewrites": [
     {
-      "source": "/farmmart_api/v2/:path*",
-      "destination": "https://ourservicestech.com.ng/farmmart_api/v2/:path*"
+      "source": "/(.*)",
+      "destination": "/"
     }
   ],
-  "framework": "vite",
-  "cleanUrls": true
+  "headers": [
+    {
+      "source": "/farmmart_api/v2/:path*",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, PUT, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "X-Requested-With, Content-Type, Authorization"
+        }
+      ]
+    }
+  ]
 }
