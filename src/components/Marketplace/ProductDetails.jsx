@@ -65,7 +65,7 @@
 
 
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { dummyProducts } from "../../constants/constant";
 import MarketNav from "./MarketNav";
 import Footer from "../LandingPage/Footer";
@@ -181,11 +181,13 @@ const ProductDetails = ({ addToCart }) => {
             </div>
             {/* Price and Add to Cart */}
             <div className="flex items-center">
-              <button
-                className="bg-[#ff7300] text-white text-2xl font-semibold px-16 py-3 rounded-3xl shadow hover:bg-green-700 transition duration-200"
-              >
-                Buy
-              </button>
+              <Link to='/checkout'>
+                <button
+                  className="bg-[#ff7300] text-white text-2xl font-semibold px-16 py-3 rounded-3xl shadow hover:bg-green-700 transition duration-200"
+                >
+                  Buy
+                </button>
+              </Link>
             </div>
           </div>
 

@@ -13,7 +13,9 @@ const Login = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const {setSelectedProfiles, setUserId, setUserToken, setUserEmail, setUserFirstName, setUserLastName}  = useProfile()
+  const {setSelectedProfiles, setUserId, setUserToken, 
+        setUserEmail, setUserFirstName, setUserLastName,
+        setKycLevel}  = useProfile()
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -35,7 +37,7 @@ const Login = () => {
       const response = await axios.post(apiUrl, loginData);
   
       if (response.data.status === 1) {
-        const { id, users_token, profile, users_email, users_fn, users_ln } = response.data.data;
+        const { id, users_token, profile, users_email, users_fn, users_ln, kyc_level } = response.data.data;
   
         // Store user information in localStorage
         setUserId(id)
@@ -43,7 +45,8 @@ const Login = () => {
         setUserEmail(users_email)
         setSelectedProfiles(profile)
         setUserFirstName(users_fn)
-        setUserLastName(users_ln);
+        setUserLastName(users_ln)
+        setKycLevel(kyc_level);
 
         // Navigate to the user dashboard or home
         navigate('/user', { state: { selectedProfiles: profile } });

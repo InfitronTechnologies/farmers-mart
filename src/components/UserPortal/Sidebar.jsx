@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Sidebar } from "flowbite-react";
 import { useProfile } from "../ProfileContext/ProfileContext";
 import { Agriculture, Dashboard, Handshake, LocalShipping, Login, Logout, Menu, Person, Person2, ShoppingBag, Storefront, SupportAgent, Forum } from '@mui/icons-material';
-import { Link, Route, Routes, useLocation } from "react-router-dom";
+import { Link, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import UserOverview from './UserOverview/UserOverview';
 import ProfileOverview from './Profile/ProfileOverview';
 import BankDetails from './Profile/BankDetails';
@@ -31,11 +31,17 @@ import KYC from "./Profile/KYC/KYC";
 function SideBar() {
   const [collapsed, setCollapsed] = useState(false);
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate()
   const location = useLocation();
-  const {selectedProfiles, userFirstName, userLastName} = useProfile()
+  const {selectedProfiles, userFirstName, userLastName, clearProfile} = useProfile()
 
   const addProduct = (product) => {
     setProducts([...products, product]);
+  };
+
+  const handleLogout = () => {
+    clearProfile(); // Clears session storage and context state
+    navigate('/login'); // Redirect the user to the login page
   };
   
   // useEffect(() => {
@@ -124,7 +130,7 @@ function SideBar() {
                   Forum
                 </Sidebar.Item>
 
-                <Sidebar.Item href="/login" onClick={localStorage.clear()} icon={Logout}>
+                <Sidebar.Item href="" onClick={handleLogout} icon={Logout}>
                   Logout
                 </Sidebar.Item>
               </Sidebar.ItemGroup>

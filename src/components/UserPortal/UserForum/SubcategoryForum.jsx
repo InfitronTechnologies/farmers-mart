@@ -1,46 +1,49 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useLocation } from "react-router-dom";
+import { useProfile } from "../../ProfileContext/ProfileContext";
 
 const SubcategoryForum = () => {
   const { subcategoryId } = useParams(); // Get subcategory ID from the URL
   const [posts, setPosts] = useState([]);
+  const [picture, setPicture] = useState(null);
+  // const [error, setError] = useState(null);
   const [loadingPosts, setLoadingPosts] = useState(true);
+  const {userId, userToken} = useProfile()
+  const [error, setError] = useState(null)
   const location = useLocation();
   const { categoryId, categoryName, subcategoryName } = location.state || {};
-
   const [forumData, setForumData] = useState({
-    users_id: "", // Replace with actual user ID
-    users_token: "", // Replace with actual user token
+    users_id: userId,
+    users_token: userToken,
     forum_name: "",
     forum_desc: "",
-    forum_image: null, // Change to hold a file
+    forum_image: '',
     cat_id: categoryId || "",
     subcat_id: subcategoryId || "",
   });
-
   const [showForm, setShowForm] = useState(false); // Toggle form visibility
-  const [loadingCreate, setLoadingCreate] = useState(false); // For form submission state
+  const [loading, setLoading] = useState(false); // For form submission state
 
   // Fetch posts for the subcategory on component mount
-  useEffect(() => {
-    const apiUrl =
-      process.env.NODE_ENV === "production"
-        ? `https://ourservicestech.com.ng/farmmart_api/v2/posts/by_subcategory?id=${subcategoryId}`
-        : `/farmmart_api/v2/posts/by_subcategory?id=${subcategoryId}`;
+  // useEffect(() => {
+  //   const apiUrl =
+  //     process.env.NODE_ENV === "production"
+  //       ? `https://ourservicestech.com.ng/farmmart_api/v2/posts/by_subcategory?id=${subcategoryId}`
+  //       : `/farmmart_api/v2/posts/by_subcategory?id=${subcategoryId}`;
 
-    axios
-      .get(apiUrl)
-      .then((response) => {
-        setPosts(response.data.data); // Assuming API returns an array of posts
-      })
-      .catch((error) => {
-        console.error("Error fetching posts:", error);
-      })
-      .finally(() => {
-        setLoadingPosts(false); // Stop loading spinner
-      });
-  }, [subcategoryId]);
+  //   axios
+  //     .get(apiUrl)
+  //     .then((response) => {
+  //       setPosts(response.data.data); // Assuming API returns an array of posts
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching posts:", error);
+  //     })
+  //     .finally(() => {
+  //       setLoadingPosts(false); // Stop loading spinner
+  //     });
+  // }, [subcategoryId]);
 
   // Handle form input changes
   const handleChange = (e) => {
@@ -53,59 +56,72 @@ const SubcategoryForum = () => {
 
   // Handle file input change
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setForumData((prevData) => ({
-      ...prevData,
-      forum_image: file, // Set the file in state
-    }));
+    setPicture(e.target.files[0]); // Store the selected file
   };
 
-  // Handle form submission
-  const handleSubmit = (e) => {
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoadingCreate(true);
+    console.log(picture)
 
-    // Prepare form data
-    const formData = new FormData();
-    formData.append("users_id", forumData.users_id);
-    formData.append("users_token", forumData.users_token);
-    formData.append("forum_name", forumData.forum_name);
-    formData.append("forum_desc", forumData.forum_desc);
-    formData.append("cat_id", forumData.cat_id);
-    formData.append("subcat_id", forumData.subcat_id);
-
-    if (forumData.forum_image) {
-      formData.append("forum_image", forumData.forum_image); // Add the image file
+    if (!picture) {
+      setError("Please upload a picture.");
+      return;
     }
 
-    const apiUrl =
-      process.env.NODE_ENV === "production"
-        ? "https://ourservicestech.com.ng/farmmart_api/v2/forum/create_forum"
-        : "/farmmart_api/v2/forum/create_forum";
+    setLoading(true);
+    setError(null); // Clear previous errors
 
-    axios
-      .post(apiUrl, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+    try {
+      // Step 1: Upload the image
+      const uploadUrl = process.env.NODE_ENV === 'production'
+          ? 'https://ourservicestech.com.ng/farmmart_api/v2/uploadimage'
+          : '/farmmart_api/v2/uploadimage';
+
+      const uploadData = new FormData();
+      uploadData.append("upimg", picture);
+
+      setForumData((prevData) => ({
+        ...prevData,
+        forum_image: picture.name,
+      }));
+
+      try{
+        const uploadResponse = await axios.post(uploadUrl, uploadData, {
+            headers: {
+            'Content-Type': 'multipart/form-data',
+            },
+        });
+        console.log(uploadResponse.data); // Handle response
+      }
+      catch (error) {
+        console.error("Error uploading image:", error.response?.data || error.message);
+      }
+
+
+
+      console.log(forumData)
+
+      // Step 2: Submit Forum Details    
+      const apiUrl = process.env.NODE_ENV === 'production'
+      ? 'https://ourservicestech.com.ng/farmmart_api/v2/forum/create_forum'
+      : '/farmmart_api/v2/forum/create_forum'
+
+      const response = await axios.post (apiUrl,{
+        ...forumData,
+        forum_image: picture.name
       })
-      .then((response) => {
-        if (response.data.success) {
-          alert("Forum created successfully!");
-          // Optionally refresh posts or handle post creation logic
-          setShowForm(false); // Hide the form after successful creation
-        } else {
-          alert("Failed to create forum. Please try again.");
-        }
-      })
-      .catch((error) => {
-        console.error("Error creating forum:", error);
-        alert("An error occurred. Please try again later.");
-      })
-      .finally(() => {
-        setLoadingCreate(false);
-      });
-  };
+      console.log(response.data)
+
+    } catch (err) {
+      console.error(err);
+      setError(err.message || 'Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  }
+
 
   return (
     <div className="subcategory-forum">
@@ -153,7 +169,7 @@ const SubcategoryForum = () => {
                 value={forumData.forum_desc}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border rounded focus:ring focus:ring-blue-300"
+                className="w-full px-4 py-2 border h-96 rounded focus:ring focus:ring-blue-300"
                 placeholder="Enter forum description"
               ></textarea>
             </div>
@@ -171,12 +187,12 @@ const SubcategoryForum = () => {
             <div className="flex space-x-4">
               <button
                 type="submit"
-                disabled={loadingCreate}
+                disabled={loading}
                 className={`px-4 py-2 rounded bg-green-500 text-white hover:bg-green-600 ${
-                  loadingCreate ? "opacity-50 cursor-not-allowed" : ""
+                  loading ? "opacity-50 cursor-not-allowed" : ""
                 }`}
               >
-                {loadingCreate ? "Creating..." : "Create Forum"}
+                {loading ? "Creating..." : "Create Forum"}
               </button>
               <button
                 type="button"
@@ -191,7 +207,7 @@ const SubcategoryForum = () => {
       )}
 
       {/* Display Posts */}
-      <div>
+      {/* <div>
         <h2 className="text-xl font-semibold mb-4">Posts</h2>
         {loadingPosts ? (
           <div className="flex justify-center items-center">
@@ -218,7 +234,7 @@ const SubcategoryForum = () => {
         ) : (
           <p className="text-gray-500">No posts available for this subcategory.</p>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

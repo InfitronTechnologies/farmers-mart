@@ -16,6 +16,7 @@ export const ProfileProvider = ({ children }) => {
   const [userEmail, setUserEmail] = useState(() => sessionStorage.getItem('userEmail') || null);
   const [userFirstName, setUserFirstName] = useState(() => sessionStorage.getItem('userFirstName') || null);
   const [userLastName, setUserLastName] = useState(() => sessionStorage.getItem('userLastName') || null);
+  const [kycLevel, setKycLevel] = useState(() => sessionStorage.getItem('kycLevel') || null);
 
   // Persist data in sessionStorage whenever they change
   useEffect(() => {
@@ -25,17 +26,19 @@ export const ProfileProvider = ({ children }) => {
     if (userEmail) sessionStorage.setItem('userEmail', userEmail);
     if (userFirstName) sessionStorage.setItem('userFirstName', userFirstName);
     if (userLastName) sessionStorage.setItem('userLastName', userLastName);
-
+    if(kycLevel) sessionStorage.setItem('kycLevel', kycLevel)
   }, [selectedProfiles, userId, userToken, userEmail]);
+  
 
   // Function to clear all user data on logout
   const clearProfile = () => {
-    setSelectedProfiles({});
-    setUserId(null);
-    setUserToken(null);
-    setUserEmail(null);
-    setUserFirstName(null);
-    setUserLastName(null)
+    // setSelectedProfiles({});
+    // setUserId(null);
+    // setUserToken(null);
+    // setUserEmail(null);
+    // setUserFirstName(null);
+    // setUserLastName(null);
+    // setKycLevel(null);
     sessionStorage.clear();
   };
 
@@ -54,6 +57,8 @@ export const ProfileProvider = ({ children }) => {
         setUserFirstName,
         userLastName,
         setUserLastName,
+        kycLevel,
+        setKycLevel,
         clearProfile,  // Add clearProfile to context
       }}
     >

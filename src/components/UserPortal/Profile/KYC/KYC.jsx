@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useProfile } from '../../../ProfileContext/ProfileContext';
 import LevelOne from './LevelOne';
-import { useProfile } from '../../../ProfileContext/ProfileContext'; // Assuming you are using ProfileContext for user data
+import LevelTwo from './LevelTwo'; 
+import LevelThree from './LevelThree';
+import LevelFour from './LevelFour';
+import LevelFive from './LevelFive';
 
 const KYC = () => {
-  const { userId, userToken } = useProfile(); // Get user data from context or state
-  const [kycLevel, setKycLevel] = useState(1); // This will track the current level of KYC
+  const { userId, userToken, kycLevel } = useProfile(); // Get user data from context
   const navigate = useNavigate();
+  console.log((kycLevel))
+
 
   // Handle progression to the next level (or success page)
   const goToNextLevel = () => {
-    if (kycLevel < 3) { // Check if there are more levels
-      setKycLevel(kycLevel + 1);
-    } else {
-      // Redirect to a success page or dashboard
-      navigate('/dashboard'); // Example navigation after KYC completion
-    }
+    navigate('/user'); // Example navigation after KYC completion
   };
 
   return (
@@ -23,14 +23,37 @@ const KYC = () => {
       <h1 className="text-center text-2xl font-bold">Complete Your KYC</h1>
       <div className="kyc-steps">
         {/* Render different levels of the KYC process */}
-        {kycLevel === 1 && (
-          <LevelOne 
-            userId={userId} 
-            userToken={userToken} 
-            goToNextLevel={goToNextLevel} 
+        {(kycLevel == null) && (
+          <LevelOne
+            userId={userId}
+            userToken={userToken}
           />
         )}
-        {/* Add further levels here as needed */}
+        {(kycLevel == 1 || kycLevel == '1') && (
+          <LevelTwo
+            userId={userId}
+            userToken={userToken}
+          />
+        )}
+        {(kycLevel == 2 || kycLevel == '2') && (
+          <LevelThree
+            userId={userId}
+            userToken={userToken}
+          />
+        )}
+        {(kycLevel == 3 || kycLevel == '3') && (
+          <LevelFour
+            userId={userId}
+            userToken={userToken}
+          />
+        )}
+        {(kycLevel == 4 || kycLevel === '4') && (
+          <LevelFive
+            userId={userId}
+            userToken={userToken}
+          />
+        )}
+        {/* <div className='text-4xl font-bold text-farmersmartDarkGreen'>KYC COMPLETED</div> */}
       </div>
     </div>
   );

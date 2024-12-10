@@ -5,20 +5,13 @@ import Footer from '../LandingPage/Footer';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import bgImage from '../../assets/login-bg.png'
+import { useProfile } from '../ProfileContext/ProfileContext';
 
 const ProfileSelection = ({ onNext }) => {
   const [selectedProfiles, setSelectedProfiles] = useState([]);
   const [error, setError] = useState(null);
-  const [userId, setUserId] = useState(null);
+  const {userId} = useProfile()
   const navigate = useNavigate(); // Correctly initialize useNavigate
-
-  useEffect(() => {
-    // Retrieve userId from local storage
-    const storedUserId = localStorage.getItem("userId");
-    if (storedUserId) {
-      setUserId(storedUserId);
-    }
-  }, []);
 
   const handleProfileChange = (profile) => {
     setSelectedProfiles((prevSelectedProfiles) =>
@@ -53,7 +46,7 @@ const ProfileSelection = ({ onNext }) => {
       if (response.status === 200) {
         localStorage.setItem("selectedProfiles", JSON.stringify(selectedProfiles));
         // onNext(); // Calls onNext if passed as prop
-        navigate('/login'); // Navigates to the next page
+        navigate('/policyform'); // Navigates to the next page
       }
     } catch (err) {
       setError('Failed to create profile. Please try again.');

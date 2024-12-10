@@ -8,6 +8,7 @@ import {Menu }from '@mui/icons-material';
 import bgImage from '../../assets/bg-login.png'
 import Footer from '../LandingPage/Footer';
 import { EmailOutlined, PersonOutlined, PhoneOutlined, Visibility } from '@mui/icons-material';
+import { useProfile } from '../ProfileContext/ProfileContext';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -29,6 +30,7 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [states, setStates] = useState([])
   const [isOtpOverlayVisible, setIsOtpOverlayVisible] = useState(false);
+  const {setUserId, setUserEmail} = useProfile()
   
   const navigate = useNavigate();  // Hook to navigate between pages
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -152,9 +154,8 @@ const Signup = () => {
       const jsonResponse = JSON.parse(jsonResponseString); // Parse the JSON portion
 
       if (jsonResponse.status === 1) {
-        localStorage.setItem("userId", jsonResponse.users_id);
-        localStorage.setItem("userEmail", users_email);
-        console.log("User ID:", jsonResponse.users_id);
+        setUserId(jsonResponse.users_id);
+        // setUserEmail(users_email);
         setIsOtpOverlayVisible(true);
 
         // navigate('/account-activation');
@@ -389,23 +390,30 @@ const Signup = () => {
                   </div>
                 </div>
 
+                {/* Select State */}
                 <div className="mb-4">
-                  <div className='relative'>
+                  <div className="relative">
                     <select
                       className="w-full p-2 border-1 rounded-xl text-black bg-white focus:border-farmersmartDarkGreen 
                       focus:outline-none focus:ring-0 focus:border-2"
-                      name="stateId"
-                      value={formData.stateId}
-                      onChange={handleChange}
+                      id="state_id"
+                      name="state_id"
+                      value={formData.state_id} // Bind the selected value
+                      onChange={(e) => setFormData({ ...formData, state_id: e.target.value })} // Update state on selection
                       required
                     >
-                      <option value="">Select State</option>
+                      <option value="" disabled>
+                        Select State
+                      </option>
                       {states.map((state) => (
-                        <option key={state.id} value={state.id}>{state.state_name}</option>
+                        <option key={state.id} value={state.id}>
+                          {state.state_name}
+                        </option>
                       ))}
                     </select>
                   </div>
                 </div>
+
 
                 {/* Password Field */}
                 <div className="mb-4">
