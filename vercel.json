@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/farmmart_api/v2/:path*",
-      "destination": "https://your-api-url.com/farmmart_api/v2/:path*"
+      "destination": "https://ourservicestech.com.ng/farmmart_api/v2/:path*"
     }
   ],
   "framework": "vite",
