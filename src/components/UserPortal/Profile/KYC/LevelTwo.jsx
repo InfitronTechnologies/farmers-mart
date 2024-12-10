@@ -79,7 +79,14 @@ const LevelTwo = ({userId, userToken}) => {
             : '/farmmart_api/v2/kyc/level_two';
 
             console.log(formData)
-        const response = await axios.post( apiUrl, formData);
+        const response = await axios.post( apiUrl, formData, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Allow-Origin': '*',
+            'charset':'UFT-8'
+          }
+        });
         console.log("Submission successful:", response.data);
         
         if (response.data.status === 1) {

@@ -91,7 +91,14 @@ const Signup = () => {
       : '/farmmart_api/v2/account/account_otp_active';
 
     try {
-      const response = await axios.post(apiUrl, { code: otpCode.join('') });
+      const response = await axios.post(apiUrl, { code: otpCode.join('') }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Allow-Origin': '*',
+          'charset':'UFT-8'
+        }
+      });
       if (response.status === 200) {
         setSuccess(true);
         if (response.data.status === 1) {

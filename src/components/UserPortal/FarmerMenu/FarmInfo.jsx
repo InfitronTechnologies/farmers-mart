@@ -46,6 +46,14 @@ function FarmInfo() {
         const response = await axios.post(farmerIdUrl, {
           users_id : userId,
           users_token	: userToken,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Allow-Origin': '*',
+            'charset':'UFT-8'
+          }
         })
         // console.log(response.data.data.Farmer_id)
         let responseId = response.data.data.Farmer_id
@@ -153,10 +161,13 @@ function FarmInfo() {
       uploadData.append("f_img", picture);
 
       try{
-        const uploadResponse = await axios.post(uploadUrl, uploadData, {
+        const uploadResponse = await axios.post(uploadUrl, uploadData,{
           headers: {
-          'Content-Type': 'multipart/form-data',
-          },
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Allow-Origin': '*',
+            'charset':'UFT-8'
+          }
         });
         console.log(uploadResponse.data); // Handle response
       }

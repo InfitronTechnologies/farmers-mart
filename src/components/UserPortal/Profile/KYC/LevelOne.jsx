@@ -53,6 +53,14 @@ const LevelOne = ({ userId, userToken, goToNextLevel }) => {
           users_id: userId,
           users_token: userToken,
           picture_name: picture.name,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Allow-Origin': '*',
+          'charset':'UFT-8'
+        }
       });
 
       // Check if KYC submission was successful

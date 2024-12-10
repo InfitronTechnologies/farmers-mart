@@ -112,7 +112,14 @@ const SubcategoryForum = () => {
       console.log(updatedForumData)
       
       try{
-        const response = await axios.post (apiUrl, updatedForumData)
+        const response = await axios.post (apiUrl, updatedForumData, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Allow-Origin': '*',
+            'charset':'UFT-8'
+          }
+        })
         console.log(updatedForumData)
         console.log(response.data)
         useNavigate('/user')

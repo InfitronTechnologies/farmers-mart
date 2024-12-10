@@ -37,6 +37,9 @@ const Login = () => {
       const response = await axios.post(apiUrl, loginData, {
         headers: {
           'Content-Type': 'application/json',
+          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Allow-Origin': '*',
+          'charset':'UFT-8'
         }
       });
   

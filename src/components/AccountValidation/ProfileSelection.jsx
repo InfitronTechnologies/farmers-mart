@@ -41,7 +41,14 @@ const ProfileSelection = ({ onNext }) => {
       : '/farmmart_api/v2/account/create_account_profile';
 
     try {
-      const response = await axios.post(apiUrl, profileData);
+      const response = await axios.post(apiUrl, profileData, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Allow-Origin': '*',
+          'charset':'UFT-8'
+        }
+      });
 
       if (response.status === 200) {
         localStorage.setItem("selectedProfiles", JSON.stringify(selectedProfiles));

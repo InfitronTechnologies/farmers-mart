@@ -29,7 +29,14 @@ const ForgotPassword = () => {
       : '/farmmart_api/v2/account/forget_password';
 
     try {
-      const response = await axios.post(apiUrl, requestData);
+      const response = await axios.post(apiUrl, requestData, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Allow-Origin': '*',
+          'charset':'UFT-8'
+        }
+      });
 
       if (response.status == 200) {
         setSuccess('Password reset successfully. Please log in with your new password.');
