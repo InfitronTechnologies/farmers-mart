@@ -4,6 +4,7 @@ import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useProfile } from "../../ProfileContext/ProfileContext";
 
 const SubcategoryForum = () => {
+  const navigate = useNavigate()
   const { subcategoryId } = useParams(); // Get subcategory ID from the URL
   const [posts, setPosts] = useState([]);
   const [picture, setPicture] = useState(null);
@@ -120,9 +121,8 @@ const SubcategoryForum = () => {
             'charset':'UFT-8'
           }
         })
-        console.log(updatedForumData)
         console.log(response.data)
-        useNavigate('/user')
+        navigate('/user')
       }catch(error){
         console.error("Error creating forum:", error.response.data || error.message)
       }     

@@ -1,6 +1,10 @@
 {
-    "rewrites": [
-      { "source": "/(.*)", "destination": "/" }
-    ]
+  "rewrites": [
+    {
+      "source": "/farmmart_api/v2/:path*",
+      "destination": "https://your-api-url.com/farmmart_api/v2/:path*"
+    }
+  ],
+  "framework": "vite",
+  "cleanUrls": true
 }
-  

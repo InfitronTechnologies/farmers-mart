@@ -24,7 +24,7 @@ import Orders from "./ConsumerMenu/Orders";
 import ConsumerDashboard from "./ConsumerMenu/ConsumerDashboard";
 import PartnerServiceUpload from "./PartnerMenu/PartnerServiceUpload";
 import ForumCategories from "./UserForum/ForumCategories";
-import UserForum from './UserForum/UserForum';
+import Forums from './UserForum/Forums';
 import SubcategoryForum from "./UserForum/SubcategoryForum";
 import KYC from "./Profile/KYC/KYC";
 
@@ -128,7 +128,7 @@ function SideBar() {
                 </Sidebar.Item>
               <Sidebar.Collapse icon={Forum} label='Forum'>
                 <Sidebar.Item href="/user/createforum" >Create Forum </Sidebar.Item>
-                <Sidebar.Item href="/user/forum" >Your Forums </Sidebar.Item>
+                <Sidebar.Item href="/user/forums" >Your Forums </Sidebar.Item>
               </Sidebar.Collapse>
                 <Sidebar.Item href="" onClick={handleLogout} icon={Logout}>
                   Logout
@@ -162,6 +162,7 @@ function SideBar() {
             <Route path='buyer/farmers-profile' element={<FarmerProfiles/>} /> 
             <Route path='createforum' element={<ForumCategories/>} />
             <Route path='createforum/:subcategoryId' element={<SubcategoryForum/> } />
+            <Route path='forums' element={<Forums/>} />
           </Routes>  
         </div>
       </div> 

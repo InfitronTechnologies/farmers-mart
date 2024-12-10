@@ -91,14 +91,16 @@ const Signup = () => {
       : '/farmmart_api/v2/account/account_otp_active';
 
     try {
-      const response = await axios.post(apiUrl, { code: otpCode.join('') }, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Headers': '*',
-          'Access-Control-Allow-Origin': '*',
-          'charset':'UFT-8'
-        }
-      });
+      const response = await axios.post(apiUrl, { code: otpCode.join('') }, 
+        // {
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'Access-Control-Allow-Headers': '*',
+        //     'Access-Control-Allow-Origin': '*',
+        //     'charset':'UFT-8'
+        //   }
+        // }
+      );
       if (response.status === 200) {
         setSuccess(true);
         if (response.data.status === 1) {
@@ -151,14 +153,16 @@ const Signup = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post(apiUrl, formData, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Headers': '*',
-          'Access-Control-Allow-Origin': '*',
-          'charset':'UFT-8'
-        }
-      });
+      const response = await axios.post(apiUrl, formData, 
+        // {
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'Access-Control-Allow-Headers': '*',
+        //     'Access-Control-Allow-Origin': '*',
+        //     'charset':'UFT-8'
+        //   }
+        // }
+      );
 
       // Extract JSON portion from the response
       const responseDataString = response.data;
