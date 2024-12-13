@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Sidebar } from "flowbite-react";
 import { useProfile } from "../ProfileContext/ProfileContext";
-import { Agriculture, Dashboard, Handshake, LocalShipping, Login, Logout, Menu, Person, Person2, ShoppingBag, Storefront, SupportAgent, Forum } from '@mui/icons-material';
+import { Agriculture, Dashboard, Handshake, LocalShipping, Login, Logout, Menu, Person, Person2, ShoppingBag, Storefront, SupportAgent, Forum, Newspaper } from '@mui/icons-material';
 import { Link, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import UserOverview from './UserOverview/UserOverview';
 import ProfileOverview from './Profile/ProfileOverview';
@@ -25,8 +25,14 @@ import ConsumerDashboard from "./ConsumerMenu/ConsumerDashboard";
 import PartnerServiceUpload from "./PartnerMenu/PartnerServiceUpload";
 import ForumCategories from "./UserForum/ForumCategories";
 import Forums from './UserForum/Forums';
+import ForumData from './UserForum/ForumData'
 import SubcategoryForum from "./UserForum/SubcategoryForum";
 import KYC from "./Profile/KYC/KYC";
+import NewsCategories from "./News/NewsCategories";
+import NewsSubcategory from "./News/NewsSubcategory";
+import AllNews from "./News/AllNews";
+import NewsData from "./News/NewsData";
+
 
 function SideBar() {
   const [collapsed, setCollapsed] = useState(false);
@@ -130,6 +136,10 @@ function SideBar() {
                 <Sidebar.Item href="/user/createforum" >Create Forum </Sidebar.Item>
                 <Sidebar.Item href="/user/forums" >Your Forums </Sidebar.Item>
               </Sidebar.Collapse>
+              <Sidebar.Collapse icon={Newspaper} label='News'>
+                <Sidebar.Item href="/user/create-news" >Create News </Sidebar.Item>
+                <Sidebar.Item href="/user/news" >Your News </Sidebar.Item>
+              </Sidebar.Collapse>
                 <Sidebar.Item href="" onClick={handleLogout} icon={Logout}>
                   Logout
                 </Sidebar.Item>
@@ -163,6 +173,11 @@ function SideBar() {
             <Route path='createforum' element={<ForumCategories/>} />
             <Route path='createforum/:subcategoryId' element={<SubcategoryForum/> } />
             <Route path='forums' element={<Forums/>} />
+            <Route path='forums/:forumId' element={<ForumData/>} />
+            <Route path='create-news' element={<NewsCategories/>} />
+            <Route path='create-news/:subcategoryId' element={<NewsSubcategory/>} />
+            <Route path='news' element={<AllNews/>} />
+            <Route path='news/:newsId' element={<NewsData/>} />
           </Routes>  
         </div>
       </div> 

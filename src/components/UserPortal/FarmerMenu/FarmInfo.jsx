@@ -10,7 +10,7 @@ function FarmInfo() {
   const [error, setError] = useState(null);
   const [states, setStates] = useState([])
   const [countries, setCountries] = useState([])
-  const [farmlandTypeId, setFarmlandTypeId] = ([])
+  const [landTypeId, setLandTypeId] = useState([])
   const {userId, userToken} = useProfile()
   const [farmerId, setFarmerId] = useState()
   const [farms, setFarms] = useState([
@@ -80,7 +80,6 @@ function FarmInfo() {
     };
     fetchCountries();
 
-
     const farmlandType = async () => {
       const landUrl = process.env.NODE_ENV === 'production' 
       ? 'https://ourservicestech.com.ng/farmmart_api/v2/list_all_farm_land_type'
@@ -88,8 +87,7 @@ function FarmInfo() {
 
       try {
         const response =  await axios.get(landUrl)
-        console.log(response.data)
-        // console.log(farmlandTypeId)
+        setLandTypeId(response.data.data)
       } catch (error) {
         console.error()
       }
@@ -284,27 +282,27 @@ function FarmInfo() {
             required
           />
 
-          {/* <div className="mb-4">
+          <div className="mb-4">
             <div className='relative'>
               <select
                 className="w-full p-2 border-1 rounded-xl text-black bg-white focus:border-farmersmartDarkGreen 
                 focus:outline-none focus:ring-0 focus:border-2"
                 name="state"
-                value={newFarm.farm_land_type_number}
-                onChange={(e) => setNewFarm({ ...newFarm, farm_land_type_number : e.target.value })}
+                value={newFarm.farm_land_type_id}
+                onChange={(e) => setNewFarm({ ...newFarm, farm_land_type_id : e.target.value })}
                 required
               >
                 <option value="">What type of farmland do you have?</option>
-                {farmlandTypeId.map((land) => (
+                {landTypeId.map((land) => (
                 <option key={land.id} value={land.id}>{land.farm_land_type_name}</option>
                 ))}
               </select>
             </div>
-          </div> */}
+          </div>
 
           <label className="block mb-2">Number of Plot, Acres or Hectares</label>
           <input 
-            type="" 
+            type="number" 
             name="farm_land_type_number"
             onChange={handleInputChange}
             className="border p-2 w-full mb-4" 

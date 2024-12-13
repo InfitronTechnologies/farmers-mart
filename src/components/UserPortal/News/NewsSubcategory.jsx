@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useProfile } from "../../ProfileContext/ProfileContext";
 
-const SubcategoryForum = () => {
+const NewsSubcategory = () => {
   const navigate = useNavigate()
   const { subcategoryId } = useParams(); // Get subcategory ID from the URL
   const [posts, setPosts] = useState([]);
@@ -14,12 +14,12 @@ const SubcategoryForum = () => {
   const [error, setError] = useState(null)
   const location = useLocation();
   const { categoryId, categoryName, subcategoryName } = location.state || {};
-  const [forumData, setForumData] = useState({
+  const [newsData, setnewsData] = useState({
     users_id: userId,
     users_token: userToken,
-    forum_name: "",
-    forum_desc: "",
-    forum_image: '',
+    news_name: "",
+    news_desc: "",
+    news_image: '',
     cat_id: categoryId || "",
     subcat_id: subcategoryId || "",
   });
@@ -49,7 +49,7 @@ const SubcategoryForum = () => {
   // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForumData((prevData) => ({
+    setnewsData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -83,9 +83,9 @@ const SubcategoryForum = () => {
       const uploadData = new FormData();
       uploadData.append("upimg", picture);
 
-      setForumData((prevData) => ({
+      setnewsData((prevData) => ({
         ...prevData,
-        forum_image: picture.name,
+        news_image: picture.name,
       }));
 
       try{
@@ -100,20 +100,20 @@ const SubcategoryForum = () => {
         console.error("Error uploading image:", error.response?.data || error.message);
       }
 
-      let updatedForumData = {
-        ...forumData,
-        forum_image:picture.name,
+      let updatednewsData = {
+        ...newsData,
+        news_image:picture.name,
       }
 
-      // Step 2: Submit Forum Details    
+      // Step 2: Submit news Details    
       const apiUrl = process.env.NODE_ENV === 'production'
-      ? 'https://ourservicestech.com.ng/farmmart_api/v2/forum/create_forum'
-      : '/farmmart_api/v2/forum/create_forum'
+      ? 'https://ourservicestech.com.ng/farmmart_api/v2/news/create_news'
+      : '/farmmart_api/v2/news/create_news'
 
-      console.log(updatedForumData)
+      console.log(updatednewsData)
       
       try{
-        const response = await axios.post (apiUrl, updatedForumData, {
+        const response = await axios.post (apiUrl, updatednewsData, {
           headers: {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Headers': '*',
@@ -122,9 +122,9 @@ const SubcategoryForum = () => {
           }
         })
         console.log(response.data)
-        navigate('/user/forums')
+        navigate('/user/news')
       }catch(error){
-        console.error("Error creating forum:", error.response.data || error.message)
+        console.error("Error creating news:", error.response.data || error.message)
       }     
 
     } catch (err) {
@@ -137,8 +137,8 @@ const SubcategoryForum = () => {
 
 
   return (
-    <div className="subcategory-forum">
-      <h1 className="text-2xl font-bold mb-4">{subcategoryName} Forum</h1>
+    <div className="subcategory-news">
+      <h1 className="text-2xl font-bold mb-4">{subcategoryName} news</h1>
       <div className="subcategory-info mb-4">
         <p className="text-gray-600">Category: {categoryName}</p>
         <p className="text-gray-600">Subcategory ID: {subcategoryId}</p>
@@ -157,38 +157,38 @@ const SubcategoryForum = () => {
         )}
       </div>
 
-      {/* Create Forum Form */}
+      {/* Create news Form */}
       {showForm && (
-        <div className="create-forum mb-8">
-          <h2 className="text-xl font-semibold mb-2">Create a New Forum</h2>
+        <div className="create-news mb-8">
+          <h2 className="text-xl font-semibold mb-2">Create News</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium">Forum Name</label>
+              <label className="block text-sm font-medium">Title</label>
               <input
                 type="text"
-                name="forum_name"
-                value={forumData.forum_name}
+                name="news_name"
+                value={newsData.news_name}
                 onChange={handleChange}
                 required
                 className="w-full px-4 py-2 border rounded focus:ring focus:ring-blue-300"
-                placeholder="Enter forum name"
+                placeholder="Enter news name"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium">Forum Description</label>
+              <label className="block text-sm font-medium">Description</label>
               <textarea
-                name="forum_desc"
-                value={forumData.forum_desc}
+                name="news_desc"
+                value={newsData.news_desc}
                 onChange={handleChange}
                 required
                 className="w-full px-4 py-2 border h-96 rounded focus:ring focus:ring-blue-300"
-                placeholder="Enter forum description"
+                placeholder="Enter news description"
               ></textarea>
             </div>
 
             <div>
-              <label className="block text-sm font-medium">Forum Image</label>
+              <label className="block text-sm font-medium">Image</label>
               <input
                 type="file"
                 accept="image/*"
@@ -205,7 +205,7 @@ const SubcategoryForum = () => {
                   loading ? "opacity-50 cursor-not-allowed" : ""
                 }`}
               >
-                {loading ? "Creating..." : "Create Forum"}
+                {loading ? "Creating..." : "Create news"}
               </button>
               <button
                 type="button"
@@ -252,4 +252,4 @@ const SubcategoryForum = () => {
   );
 };
 
-export default SubcategoryForum;
+export default NewsSubcategory;

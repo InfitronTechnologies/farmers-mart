@@ -3,11 +3,11 @@ import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useProfile } from "../../ProfileContext/ProfileContext";
 import axios from "axios";
 
-const ForumData = () => {
-  const { forumId } = useParams();
+const NewsData = () => {
+  const { newsId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const { forumName, forumCategory, forumSubCategory, forumDescription, forumOwner } = location.state || {};
+  const { newsName, newsCategory, newsSubCategory, newsDescription, newsOwner } = location.state || {};
   
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -16,10 +16,10 @@ const ForumData = () => {
   
   const { userId, userToken } = useProfile();
 
-  const [forumComment, setForumComment] = useState({
+  const [newsComment, setnewsComment] = useState({
     users_id: userId,
     users_token: userToken,
-    forum_id: forumId,
+    news_id: newsId,
     user_msg: ''
   });
 
@@ -29,8 +29,8 @@ const ForumData = () => {
 
     const handleAllComments = async () => {
         const url  = process.env.NODE_ENV === "production"
-        ? `https://ourservicestech.com.ng/farmmart_api/v2/forum_data/select_by_forum_id?id=${forumId}`
-        : `/farmmart_api/v2/forum_data/select_by_forum_id?id=${forumId}`;
+        ? `https://ourservicestech.com.ng/farmmart_api/v2/news_data/select_by_news_id?id=${newsId}`
+        : `/farmmart_api/v2/news_data/select_by_news_id?id=${newsId}`;
       
         try {
             const response = await axios.get(url);
@@ -38,7 +38,7 @@ const ForumData = () => {
                 setAllComments(response.data.data)
             }
         }  catch (err) {
-            setError("Failed to fetch forums. Please try again later.");
+            setError("Failed to fetch newss. Please try again later.");
             console.error(err);
         } finally {
             setLoading(false);
@@ -52,8 +52,8 @@ const ForumData = () => {
   };
 
   const handleChange = (e) => {
-    setForumComment({
-      ...forumComment,
+    setnewsComment({
+      ...newsComment,
       user_msg: e.target.value
     });
   };
@@ -68,21 +68,21 @@ const ForumData = () => {
     }
 
     // Validate comment
-    if (!forumComment.user_msg.trim()) {
+    if (!newsComment.user_msg.trim()) {
       setError("Comment cannot be empty");
       return;
     }
 
     const commentUrl = process.env.NODE_ENV === 'production'
-      ? 'https://ourservicestech.com.ng/farmmart_api/v2/forum_data/create_forum_data'
-      : '/farmmart_api/v2/forum_data/create_forum_data';
+      ? 'https://ourservicestech.com.ng/farmmart_api/v2/news_data/create_news_data'
+      : '/farmmart_api/v2/news_data/create_news_data';
 
     setLoading(true);
     setError(null);
 
     try {
       const response = await axios.post(commentUrl, {
-        ...forumComment,
+        ...newsComment,
         users_id: userId,
         users_token: userToken
       });
@@ -90,16 +90,16 @@ const ForumData = () => {
       console.log(response.data);
       
       // Reset form after successful submission
-      setForumComment({
+      setnewsComment({
         users_id: userId,
         users_token: userToken,
-        forum_id: forumId,
+        news_id: newsId,
         user_msg: ''
       });
       setCommentForm(false);
     } catch (error) {
       setError(error.response?.data?.message || error.message || "An error occurred");
-      console.error("Error creating forum comment:", error);
+      console.error("Error creating news comment:", error);
     } finally {
       setLoading(false);
     }
@@ -110,7 +110,7 @@ const ForumData = () => {
       <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
         {/* Header Section */}
         <div className="flex justify-between items-center border-b pb-4 mb-6">
-          <h1 className="text-2xl font-bold text-gray-800">{forumName}</h1>
+          <h1 className="text-2xl font-bold text-gray-800">{newsName}</h1>
           <button
             onClick={handleBackClick}
             className="text-sm text-white bg-blue-500 px-4 py-2 rounded hover:bg-blue-600"
@@ -119,23 +119,23 @@ const ForumData = () => {
           </button>
         </div>
 
-        {/* Forum Info Section */}
+        {/* news Info Section */}
         <div className="space-y-4">
           <div className="flex items-center space-x-4">
             <span className="text-gray-500 font-medium">Category:</span>
             <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
-              {forumCategory}
+              {newsCategory}
             </span>
           </div>
           <div className="flex items-center space-x-4">
             <span className="text-gray-500 font-medium">Subcategory:</span>
             <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">
-              {forumSubCategory}
+              {newsSubCategory}
             </span>
           </div>
           <div className="flex items-center space-x-4">
             <span className="text-gray-500 font-medium">Created By:</span>
-            <span className="text-gray-800 font-semibold">{forumOwner}</span>
+            <span className="text-gray-800 font-semibold">{newsOwner}</span>
           </div>
         </div>
 
@@ -143,7 +143,7 @@ const ForumData = () => {
         <div className="mt-6">
           <h2 className="text-xl font-semibold text-gray-700 mb-2">Description</h2>
           <p className="text-gray-600 leading-relaxed">
-            {forumDescription}
+            {newsDescription}
           </p>
         </div>
 
@@ -176,7 +176,7 @@ const ForumData = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <textarea
                 name="user_msg"
-                value={forumComment.user_msg}
+                value={newsComment.user_msg}
                 onChange={handleChange}
                 className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 rows="4"
@@ -200,8 +200,8 @@ const ForumData = () => {
                 <ul className="space-y-4">
                 {allComments.slice().reverse().map((comment, index) => ( //.slice.reverse to show latest comment first
                     <li key={index} className="p-4 border rounded shadow">
-                        <p className="text-lg font-semibold"> By: {comment.user_forum}</p>
-                        <p>{comment.user_msg}</p>
+                        <p className="text-lg font-semibold"> By: {comment.user_news}</p>
+                        <p>{comment.user_comment}</p>
                         <p className="text-gray-500 text-sm">
                             Posted: {comment.created_date} {comment.created_time}
                         </p>
@@ -217,4 +217,4 @@ const ForumData = () => {
   );
 };
 
-export default ForumData;
+export default NewsData;

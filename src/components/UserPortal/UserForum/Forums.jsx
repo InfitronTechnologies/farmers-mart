@@ -50,22 +50,15 @@ const Forums = () => {
         <ul className="space-y-4">
           {forums.map((forum, index) => (
             <Link
+              key={forum.id}
               to={`/user/forums/${forum.id}`}
               state={{
+                forumId: forum.id,
                 forumName: forum.forum_name,
                 forumCategory: forum.category,
                 forumSubCategory: forum.sub_category,
                 forumDescription: forum.forum_desc,
-                subcategoryId: subcategory.id,
-                subcategoryName: subcategory.sub_category_name,
-
-                "id": "21",
-        "forum_name": "Yam Festival",
-        "forum_desc": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet aperiam suscipit dignissimos, mollitia possimus quia harum unde. Reiciendis maiores culpa expedita facere iusto blanditiis itaque, corrupti sapiente voluptates eveniet. Quibusdam?\nLorem ips",
-        "forum_image": "10-12-2024state.jpg",
-        "category": "Tubers",
-        "sub_category": "Yam",
-        "forum_user": "Muqsit Lawal ",
+                forumOwner: forum.forum_user
               }}
             >
               <li key={index} className="p-4 border rounded shadow">
