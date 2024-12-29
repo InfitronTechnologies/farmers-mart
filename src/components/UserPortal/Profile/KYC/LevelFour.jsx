@@ -1,9 +1,11 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useProfile } from '../../../ProfileContext/ProfileContext';
 
 const LevelFour = ({userId, userToken}) => {
     const {kycLevel, setKycLevel} = useProfile()
+    const [banks, setBanks] = useState([])
+    const [errorMessage, setErrorMessage] = useState(null); // Error message state for validation errors
     const [formData, setFormData] = useState({
         users_id : userId,
         users_token	: userToken,
@@ -12,35 +14,56 @@ const LevelFour = ({userId, userToken}) => {
         account_number : "",
     })
 
+    useEffect(() => {
+        const bankUrl =  process.env.NODE_ENV === 'production' 
+        ?'https://ourservicestech.com.ng/farmmart_api/v2/list_all_bank'
+        :'/farmmart_api/v2/list_all_bank'
+
+        const getBanks = async () => {
+            try {
+                const response = await axios.get(bankUrl)
+                console.log(response.data.data)            
+                setBanks(response.data.data)            
+            } catch (error) {
+                console.error(error)
+            }
+        }
+        getBanks()
+    }, [])
+
     const handleChange = (e) => {
         const {name, value} = e.target
         setFormData({
             ...formData, 
             [name]:value
         })
-    }       
+    }
+
+    const validateAccountNumber = (accountNumber) => {
+        return /^[0-9]{10}$/.test(accountNumber);
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Validate account number
+        if (!validateAccountNumber(formData.account_number)) {
+            setErrorMessage("Account number must be 10 digits.");
+            return;
+        }
 
         const apiUrl =  process.env.NODE_ENV === 'production' 
         ?'https://ourservicestech.com.ng/farmmart_api/v2/kyc/level_four'
         :'/farmmart_api/v2/kyc/level_four'
 
         try {
-            const response = await axios.post(apiUrl, formData, {
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Access-Control-Allow-Headers': '*',
-                  'Access-Control-Allow-Origin': '*',
-                  'charset':'UFT-8'
-                }
-              })
+            const response = await axios.post(apiUrl, formData)
             console.log("Submission successful:", response.data);
 
             if (response.data.status === 1) {
                 console.log(response)
                 setKycLevel(Number(kycLevel) + 1)
+                setErrorMessage(null); // Clear error message after successful submission
             } else {
                 throw new Error(response.data.message || 'KYC submission failed');
             }
@@ -51,19 +74,23 @@ const LevelFour = ({userId, userToken}) => {
 
     return(
         <div>
-            <h2 className="text-2xl font-semibold text-green-800 mb-4">KYC Level 3</h2>
+            <h2 className="text-2xl font-semibold text-green-800 mb-4">KYC Level 4</h2>
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Enter your Bank ID</label>
-                    <input
-                        type="text"
+                <div className="mb-4">
+                    <div className='relative'>
+                        <select
+                        className="w-full p-2 border rounded-md focus:ring focus:ring-green-200 focus:outline-none"
                         name="bank_id"
                         value={formData.bank_id}
-                        onChange={handleChange}
-                        className="w-full p-2 border rounded-md focus:ring focus:ring-green-200 focus:outline-none"
-                        placeholder=""
+                        onChange={(e) => setFormData({ ...formData, bank_id: e.target.value })}
                         required
-                    />
+                        >
+                        <option value="">Select bank</option>
+                        {banks.map((bank) => (
+                        <option key={bank.id} value={bank.id}>{bank.bank_name}</option>
+                        ))}
+                        </select>
+                    </div>
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Account name</label>
@@ -88,6 +115,7 @@ const LevelFour = ({userId, userToken}) => {
                         placeholder=""
                         required
                     />
+                    {errorMessage && <p className="text-red-500 text-sm mt-1">{errorMessage}</p>}
                 </div>
                 <button
                     type="submit"

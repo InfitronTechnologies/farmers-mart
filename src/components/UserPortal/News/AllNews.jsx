@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 const AllNews = () => {
-  const [newss, setnewss] = useState([]);
+  const [allNews, setAllNews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -13,22 +13,19 @@ const AllNews = () => {
       setError(null);
       const apiUrl =
         process.env.NODE_ENV === "production"
-          ? "https://ourservicestech.com.ng/farmmart_api/v2/news/select_by_news_id"
-          : "/farmmart_api/v2/news/select_by_news_id";
+          ? "https://ourservicestech.com.ng/farmmart_api/v2/news/list_last10_news"
+          : "/farmmart_api/v2/news/list_last10_news";
 
       const fetchednewss = [];
       try {
-        for (let id = 1; id <= 21; id++) {
-          try {
-            const response = await axios.get(`${apiUrl}?id=${id}`);
-            if (response.data) {
-              fetchednewss.push(response.data.data); // Assuming news data is in `data`
-            }
-          } catch (err) {
-            console.warn(`news with ID ${id} not found or error occurred`);
+        try {
+          const response = await axios.get(apiUrl);
+          if (response.data) {
+            setAllNews(response.data.data); // Assuming news data is in `data`
           }
+        } catch (err) {
+          console.warn(`news with ID not found or error occurred`);
         }
-        setnewss(fetchednewss);
       } catch (err) {
         setError("Failed to fetch newss. Please try again later.");
         console.error(err);
@@ -45,10 +42,10 @@ const AllNews = () => {
 
   return (
     <div>
-      <h1 className="text-xl font-bold mb-4">newss</h1>
-      {newss.length > 0 ? (
+      <h1 className="text-xl font-bold mb-4">News</h1>
+      {allNews.length > 0 ? (
         <ul className="space-y-4">
-          {newss.map((news, index) => (
+          {allNews.map((news) => (
             <Link
               key={news.id}
               to={`/user/news/${news.id}`}
@@ -61,7 +58,7 @@ const AllNews = () => {
                 newsOwner: news.news_user
               }}
             >
-              <li key={index} className="p-4 border rounded shadow">
+              <li key={news.id} className="p-4 border rounded shadow">
                 <h2 className="text-lg font-semibold">{news.news_name}</h2>
                 <p>{news.news_desc}</p>
                 <p>Category: {news.category}, Subcategory:{news.subcategory}</p>
@@ -73,7 +70,7 @@ const AllNews = () => {
           ))}
         </ul>
       ) : (
-        <p>No newss available.</p>
+        <p>No news available.</p>
       )}
     </div>
   );

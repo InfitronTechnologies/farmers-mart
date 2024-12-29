@@ -1,49 +1,3 @@
-// import React from 'react';
-// import { Link } from 'react-router-dom';
-
-// const ProductCard = ({ product }) => {
-//   return (
-//     <div className="border p-4 rounded shadow-sm hover:shadow-lg transition-shadow">
-//       <img src={product.image} alt={product.name} className="w-full h-40 object-cover mb-4 rounded" />
-//       <h3 className="text-lg font-semibold">{product.name}</h3>
-//       <p className="text-gray-500">{product.shortDescription}</p>
-//       <Link
-//         to={`/products/${product.id}`}
-//         className="mt-4 inline-block bg-farmersmartDarkGreen text-white px-4 py-2 rounded"
-//       >
-//         View Details
-//       </Link>
-//     </div>
-//   );
-// };
-
-// export default ProductCard;
-
-
-// import React from 'react';
-// import { Link } from 'react-router-dom';
-
-// const ProductCard = ({ product }) => {
-//   return (
-//     <div className="border p-4 rounded shadow-sm hover:shadow-lg transition-shadow">
-//       <img src={product.image} alt={product.name} className="w-full h-40 object-cover mb-4 rounded" />
-//       <h3 className="text-lg font-semibold">{product.name}</h3>
-//       <p className="text-gray-500">{product.shortDescription}</p>
-//       <span className="text-farmersmartDarkGreen font-bold">${product.price.toFixed(2)}</span>
-//       <Link
-//         to={`/products/${product.id}`}
-//         className="mt-4 inline-block bg-farmersmartDarkGreen text-white ml-2 px-4 py-2 rounded"
-//       >
-//         View Details
-//       </Link>
-//     </div>
-//   );
-// };
-
-// export default ProductCard;
-
-
-import { FavoriteBorderOutlined } from '@mui/icons-material';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -66,7 +20,7 @@ const ProductCard = ({ product }) => {
         <div className="flex justify-between items-center mb-2">
           <h3 className="text-lg font-bold">{product.name}</h3>
           <span className="text-[#F7C531] font-extrabold text-xl">
-            ₦{product.price.toLocaleString()}
+            ₦{product.price}
           </span>
         </div>
         <p className="text-gray-500 text-xs mt-1 mb-4">{product.shortDescription}</p>

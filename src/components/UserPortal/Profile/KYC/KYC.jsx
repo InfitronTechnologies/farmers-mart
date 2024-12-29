@@ -10,9 +10,9 @@ import LevelFive from './LevelFive';
 const KYC = () => {
   const { userId, userToken, kycLevel } = useProfile(); // Get user data from context
   const navigate = useNavigate();
-  console.log((kycLevel))
 
-
+  console.log(kycLevel)
+  
   // Handle progression to the next level (or success page)
   const goToNextLevel = () => {
     navigate('/user'); // Example navigation after KYC completion
@@ -47,7 +47,7 @@ const KYC = () => {
             userToken={userToken}
           />
         )}
-        {(kycLevel == 4 || kycLevel === '4') && (
+        {(kycLevel == 4 || kycLevel == '4') && (
           <LevelFive
             userId={userId}
             userToken={userToken}

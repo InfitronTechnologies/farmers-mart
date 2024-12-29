@@ -6,11 +6,14 @@ import PriceFilter from './PriceFilter'; // Price filter component
 import MarketNav from './MarketNav';
 import { dummyProducts } from '../../constants/constant';
 import { Menu } from '@mui/icons-material'; // Material UI Menu Icon
+import axios from 'axios';
 
 const Marketplace = ({ addToCart, cartItems }) => {
   const [filteredProducts, setFilteredProducts] = useState(dummyProducts);
   const [sortOption, setSortOption] = useState(''); // To track the selected sort option
   const [isSidebarVisible, setIsSidebarVisible] = useState(true); // Sidebar visibility state
+  const [categoryName, setCategoryName] = useState ('')
+  const [subcategories, setSubcategories] = useState([])
 
   const handleSort = (e) => {
     const sortBy = e.target.value;
@@ -23,11 +26,25 @@ const Marketplace = ({ addToCart, cartItems }) => {
     setIsSidebarVisible(!isSidebarVisible);
   };
 
+  const handleSubcategoryProducts = async (name, id) => {
+    const url = process.env.NODE_ENV === 'production'
+    ? `https://ourservicestech.com.ng/farmmart_api/v2/product/select_by_subcat_id_get_product?id=${id}`
+    : `/farmmart_api/v2/product/select_by_subcat_id_get_product?id=${id}`
+
+    try{  
+      const response = await axios.get(url)
+      setFilteredProducts(response.data.data)
+      setCategoryName(name)
+    } catch (error) {
+      console.error("Category Error:", error)
+    }
+  }
+
   return (
     <div className="relative text-montserrat">
       {/* Navigation */}
       <div className="fixed top-0 left-0 w-full z-30">
-        <MarketNav />
+        <MarketNav setSearchResults={setFilteredProducts} />
       </div>
 
       {/* Toggle button for sidebar */}
@@ -46,7 +63,11 @@ const Marketplace = ({ addToCart, cartItems }) => {
             } fixed lg:relative left-0 top-20 md:top-0 z-20 h-full w-64 bg-[#c1e84991] p-4 rounded-xl`}
           >
             <div className="space-y-8">
-              <CategoryFilter setFilteredProducts={setFilteredProducts} />
+              <CategoryFilter 
+                setFilteredProducts={setFilteredProducts} 
+                setCategoryName={setCategoryName}
+                setSubcategories={setSubcategories}  
+              />
               <PriceFilter setFilteredProducts={setFilteredProducts} />
             </div>
           </div>
@@ -59,7 +80,7 @@ const Marketplace = ({ addToCart, cartItems }) => {
           >
             {/* Sorting Bar */}
             <div className="flex flex-col md:flex-row justify-between items-center mb-6">
-              <h2 className="text-xl font-bold">Crop Production</h2>
+              <h2 className="text-xl font-bold">{categoryName == '' ? "Produce": categoryName}</h2>
               <div className="flex flex-row flex-wrap items-center md:space-x-4">
                 <select
                   className="p-2 border rounded-xl border-white m-1"
@@ -90,6 +111,18 @@ const Marketplace = ({ addToCart, cartItems }) => {
                 </select>
               </div>
             </div>
+
+            <div className='flex flex-row mb-4'>
+            {subcategories.map((subcategory) => (
+              <button 
+                key={subcategory.id}
+                onClick={() => handleSubcategoryProducts(subcategory.sub_category_name, subcategory.id)}
+                className = "px-4 py-2 rounded-full text-sm text-white font-medium transition-colors duration-300 border-2 mx-2 border-farmersmartDarkGreen bg-farmersmartDarkGreen"
+              >
+                {subcategory.sub_category_name}
+              </button>
+            ))}  
+            </div>           
 
             {/* Product Grid */}
             <ProductGrid products={filteredProducts} />

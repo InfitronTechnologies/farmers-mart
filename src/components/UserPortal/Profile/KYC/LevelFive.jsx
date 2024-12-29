@@ -26,14 +26,7 @@ const LevelFive = ({userId, userToken}) => {
         :'/farmmart_api/v2/kyc/level_five'
 
         try {
-            const response = await axios.post(apiUrl, formData, {
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Access-Control-Allow-Headers': '*',
-                  'Access-Control-Allow-Origin': '*',
-                  'charset':'UFT-8'
-                }
-              })
+            const response = await axios.post(apiUrl, formData)
             console.log("Submission successful:", response.data);
             
             if (response.data.status === 1) {
@@ -49,10 +42,10 @@ const LevelFive = ({userId, userToken}) => {
 
     return(
         <div>
-            <h2 className="text-2xl font-semibold text-green-800 mb-4">KYC Level 3</h2>
+            <h2 className="text-2xl font-semibold text-green-800 mb-4">KYC Level 5</h2>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Enter your NIN(National Identification Number)</label>
+                    <label className="block text-sm font-medium text-gray-700">Enter your BVN(Bank Verification Number)</label>
                     <input
                         type="text"
                         name="bvn"

@@ -13,22 +13,18 @@ const Forums = () => {
       setError(null);
       const apiUrl =
         process.env.NODE_ENV === "production"
-          ? "https://ourservicestech.com.ng/farmmart_api/v2/forum/select_by_forum_id"
-          : "/farmmart_api/v2/forum/select_by_forum_id";
+          ? "https://ourservicestech.com.ng/farmmart_api/v2/forum/list_last10_forum"
+          : "/farmmart_api/v2/forum/list_last10_forum";
 
-      const fetchedForums = [];
       try {
-        for (let id = 11; id <= 21; id++) {
-          try {
-            const response = await axios.get(`${apiUrl}?id=${id}`);
-            if (response.data) {
-              fetchedForums.push(response.data.data); // Assuming forum data is in `data`
-            }
-          } catch (err) {
-            console.warn(`Forum with ID ${id} not found or error occurred`);
+        try {
+          const response = await axios.get(apiUrl);
+          if (response.data) {
+            setForums(response.data.data); // Assuming forum data is in `data`
           }
+        } catch (err) {
+          console.warn(`Forum with ID not found or error occurred`);
         }
-        setForums(fetchedForums);
       } catch (err) {
         setError("Failed to fetch forums. Please try again later.");
         console.error(err);
@@ -39,6 +35,8 @@ const Forums = () => {
 
     fetchForums();
   }, []);
+
+  console.log(forums)
 
   if (loading) return <p>Loading forums...</p>;
   if (error) return <p className="text-red-500">{error}</p>;
@@ -61,7 +59,7 @@ const Forums = () => {
                 forumOwner: forum.forum_user
               }}
             >
-              <li key={index} className="p-4 border rounded shadow">
+              <li key={forum.id} className="p-4 border rounded shadow">
                 <h2 className="text-lg font-semibold">{forum.forum_name}</h2>
                 <p>{forum.forum_desc}</p>
                 <p>Category: {forum.category}, Subcategory:{forum.subcategory}</p>

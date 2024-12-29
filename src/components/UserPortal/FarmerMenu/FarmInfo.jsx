@@ -13,10 +13,7 @@ function FarmInfo() {
   const [landTypeId, setLandTypeId] = useState([])
   const {userId, userToken} = useProfile()
   const [farmerId, setFarmerId] = useState()
-  const [farms, setFarms] = useState([
-    // Initial dummy data (optional)
-    { image: 'image1.png', address: '6 Ajayi...', type: 'Plot', number: 23, country: 'Nigeria', state: 'Abuja', date: '09-09-2024' }
-  ]);
+  const [farms, setFarms] = useState([]);
 
   const [newFarm, setNewFarm] = useState({
     users_id : userId,
@@ -28,14 +25,33 @@ function FarmInfo() {
     farm_land_type_number	: "",
     country : "",
     state	: "",
-    farm_lat : "6.601838",
-    farm_long	: "3.351486",
+    farm_lat : "",
+    farm_long	: "",
   });
 
   useEffect(() => {
 
-    // let root = "https://ourservicestech.com.ng"
-    // let path = "/farmmart_api/v2"
+    //Getting Farmers current location
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error);
+    } else {
+      console.log("Geolocation not supported");
+    }
+    
+    function success(position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+    
+      setNewFarm((prevFarm) => ({
+        ...prevFarm,
+        farm_lat: latitude,
+        farm_long: longitude,
+      }));
+    }
+
+    function error() {
+      console.log("Unable to retrieve your location");
+    }
 
     const getFarmerId = async () => {
       const farmerIdUrl = process.env.NODE_ENV === "production"
@@ -46,25 +62,36 @@ function FarmInfo() {
         const response = await axios.post(farmerIdUrl, {
           users_id : userId,
           users_token	: userToken,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Headers': '*',
-            'Access-Control-Allow-Origin': '*',
-            'charset':'UFT-8'
-          }
         })
-        // console.log(response.data.data.Farmer_id)
-        let responseId = response.data.data.Farmer_id
-        setNewFarm({...newFarm, farmer_id:responseId})
-        // setFarmerId(response.data.data.Farmer_id)
+        const responseId = response.data.data.Farmer_id
+        setNewFarm((prevFarm) => ({
+          ...prevFarm,
+          farmer_id: responseId
+        }))
+
+        //Get the list of farms registered under this particular farmer
+        const fetchFarms = async () => {
+          const farmUrl = process.env.NODE_ENV === 'production' 
+          ? 'https://ourservicestech.com.ng/farmmart_api/v2/farm/select_farm_by_farmer_id'
+          : '/farmmart_api/v2/farm/select_farm_by_farmer_id';
+    
+          try {
+            const response = await axios.post(farmUrl, {
+              farmer_id : responseId
+            })
+            setFarms(response.data.data)
+          } catch (error) {
+            console.error("Error fetching farms:", error);  
+          }
+        };
+        fetchFarms()
+     
       } catch (error) {
         console.error("Error fetching farmersId", error);
       }
     };
     getFarmerId();
-
+ 
 
     const fetchCountries = async () => {
       const countriesUrl = process.env.NODE_ENV === 'production' 
@@ -114,28 +141,23 @@ function FarmInfo() {
     };  
     fetchStates();
   }, [newFarm.country]); // Trigger this effect whenever country_id changes
-  
+
 
   const handleAddFarmClick = () => {
     setIsFormVisible(true);
+    console.log(newFarm)
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewFarm({ ...newFarm, [name]: value });
+    console.log(newFarm)
   };
 
   const handleFileChange = (e) => {
     setPicture(e.target.files[0]); // Store the selected file
   }; 
   
-
-  const handleSaveFarm = () => {
-    setFarms([...farms, newFarm]);
-    setIsFormVisible(false);
-    setNewFarm({ image: '', address: '', type: '', number: '', country: '', state: ''});
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -159,14 +181,7 @@ function FarmInfo() {
       uploadData.append("f_img", picture);
 
       try{
-        const uploadResponse = await axios.post(uploadUrl, uploadData,{
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Headers': '*',
-            'Access-Control-Allow-Origin': '*',
-            'charset':'UFT-8'
-          }
-        });
+        const uploadResponse = await axios.post(uploadUrl, uploadData);
         console.log(uploadResponse.data); // Handle response
       }
       catch (error) {
@@ -179,18 +194,12 @@ function FarmInfo() {
       };
 
       // Step 2: Submit Farm Information
-      const kycUrl = process.env.NODE_ENV === 'production'
+      const url = process.env.NODE_ENV === 'production'
           ? 'https://ourservicestech.com.ng/farmmart_api/v2/farm/create_farm'
           : '/farmmart_api/v2/farm/create_farm';
       console.log(updatedFarm)
-      const kycResponse = await axios.post(kycUrl, updatedFarm);
-      console.log(kycResponse.data)
-      // if (kycResponse.data.status === 1) {
-      //     console.log(kycResponse)
-      //     setKycLevel(kycLevel + 1)
-      // } else {
-      //     throw new Error(kycResponse.data.message || 'KYC submission failed');
-      // }
+      const response = await axios.post(url, updatedFarm);
+      console.log(response.data)
     } catch (err) {
       console.error(err);
       setError(err.message || 'Something went wrong. Please try again.');
@@ -201,76 +210,10 @@ function FarmInfo() {
 
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-xl font-bold mb-4">List of Farms</h2>
 
-      {/* Add Farm Button */}
-      {!isFormVisible && (
-        <button 
-          onClick={handleAddFarmClick} 
-          className="bg-red-500 text-white px-4 py-2 mt-4 rounded"
-        >
-          Add Farm
-        </button>
-      )}
-
-      {/* Farm List Table */}
-      <div className="overflow-x-auto mt-4">
-        <table className="table-auto w-full">
-          <thead>
-            <tr>
-              <th className='text-left'>#</th>
-              <th className='text-left'>Farm Image</th>
-              <th className='text-left'>Farm Address</th>
-              <th className='text-left'>Farm Land Type</th>
-              <th className='text-left'>Number</th>
-              <th className='text-left'>Country</th>
-              <th className='text-left'>State</th>
-              <th className='text-left'>Created Date</th>
-              <th className='text-left'>Action</th>
-              <th className='text-left'>Action</th>
-              <th className='text-left'>Add</th>
-            </tr>
-          </thead>
-          <tbody>
-            {farms.map((farm, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{farm.image}</td>
-                <td>{farm.address}</td>
-                <td>{farm.type}</td>
-                <td>{farm.number}</td>
-                <td>{farm.country}</td>
-                <td>{farm.state}</td>
-                <td>{farm.date}</td>
-                <td><button className="bg-blue-500 text-white px-4 py-2">View</button></td>
-                <td><button className="bg-green-500 text-white px-4 py-2">Map</button></td>
-                <td>
-                  <Link to='/user/add-product'>
-                    <button className="bg-red-500 text-white px-4 py-2">
-                      Product
-                    </button>
-                  </Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Add Farm Form */}
-      {isFormVisible && (
+    {/* Add Farm Form */}
+    {isFormVisible && (
         <form onSubmit={handleSubmit} className="mt-4">
-          {/* <div className="mb-4">
-            <label className="block text-gray-700 font-medium">Upload Picture:</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              required
-              className="file-input border rounded px-3 py-2"
-            />
-          </div> */}
-
           <label className="block mb-2">Farm Address</label>
           <input 
             type="text" 
@@ -357,7 +300,7 @@ function FarmInfo() {
             required
             className="file-input border rounded px-3 py-2"
           />
-
+          
           <button 
             type='submit'
             disabled={loading}
@@ -367,8 +310,65 @@ function FarmInfo() {
           >
             {loading ? 'Saving...' : 'Save Farm'}
           </button>
+
         </form>
       )}
+
+      <h2 className="text-xl font-bold mb-4">List of Farms</h2>
+
+      {/* Add Farm Button */}
+      {!isFormVisible && (
+        <button 
+          onClick={handleAddFarmClick} 
+          className="bg-red-500 text-white px-4 py-2 mt-4 rounded"
+        >
+          Add Farm
+        </button>
+      )}
+
+      {/* Farm List Table */}
+      <div className="overflow-x-auto mt-4">
+        <table className="table-auto w-full">
+          <thead>
+            <tr>
+              <th className='text-left'>S/N</th>
+              <th className='text-left'>Farm Image</th>
+              <th className='text-left'>Farm Address</th>
+              <th className='text-left'>Farm Land Type</th>
+              <th className='text-left'>Number</th>
+              <th className='text-left'>Country</th>
+              <th className='text-left'>State</th>
+              <th className='text-left'>Created Date</th>
+              <th className='text-left'>Action</th>
+              <th className='text-left'>Action</th>
+              <th className='text-left'>Add</th>
+            </tr>
+          </thead>
+          <tbody>
+            {farms.map((farm, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{farm.image_path_name}</td>
+                <td>{farm.farm_address}</td>
+                <td>{farm.farm_land_type}</td>
+                <td>{farm.farm_land_type_number}</td>
+                <td>{farm.country}</td>
+                <td>{farm.state}</td>
+                <td>{farm.created_date}</td>
+                <td><button className="bg-blue-500 text-white px-4 py-2">View</button></td>
+                <td><button className="bg-green-500 text-white px-4 py-2">Map</button></td>
+                <td>
+                  <Link to='/user/add-product'>
+                    <button className="bg-red-500 text-white px-4 py-2">
+                      Product
+                    </button>
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
