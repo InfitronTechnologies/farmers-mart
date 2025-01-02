@@ -22,7 +22,7 @@ import FarmerPartnerMatching from "./PartnerMenu/FarmerPartnerMatching";
 import FarmerProfiles from "./ConsumerMenu/FarmersProfile";
 import Orders from "./ConsumerMenu/Orders";
 import ConsumerDashboard from "./ConsumerMenu/ConsumerDashboard";
-import PartnerServiceUpload from "./PartnerMenu/PartnerServiceUpload";
+import PartnerProduct from "./PartnerMenu/PartnerProduct";
 import ForumCategories from "./UserForum/ForumCategories";
 import Forums from './UserForum/Forums';
 import ForumData from './UserForum/ForumData'
@@ -165,7 +165,7 @@ function SideBar() {
             <Route path='logistics/revenue' element={<LogisticsRevenue/>} /> 
             <Route path='partner/' element={<PartnerDashboard/>} /> 
             <Route path='partner/services' element={<PartnerServices/>} /> 
-            <Route path='partner/add-service' element={<PartnerServiceUpload/>} /> 
+            <Route path='partner/add-service' element={<PartnerProduct/>} /> 
             <Route path='partner/offers' element={<FarmerPartnerMatching/>} /> 
             <Route path='buyer/' element={<ConsumerDashboard/>} /> 
             <Route path='buyer/orders' element={<Orders/>} /> 
