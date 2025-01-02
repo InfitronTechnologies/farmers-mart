@@ -39,7 +39,7 @@ function SideBar() {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate()
   const location = useLocation();
-  const {selectedProfiles, userFirstName, userLastName, clearProfile} = useProfile()
+  const {selectedProfiles, userFirstName, userLastName, clearProfiles} = useProfile()
 
   const addProduct = (product) => {
     setProducts([...products, product]);
