@@ -15,7 +15,7 @@ const Login = () => {
   const navigate = useNavigate();
   const {setSelectedProfiles, setUserId, setUserToken, 
         setUserEmail, setUserFirstName, setUserLastName,
-        setKycLevel}  = useProfile()
+        setKycLevel, setPartnerId}  = useProfile()
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -34,18 +34,11 @@ const Login = () => {
       : '/farmmart_api/v2/account/login_account';
   
     try {
-      const response = await axios.post(apiUrl, loginData, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Headers': '*',
-          'Access-Control-Allow-Origin': '*',
-          'charset':'UFT-8'
-        }
-      });
+      const response = await axios.post(apiUrl, loginData);
   
       if (response.data.status === 1) {
-        const { id, users_token, profile, users_email, users_fn, users_ln, kyc_level } = response.data.data;
-  
+        const { id, users_token, profile, users_email, users_fn, users_ln, kyc_level, app_ids } = response.data.data;
+        const idOfPartner = app_ids.partner
         // Store user information in localStorage
         setUserId(id)
         setUserToken(users_token)
@@ -54,7 +47,7 @@ const Login = () => {
         setUserFirstName(users_fn)
         setUserLastName(users_ln)
         setKycLevel(kyc_level);
-
+        setPartnerId(idOfPartner)
         // Navigate to the user dashboard or home
         navigate('/user', { state: { selectedProfiles: profile } });
       } else {
