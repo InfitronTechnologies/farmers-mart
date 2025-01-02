@@ -346,7 +346,7 @@ function FarmInfo() {
           </thead>
           <tbody>
             {farms.map((farm, index) => (
-              <tr key={index}>
+              <tr key={farm.id}>
                 <td>{index + 1}</td>
                 <td>{farm.image_path_name}</td>
                 <td>{farm.farm_address}</td>
@@ -358,7 +358,12 @@ function FarmInfo() {
                 <td><button className="bg-blue-500 text-white px-4 py-2">View</button></td>
                 <td><button className="bg-green-500 text-white px-4 py-2">Map</button></td>
                 <td>
-                  <Link to='/user/add-product'>
+                  <Link 
+                    to='/user/add-product'
+                    state={{
+                      farmId: farm.id,
+                    }}
+                  >
                     <button className="bg-red-500 text-white px-4 py-2">
                       Product
                     </button>
