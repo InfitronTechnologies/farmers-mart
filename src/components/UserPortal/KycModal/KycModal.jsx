@@ -9,7 +9,7 @@ const KycModal = ({isOpen, onClose}) => {
         <div className="bg-white p-6 rounded-lg shadow-lg w-96">
         <h2 className="text-lg font-bold text-gray-800 mb-4">Access Restricted</h2>
         <p className="text-gray-600">
-            You need to reach the required level to access this feature. Please upgrade your account to continue.
+            You need to reach the required KYC level 3 to access this feature. Please upgrade your account to continue.
         </p>
         <button
             onClick={onClose}

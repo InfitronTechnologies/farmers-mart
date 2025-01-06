@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useProfile } from '../../ProfileContext/ProfileContext';
 import axios from 'axios';
+import KycModal from '../KycModal/KycModal';
 
 function FarmInfo() {
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -14,6 +15,7 @@ function FarmInfo() {
   const {userId, userToken, kycLevel} = useProfile()
   const [farmerId, setFarmerId] = useState()
   const [farms, setFarms] = useState([]);
+  const [isKycModalOpen, setIsKycModalOpen] = useState(false);
 
   const [newFarm, setNewFarm] = useState({
     users_id : userId,
@@ -28,6 +30,16 @@ function FarmInfo() {
     farm_lat : "",
     farm_long	: "",
   });
+
+  //KYC MODAL CONTROL
+  const handleOpenModal = () => {
+    setIsKycModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsKycModalOpen(false);
+  };
+
 
   useEffect(() => {
 
@@ -160,165 +172,172 @@ function FarmInfo() {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!picture) {
-      setError("Please upload a picture.");
-      return;
-    }else{
-      setNewFarm({...newFarm, image_name: picture.name})
-    }
 
-    setLoading(true);
-    setError(null); // Clear previous errors
-
-    try {
-      // Step 1: Upload the image
-      const uploadUrl = process.env.NODE_ENV === 'production'
-          ? 'https://ourservicestech.com.ng/farmmart_api/v2/uploadimage'
-          : '/farmmart_api/v2/uploadimage';
-
-      const uploadData = new FormData();
-      uploadData.append("f_img", picture);
-
-      try{
-        const uploadResponse = await axios.post(uploadUrl, uploadData);
-        console.log(uploadResponse.data); // Handle response
-      }
-      catch (error) {
-        console.error("Error uploading image:", error.response?.data || error.message);
+    if (kycLevel<3) {
+      handleOpenModal()//Open the modal
+    } else {
+      if (!picture) {
+        setError("Please upload a picture.");
+        return;
+      }else{
+        setNewFarm({...newFarm, image_name: picture.name})
       }
 
-      const updatedFarm = {
-        ...newFarm,
-        image_name: picture.name,
-      };
+      setLoading(true);
+      setError(null); // Clear previous errors
 
-      // Step 2: Submit Farm Information
-      const url = process.env.NODE_ENV === 'production'
-          ? 'https://ourservicestech.com.ng/farmmart_api/v2/farm/create_farm'
-          : '/farmmart_api/v2/farm/create_farm';
-      console.log(updatedFarm)
-      const response = await axios.post(url, updatedFarm);
-      console.log(response.data)
-    } catch (err) {
-      console.error(err);
-      setError(err.message || 'Something went wrong. Please try again.');
-    } finally {
-      setLoading(false);
-    }
+      try {
+        // Step 1: Upload the image
+        const uploadUrl = process.env.NODE_ENV === 'production'
+            ? 'https://ourservicestech.com.ng/farmmart_api/v2/uploadimage'
+            : '/farmmart_api/v2/uploadimage';
+
+        const uploadData = new FormData();
+        uploadData.append("f_img", picture);
+
+        try{
+          const uploadResponse = await axios.post(uploadUrl, uploadData);
+          console.log(uploadResponse.data); // Handle response
+        }
+        catch (error) {
+          console.error("Error uploading image:", error.response?.data || error.message);
+        }
+
+        const updatedFarm = {
+          ...newFarm,
+          image_name: picture.name,
+        };
+
+        // Step 2: Submit Farm Information
+        const url = process.env.NODE_ENV === 'production'
+            ? 'https://ourservicestech.com.ng/farmmart_api/v2/farm/create_farm'
+            : '/farmmart_api/v2/farm/create_farm';
+        console.log(updatedFarm)
+        const response = await axios.post(url, updatedFarm);
+        console.log(response.data)
+      } catch (err) {
+        console.error(err);
+        setError(err.message || 'Something went wrong. Please try again.');
+      } finally {
+        setLoading(false);
+      }
+    } 
   };
 
   return (
     <div className="container mx-auto p-4">
 
     {/* Add Farm Form */}
-    {isFormVisible && (
-        <form onSubmit={handleSubmit} className="mt-4">
-          <label className="block mb-2">Farm Address</label>
-          <input 
-            type="text" 
-            name="farm_address"
-            value={newFarm.farm_address}
-            onChange={handleInputChange}
-            className="border p-2 w-full mb-4" 
-            placeholder="Enter Farm Address" 
-            required
-          />
+    {isFormVisible && (    
+      <form onSubmit={handleSubmit} className="mt-4">
+        <label className="block mb-2">Farm Address</label>
+        <input 
+          type="text" 
+          name="farm_address"
+          value={newFarm.farm_address}
+          onChange={handleInputChange}
+          className="border p-2 w-full mb-4" 
+          placeholder="Enter Farm Address" 
+          required
+        />
 
-          <div className="mb-4">
-            <div className='relative'>
-              <select
-                className="w-full p-2 border-1 rounded-xl text-black bg-white focus:border-farmersmartDarkGreen 
-                focus:outline-none focus:ring-0 focus:border-2"
-                name="state"
-                value={newFarm.farm_land_type_id}
-                onChange={(e) => setNewFarm({ ...newFarm, farm_land_type_id : e.target.value })}
-                required
-              >
-                <option value="">What type of farmland do you have?</option>
-                {landTypeId.map((land) => (
-                <option key={land.id} value={land.id}>{land.farm_land_type_name}</option>
-                ))}
-              </select>
-            </div>
+        <div className="mb-4">
+          <div className='relative'>
+            <select
+              className="w-full p-2 border-1 rounded-xl text-black bg-white focus:border-farmersmartDarkGreen 
+              focus:outline-none focus:ring-0 focus:border-2"
+              name="state"
+              value={newFarm.farm_land_type_id}
+              onChange={(e) => setNewFarm({ ...newFarm, farm_land_type_id : e.target.value })}
+              required
+            >
+              <option value="">What type of farmland do you have?</option>
+              {landTypeId.map((land) => (
+              <option key={land.id} value={land.id}>{land.farm_land_type_name}</option>
+              ))}
+            </select>
           </div>
+        </div>
 
-          <label className="block mb-2">Number of Plot, Acres or Hectares</label>
-          <input 
-            type="number" 
-            name="farm_land_type_number"
-            onChange={handleInputChange}
-            className="border p-2 w-full mb-4" 
-            placeholder="Enter Number" 
-            required
-          />
+        <label className="block mb-2">Number of Plot, Acres or Hectares</label>
+        <input 
+          type="number" 
+          name="farm_land_type_number"
+          onChange={handleInputChange}
+          className="border p-2 w-full mb-4" 
+          placeholder="Enter Number" 
+          required
+        />
 
-          {/* {Country} */}
-          <div className="mb-4">
-            <div className='relative'>
-              <select
-                className="w-full p-2 border-1 rounded-xl text-black bg-white focus:border-farmersmartDarkGreen 
-                focus:outline-none focus:ring-0 focus:border-2"
-                name="country"
-                value={newFarm.country}
-                onChange={(e) => setNewFarm({ ...newFarm, country: e.target.value })}
-                required
-              >
-                <option value="">Select country</option>
-                {countries.map((country) => (
-                <option key={country.id} value={country.id}>{country.country_name}</option>
-                ))}
-              </select>
-            </div>
+        {/* {Country} */}
+        <div className="mb-4">
+          <div className='relative'>
+            <select
+              className="w-full p-2 border-1 rounded-xl text-black bg-white focus:border-farmersmartDarkGreen 
+              focus:outline-none focus:ring-0 focus:border-2"
+              name="country"
+              value={newFarm.country}
+              onChange={(e) => setNewFarm({ ...newFarm, country: e.target.value })}
+              required
+            >
+              <option value="">Select country</option>
+              {countries.map((country) => (
+              <option key={country.id} value={country.id}>{country.country_name}</option>
+              ))}
+            </select>
           </div>
+        </div>
 
-        {/* State */}
-          <div className="mb-4">
-            <div className='relative'>
-              <select
-                className="w-full p-2 border-1 rounded-xl text-black bg-white focus:border-farmersmartDarkGreen 
-                focus:outline-none focus:ring-0 focus:border-2"
-                name="state"
-                value={newFarm.state}
-                onChange={(e) => setNewFarm({ ...newFarm, state: e.target.value })}
-                required
-              >
-                <option value="">Select state</option>
-                {states.map((state) => (
-                <option key={state.id} value={state.id}>{state.state_name}</option>
-                ))}
-              </select>
-            </div>
+      {/* State */}
+        <div className="mb-4">
+          <div className='relative'>
+            <select
+              className="w-full p-2 border-1 rounded-xl text-black bg-white focus:border-farmersmartDarkGreen 
+              focus:outline-none focus:ring-0 focus:border-2"
+              name="state"
+              value={newFarm.state}
+              onChange={(e) => setNewFarm({ ...newFarm, state: e.target.value })}
+              required
+            >
+              <option value="">Select state</option>
+              {states.map((state) => (
+              <option key={state.id} value={state.id}>{state.state_name}</option>
+              ))}
+            </select>
           </div>
+        </div>
 
 
-          <label className="block text-gray-700 font-medium">Upload Picture:</label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            required
-            className="file-input border rounded px-3 py-2"
-          />
-          
-          <button 
-            type='submit'
-            disabled={loading}
-            className={`submit-btn ml-4 px-4 py-2 rounded bg-blue-500 text-white ${
-              loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'
-            }`}
-          >
-            {loading ? 'Saving...' : 'Save Farm'}
-          </button>
+        <label className="block text-gray-700 font-medium">Upload Picture:</label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          required
+          className="file-input border rounded px-3 py-2"
+        />
+        
+        <button 
+          type='submit'
+          disabled={loading}
+          className={`submit-btn ml-4 px-4 py-2 rounded bg-blue-500 text-white ${
+            loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'
+          }`}
+        >
+          {loading ? 'Saving...' : 'Save Farm'}
+        </button>
 
-          <button
-            className='submit-btn ml-4 px-4 py-2 rounded bg-blue-500 text-white'
-            onClick={() => setIsFormVisible(false)}
-          >
-            Close
-          </button>
+        <button
+          className='submit-btn ml-4 px-4 py-2 rounded bg-blue-500 text-white'
+          onClick={() => setIsFormVisible(false)}
+        >
+          Close
+        </button>
 
-        </form>
-      )}
+      </form>
+    )}
+      <KycModal isOpen={isKycModalOpen} onClose={handleCloseModal} />
+
 
       {!isFormVisible && (<h2 className="text-xl font-bold mb-4">List of Farms</h2>)}
 
