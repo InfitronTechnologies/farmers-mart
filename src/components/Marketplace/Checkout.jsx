@@ -1,8 +1,15 @@
 import React from "react";
 import MarketNav from "./MarketNav";
 import Footer from "../LandingPage/Footer";
+import { useLocation } from "react-router-dom";
 
 const CheckoutPage = () => {
+    const location = useLocation();
+    const { product, quantity } = location.state || {}; // Safely access state
+
+
+    const subtotal = product.product_normal_price * quantity
+
   return (
     <div className="">
         <MarketNav/>
@@ -107,25 +114,34 @@ const CheckoutPage = () => {
                 <div>
                     <div className="bg-white shadow rounded-lg p-6">
                         <h2 className="text-xl font-semibold text-green-800 mb-4">Your Order</h2>
+                        <h3 className="font-semibold text-green-700 mb-4">{product.product_name}</h3>
                         <div className="space-y-4 text-sm text-gray-600">
                             {/* Order Items */}
                             <div className="flex justify-between">
-                            <span>Large Broiler Chickens</span>
-                            <span>₦600,000</span>
+                                <span>Unit Price</span>
+                                <span>{product.product_normal_price}</span>
                             </div>
                             <div className="flex justify-between">
-                            <span>VAT Charges</span>
-                            <span>₦0</span>
+                                <span>Quantity</span>
+                                <span>{quantity}</span>
+                            </div>
+                            <div className="flex justify-between font-semibold text-lg">
+                                <span>Subtotal</span>
+                                <span>{subtotal}</span>
                             </div>
                             <div className="flex justify-between">
-                            <span>Other Charges on item</span>
-                            <span>₦3,000</span>
+                                <span>VAT Charges</span>
+                                <span>₦0</span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span>Other Charges on item</span>
+                                <span>₦3,000</span>
                             </div>
                             <hr className="my-4 border-gray-300" />
                             {/* Total */}
-                            <div className="flex justify-between font-semibold text-lg">
-                            <span>Total:</span>
-                            <span>₦603,000</span>
+                            <div className="flex justify-between font-semibold text-xl">
+                                <span>Total:</span>
+                                <span>₦603,000</span>
                             </div>
                         </div>
                     </div>
