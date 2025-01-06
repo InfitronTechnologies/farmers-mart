@@ -11,7 +11,7 @@ function FarmInfo() {
   const [states, setStates] = useState([])
   const [countries, setCountries] = useState([])
   const [landTypeId, setLandTypeId] = useState([])
-  const {userId, userToken} = useProfile()
+  const {userId, userToken, kycLevel} = useProfile()
   const [farmerId, setFarmerId] = useState()
   const [farms, setFarms] = useState([]);
 
@@ -74,6 +74,7 @@ function FarmInfo() {
           const farmUrl = process.env.NODE_ENV === 'production' 
           ? 'https://ourservicestech.com.ng/farmmart_api/v2/farm/select_farm_by_farmer_id'
           : '/farmmart_api/v2/farm/select_farm_by_farmer_id';
+
     
           try {
             const response = await axios.post(farmUrl, {
@@ -151,7 +152,6 @@ function FarmInfo() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewFarm({ ...newFarm, [name]: value });
-    console.log(newFarm)
   };
 
   const handleFileChange = (e) => {
@@ -160,7 +160,6 @@ function FarmInfo() {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!picture) {
       setError("Please upload a picture.");
       return;
@@ -304,17 +303,24 @@ function FarmInfo() {
           <button 
             type='submit'
             disabled={loading}
-            className={`submit-btn px-4 py-2 rounded bg-blue-500 text-white ${
+            className={`submit-btn ml-4 px-4 py-2 rounded bg-blue-500 text-white ${
               loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'
             }`}
           >
             {loading ? 'Saving...' : 'Save Farm'}
           </button>
 
+          <button
+            className='submit-btn ml-4 px-4 py-2 rounded bg-blue-500 text-white'
+            onClick={() => setIsFormVisible(false)}
+          >
+            Close
+          </button>
+
         </form>
       )}
 
-      <h2 className="text-xl font-bold mb-4">List of Farms</h2>
+      {!isFormVisible && (<h2 className="text-xl font-bold mb-4">List of Farms</h2>)}
 
       {/* Add Farm Button */}
       {!isFormVisible && (
@@ -328,51 +334,60 @@ function FarmInfo() {
 
       {/* Farm List Table */}
       <div className="overflow-x-auto mt-4">
-        <table className="table-auto w-full">
-          <thead>
-            <tr>
-              <th className='text-left'>S/N</th>
-              <th className='text-left'>Farm Image</th>
-              <th className='text-left'>Farm Address</th>
-              <th className='text-left'>Farm Land Type</th>
-              <th className='text-left'>Number</th>
-              <th className='text-left'>Country</th>
-              <th className='text-left'>State</th>
-              <th className='text-left'>Created Date</th>
-              <th className='text-left'>Action</th>
-              <th className='text-left'>Action</th>
-              <th className='text-left'>Add</th>
-            </tr>
-          </thead>
-          <tbody>
-            {farms.map((farm, index) => (
-              <tr key={farm.id}>
-                <td>{index + 1}</td>
-                <td>{farm.image_path_name}</td>
-                <td>{farm.farm_address}</td>
-                <td>{farm.farm_land_type}</td>
-                <td>{farm.farm_land_type_number}</td>
-                <td>{farm.country}</td>
-                <td>{farm.state}</td>
-                <td>{farm.created_date}</td>
-                <td><button className="bg-blue-500 text-white px-4 py-2">View</button></td>
-                <td><button className="bg-green-500 text-white px-4 py-2">Map</button></td>
-                <td>
-                  <Link 
-                    to='/user/add-product'
-                    state={{
-                      farmId: farm.id,
-                    }}
-                  >
-                    <button className="bg-red-500 text-white px-4 py-2">
-                      Product
-                    </button>
-                  </Link>
-                </td>
+        {farms.length==0
+        ?
+          !isFormVisible && (
+            <div className="text-center font-bold text-lg text-green-700 bg-green-100 p-4 rounded-md shadow-md">
+              No farm yet, Create one.
+            </div>
+          )     
+        :
+          <table className="table-auto w-full">
+            <thead>
+              <tr>
+                <th className='text-left'>S/N</th>
+                <th className='text-left'>Farm Image</th>
+                <th className='text-left'>Farm Address</th>
+                <th className='text-left'>Farm Land Type</th>
+                <th className='text-left'>Number</th>
+                <th className='text-left'>Country</th>
+                <th className='text-left'>State</th>
+                <th className='text-left'>Created Date</th>
+                <th className='text-left'>Action</th>
+                <th className='text-left'>Action</th>
+                <th className='text-left'>Add</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {farms.map((farm, index) => (
+                <tr key={farm.id}>
+                  <td>{index + 1}</td>
+                  <td>{farm.image_path_name}</td>
+                  <td>{farm.farm_address}</td>
+                  <td>{farm.farm_land_type}</td>
+                  <td>{farm.farm_land_type_number}</td>
+                  <td>{farm.country}</td>
+                  <td>{farm.state}</td>
+                  <td>{farm.created_date}</td>
+                  <td><button className="bg-blue-500 text-white px-4 py-2">View</button></td>
+                  <td><button className="bg-green-500 text-white px-4 py-2">Map</button></td>
+                  <td>
+                    <Link 
+                      to='/user/add-product'
+                      state={{
+                        farmId: farm.id,
+                      }}
+                    >
+                      <button className="bg-red-500 text-white px-4 py-2">
+                        Product
+                      </button>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        }
       </div>
     </div>
   );

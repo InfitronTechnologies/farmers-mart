@@ -33,15 +33,7 @@ function PasswordReset() {
       : '/farmmart_api/v2/account/reset_password';
 
     try {
-      const response = await axios.post(apiUrl, requestData, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Headers': '*',
-          'Access-Control-Allow-Origin': '*',
-          'charset':'UFT-8'
-        }
-      });
-      console.log(requestData)
+      const response = await axios.post(apiUrl, requestData);
       
       if (response.data.status === 1) {
         setSuccess("Password reset successful");

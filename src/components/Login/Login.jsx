@@ -15,7 +15,7 @@ const Login = () => {
   const navigate = useNavigate();
   const {setSelectedProfiles, setUserId, setUserToken, 
         setUserEmail, setUserFirstName, setUserLastName,
-        setKycLevel, setPartnerId}  = useProfile()
+        setKycLevel, setPartnerId, setFarmerId}  = useProfile()
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -39,6 +39,7 @@ const Login = () => {
       if (response.data.status === 1) {
         const { id, users_token, profile, users_email, users_fn, users_ln, kyc_level, app_ids } = response.data.data;
         const idOfPartner = app_ids.partner
+        const idOfFarmer = app_ids.farmer
         // Store user information in localStorage
         setUserId(id)
         setUserToken(users_token)
@@ -48,6 +49,7 @@ const Login = () => {
         setUserLastName(users_ln)
         setKycLevel(kyc_level);
         setPartnerId(idOfPartner)
+        setFarmerId(idOfFarmer)
         // Navigate to the user dashboard or home
         navigate('/user', { state: { selectedProfiles: profile } });
       } else {

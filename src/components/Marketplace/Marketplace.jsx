@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Footer from '../LandingPage/Footer';
 import ProductGrid from './ProductGrid';
 import CategoryFilter from './CategoryFilter';
@@ -8,12 +8,29 @@ import { dummyProducts } from '../../constants/constant';
 import { Menu } from '@mui/icons-material'; // Material UI Menu Icon
 import axios from 'axios';
 
-const Marketplace = ({ addToCart, cartItems }) => {
-  const [filteredProducts, setFilteredProducts] = useState(dummyProducts);
+const Marketplace = () => {
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [sortOption, setSortOption] = useState(''); // To track the selected sort option
   const [isSidebarVisible, setIsSidebarVisible] = useState(true); // Sidebar visibility state
   const [categoryName, setCategoryName] = useState ('')
   const [subcategories, setSubcategories] = useState([])
+
+  useEffect(() => {
+    const getLatestProducts = async () => {
+      const url = process.env.NODE_ENV === 'production'
+      ? `https://ourservicestech.com.ng/farmmart_api/v2/product/list_20_product`
+      : `/farmmart_api/v2/product/list_20_product`
+
+      try {
+        const response = await axios.get(url)
+        setFilteredProducts(response.data.data) 
+        console.log(response.data.data) 
+      } catch (error) {
+        console.error('Product Error', error)
+      } 
+    }
+    getLatestProducts();
+  },[])
 
   const handleSort = (e) => {
     const sortBy = e.target.value;
@@ -49,7 +66,11 @@ const Marketplace = ({ addToCart, cartItems }) => {
 
       {/* Toggle button for sidebar */}
       <div className="flex justify-between p-4 mt-20 mx-4">
-        <div className="text-3xl font-semibold tracking-wide">Market Place</div>
+        <div 
+          className="text-3xl font-semibold tracking-wide"
+        >
+          Market Place
+        </div>
         <Menu onClick={toggleSidebar} aria-label="toggle sidebar" fontSize="large" />
       </div>
 
@@ -81,7 +102,7 @@ const Marketplace = ({ addToCart, cartItems }) => {
             {/* Sorting Bar */}
             <div className="flex flex-col md:flex-row justify-between items-center mb-6">
               <h2 className="text-xl font-bold">{categoryName == '' ? "Produce": categoryName}</h2>
-              <div className="flex flex-row flex-wrap items-center md:space-x-4">
+              {/* <div className="flex flex-row flex-wrap items-center md:space-x-4">
                 <select
                   className="p-2 border rounded-xl border-white m-1"
                   value={sortOption}
@@ -109,7 +130,7 @@ const Marketplace = ({ addToCart, cartItems }) => {
                   <option value="price">Cheap</option>
                   <option value="name">Expensive</option>
                 </select>
-              </div>
+              </div> */}
             </div>
 
             <div className='flex flex-row mb-4'>

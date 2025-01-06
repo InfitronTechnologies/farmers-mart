@@ -30,8 +30,7 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [states, setStates] = useState([])
   const [isOtpOverlayVisible, setIsOtpOverlayVisible] = useState(false);
-  const {setUserId, setUserEmail} = useProfile()
-  
+  const {setUserId, setUserEmail} = useProfile()  
   const navigate = useNavigate();  // Hook to navigate between pages
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -42,7 +41,7 @@ const Signup = () => {
 
     const fetchStates = async () => {
       try {
-        const response = await axios.get('https://ourservicestech.com.ng/farmmart_api/v2/select_list_state'); // Replace with actual endpoint
+        const response = await axios.get(apiUrl); // Replace with actual endpoint
         setStates(response.data.data); // Assuming response contains array of states
       } catch (error) {
         console.error("Error fetching states", error);
@@ -155,10 +154,7 @@ const Signup = () => {
 
       if (jsonResponse.status === 1) {
         setUserId(jsonResponse.users_id);
-        // setUserEmail(users_email);
         setIsOtpOverlayVisible(true);
-
-        // navigate('/account-activation');
       } else {
         setError(jsonResponse.message || 'Signup failed');
       }

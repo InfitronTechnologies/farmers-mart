@@ -7,7 +7,7 @@ function ProductForm() {
   const location = useLocation();
   const navigate = useNavigate();
   const farmId = location.state?.farmId;
-  const {userId, userToken, farmerId} = useProfile()
+  const {userId, userToken,farmerId } = useProfile()
   const [categories, setCategories] = useState([])
   const [productType, setProductType] = useState([])
   const [subcategories, setSubcategories] = useState([])
@@ -20,25 +20,25 @@ function ProductForm() {
   });
 
   const [newProduct, setNewProduct] = useState({
-    usersId: userId,
-    usersToken: userToken,
-    farmId: farmId,
-    farmerId: farmerId,
-    productTypeId: '',
-    categoryId: '',
-    subCategoryId: '',
-    productName: '',
-    productShortDesc: '',
-    productLongDesc: '',
-    productNormalPrice: '',
-    productPromoPrice: '',
-    units: '',
-    minQty: '',
-    maxQty: '',
-    productWeight: '',
-    productImageF: '',
-    productImageL: '',
-    productImageR: '',
+    users_id: userId,
+    users_token: userToken,
+    farm_id: farmId,
+		farmer_id: farmerId,
+    product_type_id: "",
+    category_id: "",
+    sub_category_id:"",
+    product_name: "",
+    product_short_desc: "",
+    product_long_desc: "",
+    product_normal_price: "",
+    product_promo_price: "",
+    units: "",
+    min_qty: "",
+    max_qty: "",
+    product_weight: "",
+    product_image_f: "",
+    product_image_l:  "",
+    product_image_r: "",
   });
 
   useEffect(() => {
@@ -74,11 +74,11 @@ function ProductForm() {
   // Fetch Subcategories when categories changes
   useEffect(() => {
     const fetchSubcategories = async () => {
-      if (newProduct.categoryId) {
+      if (newProduct.category_id) {
         const subcategoriesUrl =
           process.env.NODE_ENV === "production"
-            ? `https://ourservicestech.com.ng/farmmart_api/v2/subcategory/select_by_cat_subcat?id=${newProduct.categoryId}`
-            : `/farmmart_api/v2/subcategory/select_by_cat_subcat?id=${newProduct.categoryId}`;
+            ? `https://ourservicestech.com.ng/farmmart_api/v2/subcategory/select_by_cat_subcat?id=${newProduct.category_id}`
+            : `/farmmart_api/v2/subcategory/select_by_cat_subcat?id=${newProduct.category_id}`;
   
         try {
           const response = await axios.get(subcategoriesUrl);
@@ -91,7 +91,7 @@ function ProductForm() {
     };
   
     fetchSubcategories();
-  }, [newProduct.categoryId]); // Trigger this effect whenever categoryId changes
+  }, [newProduct.category_id]); // Trigger this effect whenever category_id changes
   
 
   const handleInputChange = (e) => {
@@ -118,9 +118,9 @@ function ProductForm() {
     }else{
       setNewProduct({
         ...newProduct,
-        productImageF: pictures.front.name,
-        productImageL: pictures.left.name,
-        productImageR: pictures.right.name
+        product_image_f: pictures.front.name,
+        product_image_l: pictures.left.name,
+        product_image_r: pictures.right.name
       })
     }
 
@@ -149,9 +149,9 @@ function ProductForm() {
 
         const updatedProduct = {
           ...newProduct,
-          productImageF: pictures.front.name,
-          productImageL: pictures.left.name,
-          productImageR: pictures.right.name
+          product_image_f: pictures.front.name,
+          product_image_l: pictures.left.name,
+          product_image_r: pictures.right.name
         };
   
 
@@ -183,9 +183,9 @@ function ProductForm() {
           <select
               className="w-full p-2 border-1 rounded-xl text-black bg-white focus:border-farmersmartDarkGreen 
               focus:outline-none focus:ring-0 focus:border-2"
-              name="productTypeId"
-              value={newProduct.productTypeId}
-              onChange={(e) => setNewProduct({ ...newProduct, productTypeId: e.target.value })}
+              name="product_type_id"
+              value={newProduct.product_type_id}
+              onChange={(e) => setNewProduct({ ...newProduct, product_type_id: e.target.value })}
               required
             >
               <option value="">Select product type</option>
@@ -199,9 +199,9 @@ function ProductForm() {
             <select
               className="w-full p-2 border-1 rounded-xl text-black bg-white focus:border-farmersmartDarkGreen 
               focus:outline-none focus:ring-0 focus:border-2"
-              name="categoryId"
-              value={newProduct.categoryId}
-              onChange={(e) => setNewProduct({ ...newProduct, categoryId: e.target.value })}
+              name="category_id"
+              value={newProduct.category_id}
+              onChange={(e) => setNewProduct({ ...newProduct, category_id: e.target.value })}
               required
             >
               <option value="">Select category</option>
@@ -215,9 +215,9 @@ function ProductForm() {
           <select
             className="w-full p-2 border-1 rounded-xl text-black bg-white focus:border-farmersmartDarkGreen 
             focus:outline-none focus:ring-0 focus:border-2"
-            name="subCategoryId"
-            value={newProduct.subCategoryId}
-            onChange={(e) => setNewProduct({ ...newProduct, subCategoryId: e.target.value })}
+            name="sub_category_id"
+            value={newProduct.sub_category_id}
+            onChange={(e) => setNewProduct({ ...newProduct, sub_category_id: e.target.value })}
             required
           >
             <option value="">Select Subcategory</option>
@@ -230,8 +230,8 @@ function ProductForm() {
           <label className="block mb-1 font-medium">Product Name</label>
           <input 
             type="text" 
-            name="productName"
-            value={newProduct.productName}
+            name="product_name"
+            value={newProduct.product_name}
             onChange={handleInputChange}
             className="border p-2 w-full rounded"
             placeholder="Enter Product Name"
@@ -240,8 +240,8 @@ function ProductForm() {
         <div className="md:col-span-2">
           <label className="block mb-1 font-medium">Short Description</label>
           <textarea 
-            name="productShortDesc"
-            value={newProduct.productShortDesc}
+            name="product_short_desc"
+            value={newProduct.product_short_desc}
             onChange={handleInputChange}
             className="border p-2 w-full rounded"
             placeholder="Enter Short Description"
@@ -250,8 +250,8 @@ function ProductForm() {
         <div className="md:col-span-2">
           <label className="block mb-1 font-medium">Long Description</label>
           <textarea 
-            name="productLongDesc"
-            value={newProduct.productLongDesc}
+            name="product_long_desc"
+            value={newProduct.product_long_desc}
             onChange={handleInputChange}
             className="border p-2 w-full rounded"
             placeholder="Enter Long Description"
@@ -263,8 +263,8 @@ function ProductForm() {
           <label className="block mb-1 font-medium">Normal Price (NGN) </label>
           <input 
             type="number" 
-            name="productNormalPrice"
-            value={newProduct.productNormalPrice}
+            name="product_normal_price"
+            value={newProduct.product_normal_price}
             onChange={handleInputChange}
             className="border p-2 w-full rounded"
             placeholder="Enter Normal Price"
@@ -274,8 +274,8 @@ function ProductForm() {
           <label className="block mb-1 font-medium">Promo Price (NGN)</label>
           <input 
             type="number" 
-            name="productPromoPrice"
-            value={newProduct.productPromoPrice}
+            name="product_promo_price"
+            value={newProduct.product_promo_price}
             onChange={handleInputChange}
             className="border p-2 w-full rounded"
             placeholder="Enter Promo Price"
@@ -296,8 +296,8 @@ function ProductForm() {
           <label className="block mb-1 font-medium">Minimum Quantity</label>
           <input 
             type="number" 
-            name="minQty"
-            value={newProduct.minQty}
+            name="min_qty"
+            value={newProduct.min_qty}
             onChange={handleInputChange}
             className="border p-2 w-full rounded"
             placeholder="Enter Minimum Quantity"
@@ -307,8 +307,8 @@ function ProductForm() {
           <label className="block mb-1 font-medium">Maximum Quantity</label>
           <input 
             type="number" 
-            name="maxQty"
-            value={newProduct.maxQty}
+            name="max_qty"
+            value={newProduct.max_qty}
             onChange={handleInputChange}
             className="border p-2 w-full rounded"
             placeholder="Enter Maximum Quantity"
@@ -318,8 +318,8 @@ function ProductForm() {
           <label className="block mb-1 font-medium">Product Weight</label>
           <input 
             type="text" 
-            name="productWeight"
-            value={newProduct.productWeight}
+            name="product_weight"
+            value={newProduct.product_weight}
             onChange={handleInputChange}
             className="border p-2 w-full rounded"
             placeholder="Enter Product Weight"

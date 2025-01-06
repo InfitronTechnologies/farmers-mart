@@ -39,7 +39,7 @@ function SideBar() {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate()
   const location = useLocation();
-  const {selectedProfiles, userFirstName, userLastName, clearProfiles} = useProfile()
+  const {selectedProfiles, userFirstName, userLastName, clearProfile, kycLevel} = useProfile()
 
   const addProduct = (product) => {
     setProducts([...products, product]);
@@ -77,69 +77,77 @@ function SideBar() {
                 (`Welcome, Guest!`)}
                 </Sidebar.Item>
               </Sidebar.ItemGroup>
-              <Sidebar.ItemGroup>
-                <Sidebar.Item href="/user" icon={Person2}>
-                  User Overview
-                </Sidebar.Item>
-                <Sidebar.Item href="#" icon={Login}>
-                  Login History
-                </Sidebar.Item>
-                <Sidebar.Item href="/marketplace" icon={Storefront}>
-                  Marketplace
-                </Sidebar.Item>
-              </Sidebar.ItemGroup>
-              <Sidebar.ItemGroup>              
-               {(selectedProfiles.farmer  == "1")&&(
-                <Sidebar.Collapse icon={Agriculture} label="Farmer">
-                  <Sidebar.Item href="/user/farm-dashboard">Dashboard </Sidebar.Item>
-                  <Sidebar.Item href="/user/farm">Farm Management </Sidebar.Item>
-                  <Sidebar.Item href="#">Available Produces </Sidebar.Item>
-                  <Sidebar.Item href="#">Orders </Sidebar.Item>
-                </Sidebar.Collapse>
-                )}
-                {(selectedProfiles.buyer  == "1") &&(
-                <Sidebar.Collapse icon={ShoppingBag} label="Buyer">
-                  <Sidebar.Item href="/user/buyer">Dashboard </Sidebar.Item>
-                  <Sidebar.Item href="/user/buyer/orders">Orders </Sidebar.Item>
-                  <Sidebar.Item href="/user/buyer/farmers-profile">Farmers Profile </Sidebar.Item>
-                </Sidebar.Collapse>
-                )}
-                {(selectedProfiles.logistic  == "1") &&(
-                <Sidebar.Collapse icon={LocalShipping} label="Logistics">
-                  <Sidebar.Item href="/user/logistics">Dashboard </Sidebar.Item>
-                  <Sidebar.Item href="/user/logistics/orders">Order Management </Sidebar.Item>
-                  <Sidebar.Item href="/user/logistics/revenue">Revenue </Sidebar.Item>
-                  <Sidebar.Item href="/user/logistics/insurance"> Insurance Cases </Sidebar.Item>
-                </Sidebar.Collapse>
-                )}
-                {(selectedProfiles.partner  == "1") &&(
-                <Sidebar.Collapse icon={Handshake} label="Partner">
-                  <Sidebar.Item href="/user/partner"> Dashboard </Sidebar.Item>
-                  <Sidebar.Item href="/user/partner/services"> Services </Sidebar.Item>
-                  <Sidebar.Item href="/user/partner/add-service"> Add Services </Sidebar.Item>
-                  <Sidebar.Item href="/user/partner/offers"> Farmer Offers</Sidebar.Item>
-                </Sidebar.Collapse>
-                )}
-              </Sidebar.ItemGroup>
+              {(kycLevel == 2) &&(
+                <Sidebar.ItemGroup>
+                  <Sidebar.Item href="/user" icon={Person2}>
+                    User Overview
+                  </Sidebar.Item>
+                  <Sidebar.Item href="#" icon={Login}>
+                    Login History
+                  </Sidebar.Item>
+                  <Sidebar.Item href="/marketplace" icon={Storefront}>
+                    Marketplace
+                  </Sidebar.Item>
+                </Sidebar.ItemGroup>
+              )}
+              {(kycLevel == 2) &&(
+                <Sidebar.ItemGroup>              
+                {(selectedProfiles.farmer  == "1")&&(
+                  <Sidebar.Collapse icon={Agriculture} label="Farmer">
+                    <Sidebar.Item href="/user/farm-dashboard">Dashboard </Sidebar.Item>
+                    <Sidebar.Item href="/user/farm">Farm Management </Sidebar.Item>
+                    <Sidebar.Item href="#">Available Produces </Sidebar.Item>
+                    <Sidebar.Item href="#">Orders </Sidebar.Item>
+                  </Sidebar.Collapse>
+                  )}
+                  {(selectedProfiles.buyer  == "1") &&(
+                  <Sidebar.Collapse icon={ShoppingBag} label="Buyer">
+                    <Sidebar.Item href="/user/buyer">Dashboard </Sidebar.Item>
+                    <Sidebar.Item href="/user/buyer/orders">Orders </Sidebar.Item>
+                    <Sidebar.Item href="/user/buyer/farmers-profile">Farmers Profile </Sidebar.Item>
+                  </Sidebar.Collapse>
+                  )}
+                  {(selectedProfiles.logistic  == "1") &&(
+                  <Sidebar.Collapse icon={LocalShipping} label="Logistics">
+                    <Sidebar.Item href="/user/logistics">Dashboard </Sidebar.Item>
+                    <Sidebar.Item href="/user/logistics/orders">Order Management </Sidebar.Item>
+                    <Sidebar.Item href="/user/logistics/revenue">Revenue </Sidebar.Item>
+                    <Sidebar.Item href="/user/logistics/insurance"> Insurance Cases </Sidebar.Item>
+                  </Sidebar.Collapse>
+                  )}
+                  {(selectedProfiles.partner  == "1") &&(
+                  <Sidebar.Collapse icon={Handshake} label="Partner">
+                    <Sidebar.Item href="/user/partner"> Dashboard </Sidebar.Item>
+                    <Sidebar.Item href="/user/partner/services"> Services </Sidebar.Item>
+                    <Sidebar.Item href="/user/partner/add-service"> Add Services </Sidebar.Item>
+                    <Sidebar.Item href="/user/partner/offers"> Farmer Offers</Sidebar.Item>
+                  </Sidebar.Collapse>
+                  )}
+                </Sidebar.ItemGroup>
+              )}  
               <Sidebar.ItemGroup>
                 <Sidebar.Collapse icon={Person} label="Profile">
-                  <Sidebar.Item href="/user/profile"> Overview </Sidebar.Item>
-                  <Sidebar.Item href="/user/profile/bank"> Bank Details </Sidebar.Item>
-                  <Sidebar.Item href="/user/profile/kyc">KYC</Sidebar.Item>
-                  <Sidebar.Item href="/user/password_reset"> Reset Password </Sidebar.Item>
-                  <Sidebar.Item href="#"> Profile Picture </Sidebar.Item>
+                {(kycLevel == 2) &&(<Sidebar.Item href="/user/profile"> Overview </Sidebar.Item>)}
+                {(kycLevel == 2) &&(<Sidebar.Item href="/user/profile/bank"> Bank Details </Sidebar.Item>)}
+                <Sidebar.Item href="/user/profile/kyc">KYC</Sidebar.Item>
+                {(kycLevel == 2) &&(<Sidebar.Item href="/user/password_reset"> Reset Password </Sidebar.Item>)}
+                {(kycLevel == 2) &&(<Sidebar.Item href="#"> Profile Picture </Sidebar.Item>)}
                 </Sidebar.Collapse>
-                <Sidebar.Item href="#" icon={SupportAgent}>
-                  Customer Support
-                </Sidebar.Item>
-              <Sidebar.Collapse icon={Forum} label='Forum'>
-                <Sidebar.Item href="/user/createforum" >Create Forum </Sidebar.Item>
-                <Sidebar.Item href="/user/forums" >Your Forums </Sidebar.Item>
-              </Sidebar.Collapse>
-              <Sidebar.Collapse icon={Newspaper} label='News'>
-                <Sidebar.Item href="/user/create-news" >Create News </Sidebar.Item>
-                <Sidebar.Item href="/user/news" >Your News </Sidebar.Item>
-              </Sidebar.Collapse>
+                {(kycLevel == 2) &&(
+                  <div>
+                    <Sidebar.Item href="#" icon={SupportAgent}>
+                      Customer Support
+                    </Sidebar.Item>
+                    <Sidebar.Collapse icon={Forum} label='Forum'>
+                      <Sidebar.Item href="/user/createforum" >Create Forum </Sidebar.Item>
+                      <Sidebar.Item href="/user/forums" >Your Forums </Sidebar.Item>
+                    </Sidebar.Collapse>
+                    <Sidebar.Collapse icon={Newspaper} label='News'>
+                      <Sidebar.Item href="/user/create-news" >Create News </Sidebar.Item>
+                      <Sidebar.Item href="/user/news" >Your News </Sidebar.Item>
+                    </Sidebar.Collapse>
+                  </div>
+                )}
                 <Sidebar.Item href="" onClick={handleLogout} icon={Logout}>
                   Logout
                 </Sidebar.Item>

@@ -3,30 +3,9 @@ import { Search, Person, Menu, AccountCircle } from '@mui/icons-material'; // MU
 import React, { useState } from 'react';
 import axios from 'axios';
 import logo from '../../assets/farmersmartlogo.png';
+import SearchBar from './SearchBar';
 
 const MarketNav = ({ setSearchResults }) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  const handleSearch = async () => {
-    if (!searchQuery.trim()) return; // Prevent empty search
-
-    setLoading(true);
-    const searchUrl =
-      process.env.NODE_ENV === 'production'
-        ? 'https://ourservicestech.com.ng/farmmart_api/v2/product/search_product_post'
-        : '/farmmart_api/v2/product/search_product_post';
-
-    try {
-      const response = await axios.post(searchUrl, { product_name: searchQuery });
-      setSearchResults(response.data.data || []); // Update search results in parent
-    } catch (error) {
-      console.error('Search Error:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <Navbar fluid rounded className="bg-[#0B2B17] p-4 shadow-md">
       {/* Left Section - Logo */}
@@ -36,22 +15,7 @@ const MarketNav = ({ setSearchResults }) => {
 
       {/* Middle Section - Search Bar */}
       <div className="flex-1 mx-4">
-        <div className="relative w-full max-w-lg mx-auto">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search for product"
-            className="w-full h-12 pl-5 pr-10 rounded-full text-gray-700 text-sm md:text-base shadow-md focus:ring-1 focus:ring-green-400 focus:outline-none"
-          />
-          <button
-            onClick={handleSearch}
-            className="absolute right-4 top-2.5 text-green-700 cursor-pointer"
-            disabled={loading}
-          >
-            <Search className={loading ? 'animate-spin' : ''} />
-          </button>
-        </div>
+        <SearchBar setSearchResults={setSearchResults}/>
       </div>
 
       {/* Right Section - Avatar and Dropdown */}

@@ -7,8 +7,8 @@ const ProductCard = ({ product }) => {
     <div>
       <div className="relative">
         <img
-          src={product.image}
-          alt={product.name}
+          src={`https://ourservicestech.com.ng/farmmart_api/images/product/${product.product_image_f}`}
+          alt={product.product_name}
           className="relative w-full h-40 object-cover mb-4 rounded-t-2xl"
         />
         {/* <button className="absolute right-4 bottom-1 text-gray-400 hover:text-gray-600">
@@ -18,12 +18,12 @@ const ProductCard = ({ product }) => {
 
       <div className="p-4">
         <div className="flex justify-between items-center mb-2">
-          <h3 className="text-lg font-bold">{product.name}</h3>
+          <h3 className="text-lg font-bold">{product.product_name}</h3>
           <span className="text-[#F7C531] font-extrabold text-xl">
-            ₦{product.price}
+            ₦{product.product_normal_price}
           </span>
         </div>
-        <p className="text-gray-500 text-xs mt-1 mb-4">{product.shortDescription}</p>
+        <p className="text-gray-500 text-xs mt-1 mb-4">{product.product_short_desc}</p>
       </div>
     </div>
 

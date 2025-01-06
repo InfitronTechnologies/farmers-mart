@@ -18,6 +18,7 @@ export const ProfileProvider = ({ children }) => {
   const [userLastName, setUserLastName] = useState(() => sessionStorage.getItem('userLastName') || null);
   const [kycLevel, setKycLevel] = useState(() => sessionStorage.getItem('kycLevel') || null);
   const [partnerId, setPartnerId] = useState(() => sessionStorage.getItem('partnerId') || null);
+  const [farmerId, setFarmerId] = useState(() => sessionStorage.getItem('farmerId') || null);
   // const [kycLevel, setKycLevel] = useState(() => sessionStorage.getItem('kycLevel') || null);
 
   // Persist data in sessionStorage whenever they change
@@ -30,6 +31,7 @@ export const ProfileProvider = ({ children }) => {
     if (userLastName) sessionStorage.setItem('userLastName', userLastName);
     if(kycLevel) sessionStorage.setItem('kycLevel', kycLevel)
     if(partnerId) sessionStorage.setItem('partnerId', partnerId)
+    if(farmerId) sessionStorage.setItem('farmerId', farmerId)
   }, [selectedProfiles, userId, userToken, userEmail]);
   
 
@@ -64,6 +66,8 @@ export const ProfileProvider = ({ children }) => {
         setKycLevel,
         partnerId,
         setPartnerId,
+        farmerId,
+        setFarmerId,
         clearProfile,  // Add clearProfile to context
       }}
     >
