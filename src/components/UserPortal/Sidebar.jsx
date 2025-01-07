@@ -17,7 +17,7 @@ import OrdersPage from "./LogisticsMenu/OrdersPage";
 import InsuranceCases from "./LogisticsMenu/InsurnaceCases";
 import LogisticsRevenue from "./LogisticsMenu/LogisticsRevenue";
 import PartnerDashboard from "./PartnerMenu/PartnerDashboard";
-import PartnerServices from "./PartnerMenu/PartnerServices";
+import PartnerServices from "./PartnerMenu/PartnerAvailableProduct.jsx";
 import FarmerPartnerMatching from "./PartnerMenu/FarmerPartnerMatching";
 import FarmerProfiles from "./ConsumerMenu/FarmersProfile";
 import Orders from "./ConsumerMenu/Orders";
@@ -32,6 +32,10 @@ import NewsCategories from "./News/NewsCategories";
 import NewsSubcategory from "./News/NewsSubcategory";
 import AllNews from "./News/AllNews";
 import NewsData from "./News/NewsData";
+import PartnerAvailableProduce from "./PartnerMenu/PartnerAvailableProduct.jsx";
+import FarmerProductDetails from './FarmerMenu/FarmerProductDetails'
+import PartnerProductDetails from "./PartnerMenu/PartnerProductDetails.jsx";
+
 
 
 function SideBar() {
@@ -49,8 +53,6 @@ function SideBar() {
     clearProfile(); // Clears session storage and context state
     navigate('/login'); // Redirect the user to the login page
   };
-
-  console.log(typeof(kycLevel))
   
   // useEffect(() => {
   //     if (selectedProfiles.length > 0) {
@@ -98,7 +100,7 @@ function SideBar() {
                   <Sidebar.Collapse icon={Agriculture} label="Farmer">
                     <Sidebar.Item href="/user/farm-dashboard">Dashboard </Sidebar.Item>
                     <Sidebar.Item href="/user/farm">Farm Management </Sidebar.Item>
-                    <Sidebar.Item href="#">Available Produces </Sidebar.Item>
+                    <Sidebar.Item href="/user/my-products">Available Produces </Sidebar.Item>
                     <Sidebar.Item href="#">Orders </Sidebar.Item>
                   </Sidebar.Collapse>
                   )}
@@ -167,14 +169,14 @@ function SideBar() {
             <Route path='farm' element={<FarmInfo/>} />
             <Route path='farm-dashboard' element={<FarmerDashboard/>} />
             <Route path="add-product" element={<ProductForm addProduct={addProduct} />} />
-            <Route path="available-produce" element={<AvailableProduce products={products} />}/>
+            <Route path="my-products" element={<AvailableProduce products={products} />}/>
             <Route path='logistics' element={<LogisticsDashboard/>} />
             <Route path='logistics/orders' element={<OrdersPage/>} />
             <Route path='logistics/orders/:orderId' element={<OrderDetails />} /> 
             <Route path='logistics/insurance' element={<InsuranceCases/>} /> 
             <Route path='logistics/revenue' element={<LogisticsRevenue/>} /> 
             <Route path='partner/' element={<PartnerDashboard/>} /> 
-            <Route path='partner/services' element={<PartnerServices/>} /> 
+            <Route path='partner/services' element={<PartnerAvailableProduce/>} /> 
             <Route path='partner/add-service' element={<PartnerProduct/>} /> 
             <Route path='partner/offers' element={<FarmerPartnerMatching/>} /> 
             <Route path='buyer/' element={<ConsumerDashboard/>} /> 
@@ -188,6 +190,8 @@ function SideBar() {
             <Route path='create-news/:subcategoryId' element={<NewsSubcategory/>} />
             <Route path='news' element={<AllNews/>} />
             <Route path='news/:newsId' element={<NewsData/>} />
+            <Route path='/my-products/:id'  element={<FarmerProductDetails/> } />
+            <Route path='partner/services/:id'  element={<PartnerProductDetails/> } />
           </Routes>  
         </div>
       </div> 

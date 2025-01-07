@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useProfile } from '../../ProfileContext/ProfileContext';
 import axios from 'axios';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, } from 'react-router-dom';
 
-function AvailableProduce() {
-  const { farmerId } = useProfile();
+function PartnerAvailableProduce() {
+  const { partnerId } = useProfile();
   const [products, setProducts] = useState([]);
   const location = useLocation()
 
   useEffect(() => {
     const url =
       process.env.NODE_ENV === 'production'
-        ? `https://ourservicestech.com.ng/farmmart_api/v2/product/select_by_farmer_id_get_product?id=${farmerId}`
-        : `/farmmart_api/v2/product/select_by_farmer_id_get_product?id=${farmerId}`;
+        ? `https://ourservicestech.com.ng/farmmart_api/v2/product/select_by_partner_id_get_product?id=${partnerId}`
+        : `/farmmart_api/v2/product/select_by_partner_id_get_product?id=${partnerId}`;
 
     const fetchProducts = async () => {
       try {
@@ -24,7 +24,7 @@ function AvailableProduce() {
     };
 
     fetchProducts();
-  }, [farmerId]);
+  }, [partnerId]);
 
   return (
     <div className="container mx-auto p-6">
@@ -90,4 +90,4 @@ function AvailableProduce() {
   );
 }
 
-export default AvailableProduce;
+export default PartnerAvailableProduce;
