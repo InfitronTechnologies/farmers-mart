@@ -37,7 +37,7 @@ const UserOverview = () => {
           </div>
         </div>      
       )}
-      {(kycLevel == 2) &&(
+      {(kycLevel >= 2) &&(
         <div>
           <AccountStatistics />
           <RecentActivity />

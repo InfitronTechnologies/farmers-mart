@@ -49,6 +49,8 @@ function SideBar() {
     clearProfile(); // Clears session storage and context state
     navigate('/login'); // Redirect the user to the login page
   };
+
+  console.log(typeof(kycLevel))
   
   // useEffect(() => {
   //     if (selectedProfiles.length > 0) {
@@ -77,7 +79,7 @@ function SideBar() {
                 (`Welcome, Guest!`)}
                 </Sidebar.Item>
               </Sidebar.ItemGroup>
-              {(kycLevel == 2) &&(
+              {(kycLevel >= 2) &&(
                 <Sidebar.ItemGroup>
                   <Sidebar.Item href="/user" icon={Person2}>
                     User Overview
@@ -90,7 +92,7 @@ function SideBar() {
                   </Sidebar.Item>
                 </Sidebar.ItemGroup>
               )}
-              {(kycLevel == 2) &&(
+              {(kycLevel >= 2) &&(
                 <Sidebar.ItemGroup>              
                 {(selectedProfiles.farmer  == "1")&&(
                   <Sidebar.Collapse icon={Agriculture} label="Farmer">
@@ -127,13 +129,13 @@ function SideBar() {
               )}  
               <Sidebar.ItemGroup>
                 <Sidebar.Collapse icon={Person} label="Profile">
-                {(kycLevel == 2) &&(<Sidebar.Item href="/user/profile"> Overview </Sidebar.Item>)}
-                {(kycLevel == 2) &&(<Sidebar.Item href="/user/profile/bank"> Bank Details </Sidebar.Item>)}
+                {(kycLevel >= 2) &&(<Sidebar.Item href="/user/profile"> Overview </Sidebar.Item>)}
+                {(kycLevel >= 2) &&(<Sidebar.Item href="/user/profile/bank"> Bank Details </Sidebar.Item>)}
                 <Sidebar.Item href="/user/profile/kyc">KYC</Sidebar.Item>
-                {(kycLevel == 2) &&(<Sidebar.Item href="/user/password_reset"> Reset Password </Sidebar.Item>)}
-                {(kycLevel == 2) &&(<Sidebar.Item href="#"> Profile Picture </Sidebar.Item>)}
+                {(kycLevel >= 2) &&(<Sidebar.Item href="/user/password_reset"> Reset Password </Sidebar.Item>)}
+                {(kycLevel >= 2) &&(<Sidebar.Item href="#"> Profile Picture </Sidebar.Item>)}
                 </Sidebar.Collapse>
-                {(kycLevel == 2) &&(
+                {(kycLevel >= 2) &&(
                   <div>
                     <Sidebar.Item href="#" icon={SupportAgent}>
                       Customer Support

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useProfile } from '../../../ProfileContext/ProfileContext';
+import { useNavigate } from "react-router-dom";
 
 const LevelTwo = ({userId, userToken}) => {
   const [countries, setCountries] = useState([])
   const [states, setStates] = useState([])
-  const {kycLevel, setKycLevel} = useProfile()
+  const {kycLevel, setKycLevel, clearProfile} = useProfile()
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     users_id : userId,
     users_token	: userToken,
@@ -90,8 +92,10 @@ const LevelTwo = ({userId, userToken}) => {
         console.log("Submission successful:", response.data);
         
         if (response.data.status === 1) {
-            console.log(response)
-            setKycLevel(Number(kycLevel) + 1)
+          console.log(response)
+          setKycLevel(Number(kycLevel) + 1)
+          clearProfile(); // Clears session storage and context state
+          navigate('/login');
         } else {
             throw new Error(response.data.message || 'KYC submission failed');
         }

@@ -10,7 +10,6 @@ import axios from 'axios';
 
 const Marketplace = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [sortOption, setSortOption] = useState(''); // To track the selected sort option
   const [isSidebarVisible, setIsSidebarVisible] = useState(true); // Sidebar visibility state
   const [categoryName, setCategoryName] = useState ('')
   const [subcategories, setSubcategories] = useState([])
@@ -32,13 +31,7 @@ const Marketplace = () => {
     getLatestProducts();
   },[])
 
-  const handleSort = (e) => {
-    const sortBy = e.target.value;
-    setSortOption(sortBy);
-    // Sorting logic here
-  };
-
-  // Toggle sidebar visibility
+    // Toggle sidebar visibility
   const toggleSidebar = () => {
     setIsSidebarVisible(!isSidebarVisible);
   };
@@ -89,7 +82,9 @@ const Marketplace = () => {
                 setCategoryName={setCategoryName}
                 setSubcategories={setSubcategories}  
               />
-              <PriceFilter setFilteredProducts={setFilteredProducts} />
+              <PriceFilter 
+                setFilteredProducts={setFilteredProducts} 
+                products={filteredProducts}/>
             </div>
           </div>
           )}

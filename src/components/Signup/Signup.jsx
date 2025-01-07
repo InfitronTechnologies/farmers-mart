@@ -145,6 +145,11 @@ const Signup = () => {
     try {
       const response = await axios.post(apiUrl, formData);
 
+      if(response.data.status == 0){
+        setError(response.data.message)
+        return
+      }
+
       // Extract JSON portion from the response
       const responseDataString = response.data;
       const jsonStartIndex = responseDataString.lastIndexOf('{');

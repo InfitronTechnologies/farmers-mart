@@ -47,7 +47,7 @@ const Login = () => {
         setSelectedProfiles(profile)
         setUserFirstName(users_fn)
         setUserLastName(users_ln)
-        setKycLevel(kyc_level);
+        setKycLevel(Number(kyc_level));
         setPartnerId(idOfPartner)
         setFarmerId(idOfFarmer)
         // Navigate to the user dashboard or home
