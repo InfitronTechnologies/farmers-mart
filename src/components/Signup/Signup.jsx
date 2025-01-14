@@ -129,48 +129,6 @@ const Signup = () => {
 
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!passwordMatch) {
-      setError('Passwords do not match');
-      return;
-    }
-
-    const apiUrl = process.env.NODE_ENV === 'production' 
-      ? 'https://ourservicestech.com.ng/farmmart_api/v2/account/create_account'
-      : '/farmmart_api/v2/account/create_account';
-
-    setLoading(true);
-    try {
-      const response = await axios.post(apiUrl, formData);
-
-      if(response.data.status == 0){
-        setError(response.data.message)
-        return
-      }
-
-      // Extract JSON portion from the response
-      const responseDataString = response.data;
-      const jsonStartIndex = responseDataString.lastIndexOf('{');
-      const jsonResponseString = responseDataString.slice(jsonStartIndex);
-
-      const jsonResponse = JSON.parse(jsonResponseString); // Parse the JSON portion
-
-      if (jsonResponse.status === 1) {
-        setUserId(jsonResponse.users_id);
-        setIsOtpOverlayVisible(true);
-      } else {
-        setError(jsonResponse.message || 'Signup failed');
-      }
-    } catch (error) {
-      setError(error.response?.data?.message || 'Something went wrong');
-    } finally {
-      setLoading(false);
-    }
-  };
- 
-
   return (
     <div>
       <nav className={`fixed justify-between top-0 left-0 w-full z-50  transition-colors duration-300 bg-transparent`}>    

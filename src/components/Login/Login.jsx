@@ -34,8 +34,7 @@ const Login = () => {
       : '/farmmart_api/v2/account/login_account';
   
     try {
-      const response = await axios.post(apiUrl, loginData);
-  
+      const response = await axios.post('https://ourservicestech.com.ng/farmmart_api/v2/account/login_account', loginData);
       if (response.data.status === 1) {
         const { id, users_token, profile, users_email, users_fn, users_ln, kyc_level, app_ids } = response.data.data;
         const idOfPartner = app_ids.partner

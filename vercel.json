@@ -13,8 +13,8 @@
   ],
   "rewrites": [
     {
-      "source": "/farmmart_api/v2/:path*",
-      "destination": "https://ourservicestech.com.ng/farmmart_api/v2/:path*"
+      "source": "/(.*)",
+      "destination": "/"
     }
   ]
 }
