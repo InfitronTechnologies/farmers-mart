@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useProfile } from '../../ProfileContext/ProfileContext';
 import axios from 'axios';
 import KycModal from '../KycModal/KycModal';
+import ProductItems from '../ProductItems/ProductItems';
 
 function PartnerProduct() {
   const location = useLocation();
@@ -20,7 +21,7 @@ function PartnerProduct() {
     left: null,
     right: null,
   });
-
+  const [productItems, setProductItems] = useState([])
   const [newProduct, setNewProduct] = useState({
     users_id: userId,
     users_token: userToken,
@@ -176,6 +177,38 @@ function PartnerProduct() {
         console.log(updatedProduct)
         const response = await axios.post(createProductUrl, updatedProduct);
         console.log(response.data)
+        const productId =  response.data.product_id
+        try {
+          const itemUrl = process.env.NODE_ENV === "production"
+          ? "https://ourservicestech.com.ng/farmmart_api/v2/product_item/create_product_items"
+          : "/farmmart_api/v2/product_item/create_product_items";        
+  
+          async function sendItemsOneByOne(productItems, itemUrl, productId) {
+            for (const item of productItems) {
+              const data = {
+                product_item_name: item.name,
+                product_item_desc: item.desc,
+                product_id: productId,
+              };
+          
+              try {
+                const response = await axios.post(itemUrl, data);
+                console.log("Item sent successfully:", response.data);
+              } catch (error) {
+                console.error("Error sending item:", error);
+              }
+            }
+          }
+          sendItemsOneByOne(productItems, itemUrl, productId)
+            .then(() => {
+              console.log("All items sent successfully!");
+            })
+            .catch(error => {
+              console.error("An unexpected error occurred:", error);
+            });
+        } catch (error) {
+          console.error("Error sending Items" , error)
+        }
       } catch (err) {
         console.error(err);
         setError(err.message || 'Something went wrong. Please try again.')
@@ -187,203 +220,234 @@ function PartnerProduct() {
   
 
   return (
-    <div className="container mx-auto p-6 bg-white shadow-md rounded-lg">
-      <h2 className="text-2xl font-bold mb-6 text-center">Add New Product</h2>
-
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/** Product Information **/}
-          <div>
-            <label className="block mb-1 font-medium">Product Type</label>
-            <select
-                className="w-full p-2 border-1 rounded-xl text-black bg-white focus:border-farmersmartDarkGreen 
-                focus:outline-none focus:ring-0 focus:border-2"
-                name="product_type_id"
-                value={newProduct.product_type_id}
-                onChange={(e) => setNewProduct({ ...newProduct, product_type_id: e.target.value })}
-                required
-              >
-                <option value="">Select product type</option>
-                {productType.map((product) => (
-                <option key={product.id} value={product.id}>{product.product_type_name}</option>
-                ))}
-              </select>
-          </div>
-          <div>
-            <label className="block mb-1 font-medium">Category</label>
-              <select
-                className="w-full p-2 border-1 rounded-xl text-black bg-white focus:border-farmersmartDarkGreen 
-                focus:outline-none focus:ring-0 focus:border-2"
-                name="category_id"
-                value={newProduct.category_id}
-                onChange={(e) => setNewProduct({ ...newProduct, category_id: e.target.value })}
-                required
-              >
-                <option value="">Select category</option>
-                {categories.map((category) => (
-                <option key={category.id} value={category.id}>{category.category_name}</option>
-                ))}
-              </select>
-          </div>
-          <div>
-            <label className="block mb-1 font-medium">Sub-Category</label>
-            <select
-              className="w-full p-2 border-1 rounded-xl text-black bg-white focus:border-farmersmartDarkGreen 
-              focus:outline-none focus:ring-0 focus:border-2"
-              name="sub_category_id"
-              value={newProduct.sub_category_id}
-              onChange={(e) => setNewProduct({ ...newProduct, sub_category_id: e.target.value })}
-              required
-            >
-              <option value="">Select Subcategory</option>
-              {subcategories.map((subcategory) => (
-              <option key={subcategory.id} value={subcategory.id}>{subcategory.sub_category_name}</option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label className="block mb-1 font-medium">Product Name</label>
-            <input 
-              type="text" 
-              name="product_name"
-              value={newProduct.product_name}
-              onChange={handleInputChange}
-              className="border p-2 w-full rounded"
-              placeholder="Enter Product Name"
-            />
-          </div>
-          <div className="md:col-span-2">
-            <label className="block mb-1 font-medium">Short Description</label>
-            <textarea 
-              name="product_short_desc"
-              value={newProduct.product_short_desc}
-              onChange={handleInputChange}
-              className="border p-2 w-full rounded"
-              placeholder="Enter Short Description"
-            ></textarea>
-          </div>
-          <div className="md:col-span-2">
-            <label className="block mb-1 font-medium">Long Description</label>
-            <textarea 
-              name="product_long_desc"
-              value={newProduct.product_long_desc}
-              onChange={handleInputChange}
-              className="border p-2 w-full rounded"
-              placeholder="Enter Long Description"
-            ></textarea>
-          </div>
-
-          {/** Pricing and Quantity **/}
-          <div>
-            <label className="block mb-1 font-medium">Normal Price (NGN) </label>
-            <input 
-              type="number" 
-              name="product_normal_price"
-              value={newProduct.product_normal_price}
-              onChange={handleInputChange}
-              className="border p-2 w-full rounded"
-              placeholder="Enter Normal Price"
-            />
-          </div>
-          <div>
-            <label className="block mb-1 font-medium">Promo Price (NGN)</label>
-            <input 
-              type="number" 
-              name="product_promo_price"
-              value={newProduct.product_promo_price}
-              onChange={handleInputChange}
-              className="border p-2 w-full rounded"
-              placeholder="Enter Promo Price"
-            />
-          </div>
-          <div>
-            <label className="block mb-1 font-medium">Units</label>
-            <input 
-              type="text" 
-              name="units"
-              value={newProduct.units}
-              onChange={handleInputChange}
-              className="border p-2 w-full rounded"
-              placeholder="Enter Units"
-            />
-          </div>
-          <div>
-            <label className="block mb-1 font-medium">Minimum Quantity</label>
-            <input 
-              type="number" 
-              name="min_qty"
-              value={newProduct.min_qty}
-              onChange={handleInputChange}
-              className="border p-2 w-full rounded"
-              placeholder="Enter Minimum Quantity"
-            />
-          </div>
-          <div>
-            <label className="block mb-1 font-medium">Maximum Quantity</label>
-            <input 
-              type="number" 
-              name="max_qty"
-              value={newProduct.max_qty}
-              onChange={handleInputChange}
-              className="border p-2 w-full rounded"
-              placeholder="Enter Maximum Quantity"
-            />
-          </div>
-          <div>
-            <label className="block mb-1 font-medium">Product Weight</label>
-            <input 
-              type="text" 
-              name="product_weight"
-              value={newProduct.product_weight}
-              onChange={handleInputChange}
-              className="border p-2 w-full rounded"
-              placeholder="Enter Product Weight"
-            />
-          </div>
-
-          {/** Product Images **/}
-          <div>
-            <label className="mb-1 font-medium">Front Image</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => handleFileChange(e, "front")}
-              required
-              className="file-input border rounded px-3 py-2"
-            />
-          </div>
-          <div>
-            <label className="mb-1 font-medium">Left Image</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => handleFileChange(e, "left")}
-              required
-              className="file-input border rounded px-3 py-2"
-            />
-          </div>
-          <div>
-            <label className="mb-1 font-medium">Right Image</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => handleFileChange(e, "right")}
-              required
-              className="file-input border rounded px-3 py-2"
-            />
-          </div>
-          <div className="text-center w-100 mt-6">
-            <button 
-              type='submit'
-              disabled={loading}
-              className={`submit-btn px-4 py-2 rounded bg-blue-500 text-white ${
-                loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'
-              }`}
-            >
-              {loading ? 'Creating...' : 'Create Product'}
-            </button>
-          </div>
-        </form>
-        <KycModal isOpen={isKycModalOpen} onClose={handleCloseModal} />      
+    <div className="container mx-auto p-8 bg-white shadow-lg rounded-lg max-w-4xl">
+       <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">Add New Product</h2>
+       <form onSubmit={handleSubmit} className="space-y-6">
+         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+           {/* Product Type */}
+           <div>
+             <label className="block text-sm font-semibold text-gray-700 mb-2">Product Type</label>
+             <select
+               className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+               name="product_type_id"
+               value={newProduct.product_type_id}
+               onChange={(e) => setNewProduct({ ...newProduct, product_type_id: e.target.value })}
+               required
+             >
+               <option value="">Select product type</option>
+               {productType.map((product) => (
+                 <option key={product.id} value={product.id}>
+                   {product.product_type_name}
+                 </option>
+               ))}
+             </select>
+           </div>
+   
+           {/* Category */}
+           <div>
+             <label className="block text-sm font-semibold text-gray-700 mb-2">Category</label>
+             <select
+               className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+               name="category_id"
+               value={newProduct.category_id}
+               onChange={(e) => setNewProduct({ ...newProduct, category_id: e.target.value })}
+               required
+             >
+               <option value="">Select category</option>
+               {categories.map((category) => (
+                 <option key={category.id} value={category.id}>
+                   {category.category_name}
+                 </option>
+               ))}
+             </select>
+           </div>
+   
+           {/* Sub-Category */}
+           <div>
+             <label className="block text-sm font-semibold text-gray-700 mb-2">Sub-Category</label>
+             <select
+               className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+               name="sub_category_id"
+               value={newProduct.sub_category_id}
+               onChange={(e) => setNewProduct({ ...newProduct, sub_category_id: e.target.value })}
+               required
+             >
+               <option value="">Select Subcategory</option>
+               {subcategories.map((subcategory) => (
+                 <option key={subcategory.id} value={subcategory.id}>
+                   {subcategory.sub_category_name}
+                 </option>
+               ))}
+             </select>
+           </div>
+   
+           {/* Product Name */}
+           <div>
+             <label className="block text-sm font-semibold text-gray-700 mb-2">Product Name</label>
+             <input
+               type="text"
+               name="product_name"
+               value={newProduct.product_name}
+               onChange={handleInputChange}
+               className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+               placeholder="Enter Product Name"
+             />
+           </div>
+         </div>
+   
+         {/* Short Description */}
+         <div>
+           <label className="block text-sm font-semibold text-gray-700 mb-2">Short Description</label>
+           <textarea
+             name="product_short_desc"
+             value={newProduct.product_short_desc}
+             onChange={handleInputChange}
+             className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+             placeholder="Enter Short Description"
+           ></textarea>
+         </div>
+   
+         {/* Long Description */}
+         <div>
+           <label className="block text-sm font-semibold text-gray-700 mb-2">Long Description</label>
+           <textarea
+             name="product_long_desc"
+             value={newProduct.product_long_desc}
+             onChange={handleInputChange}
+             className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+             placeholder="Enter Long Description"
+           ></textarea>
+         </div>
+   
+         {/* Pricing and Quantity */}
+         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+           <div>
+             <label className="block text-sm font-semibold text-gray-700 mb-2">Normal Price (NGN)</label>
+             <input
+               type="number"
+               name="product_normal_price"
+               value={newProduct.product_normal_price}
+               onChange={handleInputChange}
+               className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+               placeholder="Enter Normal Price"
+             />
+           </div>
+   
+           <div>
+             <label className="block text-sm font-semibold text-gray-700 mb-2">Promo Price (NGN)</label>
+             <input
+               type="number"
+               name="product_promo_price"
+               value={newProduct.product_promo_price}
+               onChange={handleInputChange}
+               className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+               placeholder="Enter Promo Price"
+             />
+           </div>
+   
+           <div>
+             <label className="block text-sm font-semibold text-gray-700 mb-2">Units</label>
+             <input
+               type="text"
+               name="units"
+               value={newProduct.units}
+               onChange={handleInputChange}
+               className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+               placeholder="Enter Units"
+             />
+           </div>
+         </div>
+   
+         {/*Quantity and Weight */}
+         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+           <div>
+             <label className="block text-sm font-semibold text-gray-700 mb-2">Minimum Quantity</label>
+             <input
+               type="number"
+               name="min_qty"
+               value={newProduct.min_qty}
+               onChange={handleInputChange}
+               className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+               placeholder="Enter Normal Price"
+             />
+           </div>
+   
+           <div>
+             <label className="block text-sm font-semibold text-gray-700 mb-2">Maximum Quantity</label>
+             <input
+               type="number"
+               name="max_qty"
+               value={newProduct.max_qty}
+               onChange={handleInputChange}
+               className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+               placeholder="Enter Promo Price"
+             />
+           </div>
+   
+           <div>
+             <label className="block text-sm font-semibold text-gray-700 mb-2">Product Weight</label>
+             <input
+               type="text"
+               name="product_weight"
+               value={newProduct.product_weight}
+               onChange={handleInputChange}
+               className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+               placeholder="Enter Units"
+             />
+           </div>
+         </div>
+   
+         {/* Product Images */}
+         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+           <div>
+             <label className="block text-sm font-semibold text-gray-700 mb-2">Front Image</label>
+             <input
+               type="file"
+               accept="image/*"
+               onChange={(e) => handleFileChange(e, "front")}
+               className="w-full border rounded-lg p-2 bg-gray-50 shadow-sm focus:outline-none"
+             />
+           </div>
+   
+           <div>
+             <label className="block text-sm font-semibold text-gray-700 mb-2">Left Image</label>
+             <input
+               type="file"
+               accept="image/*"
+               onChange={(e) => handleFileChange(e, "left")}
+               className="w-full border rounded-lg p-2 bg-gray-50 shadow-sm focus:outline-none"
+             />
+           </div>
+   
+           <div>
+             <label className="block text-sm font-semibold text-gray-700 mb-2">Right Image</label>
+             <input
+               type="file"
+               accept="image/*"
+               onChange={(e) => handleFileChange(e, "right")}
+               className="w-full border rounded-lg p-2 bg-gray-50 shadow-sm focus:outline-none"
+             />
+           </div>
+         </div>
+   
+         <ProductItems productItems={productItems} setProductItems={setProductItems} />
+   
+         {/* Submit Button */}
+         <div className="text-center mt-8">
+           <button
+             type="submit"
+             disabled={loading}
+             className={`w-full md:w-auto px-6 py-3 text-white rounded-lg shadow-md ${
+               loading
+                 ? "bg-blue-300 cursor-not-allowed"
+                 : "bg-blue-500 hover:bg-blue-600 transition"
+             }`}
+           >
+             {loading ? "Creating..." : "Create Product"}
+           </button>
+         </div>
+       </form>
+       <KycModal isOpen={isKycModalOpen} onClose={handleCloseModal} />      
     </div>
   );
 }

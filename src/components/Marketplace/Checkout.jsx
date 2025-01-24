@@ -8,7 +8,7 @@ const CheckoutPage = () => {
     const { product, quantity } = location.state || {}; // Safely access state
 
 
-    const subtotal = product.product_normal_price * quantity
+    const subtotal = product.product_promo_price * quantity
 
   return (
     <div className="">
@@ -119,7 +119,7 @@ const CheckoutPage = () => {
                             {/* Order Items */}
                             <div className="flex justify-between">
                                 <span>Unit Price</span>
-                                <span>{product.product_normal_price}</span>
+                                <span>{product.product_promo_price}</span>
                             </div>
                             <div className="flex justify-between">
                                 <span>Quantity</span>

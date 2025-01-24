@@ -1,180 +1,3 @@
-// import React, { useState, useEffect } from "react";
-// import { useParams, Link } from "react-router-dom";
-// import MarketNav from "./MarketNav";
-// import Footer from "../LandingPage/Footer";
-// import { IconButton } from "@mui/material";
-// import AddIcon from "@mui/icons-material/Add";
-// import RemoveIcon from "@mui/icons-material/Remove";
-// import axios from "axios";
-
-// const ProductDetails = () => {
-//   const { id } = useParams();
-//   const [product, setProduct] = useState();
-//   const [quantity, setQuantity] = useState(1); // Track selected quantity
-//   const [productImages, setProductImages] = useState([]);
-//   const [currentImageIndex, setCurrentImageIndex] = useState(0); // For the slideshow
-
-//   useEffect(() => {
-//     const getProductDetails = async () => {
-//       const url = process.env.NODE_ENV === "production"
-//       ? `https://ourservicestech.com.ng/farmmart_api/v2/product/select_by_id_get_product?id=${id}`
-//       : `/farmmart_api/v2/product/select_by_id_get_product?id=${id}`;
-
-//       try {
-//         const response = await axios.get(url);
-//         const productData = response.data.data;
-//         setProduct(response.data.data);
-
-//         const images = [
-//           productData.product_image_f,
-//           productData.product_image_l,
-//           productData.product_image_r,
-//         ].filter(Boolean); // Remove null or undefined values
-
-//         setProductImages(images);
-//       } catch (error) {
-//         console.error("Product Error", error);
-//       }
-//     };
-
-//     getProductDetails();
-//   }, [id]);
-
-//   // Handle quantity adjustments
-//   const handleIncrease = () => setQuantity(quantity + 1);
-//   const handleDecrease = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
-
-//   // Handle slideshow navigation
-//   const nextImage = () => {
-//     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % productImages.length);
-//   };
-
-//   const prevImage = () => {
-//     setCurrentImageIndex((prevIndex) =>
-//       prevIndex === 0 ? productImages.length - 1 : prevIndex - 1
-//     );
-//   };
-
-//   return (
-//     <div>
-//       <div className="fixed top-0 left-0 w-full z-30">
-//         <MarketNav />
-//       </div>
-//       <div
-//         className="text-3xl tracking-wide mt-24 lg:ml-12 font-bold text-farmersmartDarkGreen"
-//         style={{ fontFamily: "Montserrat" }}
-//       >
-//         Product Details
-//       </div>
-//       <div className="flex flex-col lg:flex-row items-start px-6 my-16">
-//         {/* Product Image Slideshow */}
-//         <div className="p-4 flex">
-//           <div className="relative rounded-lg shadow-md">
-//             {productImages.length > 0 ? (
-//               <>
-//                 <img
-//                   src={`https://ourservicestech.com.ng/farmmart_api/images/product/${productImages[currentImageIndex]}`}
-//                   alt={`Product ${currentImageIndex + 1}`}
-//                   className="rounded-lg object-cover w-96 h-96"
-//                 />
-//                 <button
-//                   onClick={prevImage}
-//                   className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-700 text-white p-2 rounded-full shadow hover:bg-gray-900"
-//                 >
-//                   &lt;
-//                 </button>
-//                 <button
-//                   onClick={nextImage}
-//                   className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-gray-700 text-white p-2 rounded-full shadow hover:bg-gray-900"
-//                 >
-//                   &gt;
-//                 </button>
-//               </>
-//             ) : (
-//               <p className="text-gray-500">No images available</p>
-//             )}
-//           </div>
-//         </div>
-//         {/* Product Details */}
-//         <div className="lg:w-1/2 p-4 text-gray-700 h-auto">
-//           <div className="flex flex-row justify-between mb-4 mr-4">
-//             <h1 className="text-4xl font-bold text-farmersmartDarkGreen mb-4">
-//               {product?.product_name}
-//             </h1>
-//             <p className="text-2xl text-gray-600 mb-2">
-//               Price:{" "}
-//               <span className="text-farmersmartGreen font-semibold">
-//                 ₦{product?.product_normal_price}
-//               </span>
-//             </p>
-//           </div>
-//           <div>
-//             <p className="">Weight: {product?.product_weight} kg</p>
-//           </div>
-//           <div className="mt-4">
-//             <div className="text-xl text-farmersmartDarkGreen font-semibold">
-//               Description
-//             </div>
-//             <p className="text-md text-gray-500 mb-4">
-//               {product?.product_long_desc}
-//             </p>
-//           </div>
-//           {/* Quantity Selector */}
-//           <div className="flex items-center justify-between mb-6">
-//             <div className="flex items-center">
-//               <div className="border border-[#C1E84991] rounded-l-3xl bg-[#C1E84991] ">
-//                 <IconButton
-//                   onClick={handleDecrease}
-//                   className="text-farmersmartGreen "
-//                 >
-//                   <RemoveIcon className="text-black font-medium" />
-//                 </IconButton>
-//               </div>
-//               <input
-//                 type="number"
-//                 value={quantity}
-//                 onChange={(e) =>
-//                   setQuantity(Math.max(1, parseInt(e.target.value) || 1))
-//                 }
-//                 className="w-12 text-center border-none bg-transparent focus:outline-none"
-//                 min="1"
-//               />
-//               <div className="border border-[#C1E84991] rounded-r-3xl bg-[#C1E84991] ">
-//                 <IconButton
-//                   onClick={handleIncrease}
-//                   className="text-farmersmartGreen rounded-r-lg"
-//                 >
-//                   <AddIcon className="text-black font-medium" />
-//                 </IconButton>
-//               </div>
-//             </div>
-//             {/* Price and Add to Cart */}
-//             <div className="flex items-center">
-//             <Link
-//               to={{
-//                 pathname: "/checkout",
-//                 state: { 
-//                   name: product.product_name,
-//                   quantity: quantity
-//                 } // Pass the product and quantity as state
-//               }}
-//             >
-//               <button className="bg-[#ff7300] text-white text-2xl font-semibold px-16 py-3 rounded-3xl shadow hover:bg-green-700 transition duration-200">
-//                 Buy
-//               </button>
-//             </Link>
-
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//       <Footer />
-//     </div>
-//   );
-// };
-
-// export default ProductDetails;
-
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import MarketNav from "./MarketNav";
@@ -183,6 +6,7 @@ import { IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import axios from "axios";
+import ProductItemsDisplay from "./ProductItemsDisplay";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -190,6 +14,7 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [productImages, setProductImages] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [productItemsData, setProductItemsData] = useState([])
 
   // Fetch product details
   useEffect(() => {
@@ -215,8 +40,22 @@ const ProductDetails = () => {
         console.error("Error fetching product details:", error);
       }
     };
-
     fetchProductDetails();
+
+    const fetchProductItems = async () => {
+      const url = process.env.NODE_ENV === "production"
+      ? `https://ourservicestech.com.ng/farmmart_api/v2/product_item/select_by_product_id_product_items`
+      : `/farmmart_api/v2/product_item/select_by_product_id_product_items`;
+      try{
+        const response =  await axios.post(url, {
+          id: id
+        });
+        setProductItemsData(response.data.data)
+      } catch (error){
+        console.error ("Error fetching product items", error)
+      }
+    } 
+    fetchProductItems()
   }, [id]);
 
   // Handle quantity adjustments
@@ -233,116 +72,125 @@ const ProductDetails = () => {
 
   return (
     <div>
-      <div className="fixed top-0 left-0 w-full z-30">
+      <div className="fixed top-0 left-0 w-full z-30 bg-white shadow-md">
         <MarketNav />
       </div>
+    
       <div
-        className="text-3xl tracking-wide mt-24 lg:ml-12 font-bold text-farmersmartDarkGreen"
+        className="text-3xl md:text-4xl tracking-wider mt-28 lg:ml-16 font-extrabold text-farmersmartDarkGreen text-center lg:text-left"
         style={{ fontFamily: "Montserrat" }}
       >
         Product Details
       </div>
-      <div className="flex flex-col lg:flex-row items-start px-6 my-16">
+    
+      <div className="flex flex-col lg:flex-row items-start px-6 lg:px-16 my-20 space-y-12 lg:space-y-0 lg:space-x-16">
         {/* Product Image Slideshow */}
-        <div className="p-4 flex">
-          <div className="relative rounded-lg shadow-md">
+        <div className="p-4 lg:mr-8 flex justify-center items-center lg:w-1/2">
+          <div className="relative rounded-lg shadow-lg border border-gray-200 max-w-full">
             {productImages.length > 0 ? (
               <>
                 <img
                   src={`https://ourservicestech.com.ng/farmmart_api/images/product/${productImages[currentImageIndex]}`}
                   alt={`Product Image ${currentImageIndex + 1}`}
-                  className="rounded-lg object-cover w-96 h-96"
+                  className="rounded-lg object-cover w-full max-w-xs sm:max-w-md h-80 sm:h-96"
                 />
                 <button
                   onClick={prevImage}
                   aria-label="Previous Image"
-                  className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-700 text-white p-2 rounded-full shadow hover:bg-gray-900"
+                  className="absolute top-1/2 left-2 sm:left-4 transform -translate-y-1/2 bg-farmersmartGreen text-white p-3 rounded-full shadow-lg hover:bg-farmersmartDarkGreen transition"
                 >
                   &lt;
                 </button>
                 <button
                   onClick={nextImage}
                   aria-label="Next Image"
-                  className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-gray-700 text-white p-2 rounded-full shadow hover:bg-gray-900"
+                  className="absolute top-1/2 right-2 sm:right-4 transform -translate-y-1/2 bg-farmersmartGreen text-white p-3 rounded-full shadow-lg hover:bg-farmersmartDarkGreen transition"
                 >
                   &gt;
                 </button>
               </>
             ) : (
-              <p className="text-gray-500">No images available</p>
+              <p className="text-gray-500 text-center py-8">No images available</p>
             )}
           </div>
         </div>
+    
         {/* Product Details */}
-        <div className="lg:w-1/2 p-4 text-gray-700 h-auto">
-          <div className="flex flex-row justify-between mb-4 mr-4">
-            <h1 className="text-4xl font-bold text-farmersmartDarkGreen mb-4">
+        <div className="lg:w-1/2 p-6 text-gray-800 space-y-6">
+          <div className="flex flex-col lg:flex-row justify-between items-center lg:items-start">
+            <h1 className="text-2xl sm:text-4xl font-extrabold text-farmersmartDarkGreen text-center lg:text-left">
               {product?.product_name || "Loading..."}
             </h1>
-            <p className="text-2xl text-gray-600 mb-2">
+            <p className="text-xl sm:text-2xl text-gray-600 mt-4 lg:mt-0">
               Price:{" "}
-              <span className="text-farmersmartGreen font-semibold">
+              <span className="font-bold text-base text-gray-400 mr-2 line-through">
                 ₦{product?.product_normal_price || 0}
+              </span>
+              <span className="text-farmersmartGreen font-bold text-xl">
+                ₦{product?.product_promo_price || 0}
               </span>
             </p>
           </div>
-          <p>Weight: {product?.product_weight || "N/A"} kg</p>
-          <div className="mt-4">
-            <div className="text-xl text-farmersmartDarkGreen font-semibold">
+          <p className="text-lg text-center lg:text-left">
+            <span className="font-bold text-farmersmartDarkGreen">Weight:</span>{" "}
+            {product?.product_weight || "N/A"} kg
+          </p>
+          <div>
+            <h2 className="text-xl sm:text-2xl text-farmersmartDarkGreen font-bold mb-2 text-center lg:text-left">
               Description
-            </div>
-            <p className="text-md text-gray-500 mb-4">
+            </h2>
+            <p className="text-md text-gray-600 leading-relaxed text-justify lg:text-left">
               {product?.product_long_desc || "No description available."}
             </p>
           </div>
+    
           {/* Quantity Selector */}
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center">
-              <div className="border border-[#C1E84991] rounded-l-3xl bg-[#C1E84991] ">
-                <IconButton
-                  onClick={handleDecrease}
-                  className="text-farmersmartGreen"
-                >
-                  <RemoveIcon className="text-black font-medium" />
-                </IconButton>
-              </div>
+          <div className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0 sm:space-x-8">
+            <div className="flex items-center border border-farmersmartLightGreen rounded-full">
+              <button
+                onClick={handleDecrease}
+                className="p-3 bg-farmersmartLightGreen text-farmersmartDarkGreen font-bold hover:bg-farmersmartGreen hover:text-white transition rounded-l-full"
+              >
+                -
+              </button>
               <input
                 type="number"
                 value={quantity}
                 onChange={(e) =>
                   setQuantity(Math.max(1, parseInt(e.target.value) || 1))
                 }
-                className="w-12 text-center border-none bg-transparent focus:outline-none"
+                className="w-16 text-center bg-white text-lg font-semibold focus:outline-none"
                 min="1"
               />
-              <div className="border border-[#C1E84991] rounded-r-3xl bg-[#C1E84991] ">
-                <IconButton
-                  onClick={handleIncrease}
-                  className="text-farmersmartGreen rounded-r-lg"
-                >
-                  <AddIcon className="text-black font-medium" />
-                </IconButton>
-              </div>
-            </div>
-            {/* Buy Button */}
-            <div className="flex items-center">
-              <Link
-                to="/checkout"
-                state={{
-                  product: product,
-                  quantity: quantity,
-                }}
+              <button
+                onClick={handleIncrease}
+                className="p-3 bg-farmersmartLightGreen text-farmersmartDarkGreen font-bold hover:bg-farmersmartGreen hover:text-white transition rounded-r-full"
               >
-                <button className="bg-[#ff7300] text-white text-2xl font-semibold px-16 py-3 rounded-3xl shadow hover:bg-green-700 transition duration-200">
-                  Buy
-                </button>
-              </Link>
+                +
+              </button>
             </div>
+            <Link
+              to="/delivery route"
+              state={{
+                product: product,
+                quantity: quantity,
+                id: id,
+              }}
+            >
+              <button className="bg-[#ff7300] text-white text-lg font-semibold px-12 py-3 rounded-full shadow-md hover:bg-[#ff8c33] transition duration-300">
+                Buy
+              </button>
+            </Link>
           </div>
         </div>
       </div>
+    
+      <div className="px-6 lg:px-16 mb-12">
+        <ProductItemsDisplay items={productItemsData} />
+      </div>
       <Footer />
     </div>
+  
   );
 };
 
