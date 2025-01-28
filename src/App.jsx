@@ -16,6 +16,8 @@ import AccountActivation from './components/AccountValidation/AccountActivation'
 import CheckoutPage from './components/Marketplace/Checkout'
 import PrivacyPolicy from './components/PrivacyPolicy/PrivacyPolicy'
 import PrivacyAgreementForm from './components/PrivacyPolicy/PrivacyAgreementForm'
+import DeliveryRoute from './components/Marketplace/DeliveryRoute'
+import PaymentGateway from './components/Marketplace/PaystackPayment'
 
 
 function App() {
@@ -45,6 +47,8 @@ function App() {
         <Route path="/account-activation" element={<AccountActivation />} />
         <Route path='/products/:id'  element={<ProductDetails/>} />
         <Route path='/checkout'  element={<CheckoutPage/>} />
+        <Route path='/delivery-route'  element={<DeliveryRoute/>} />
+        <Route path='/payment'  element={<PaymentGateway/>} />
         <Route path='/policy'  element={<PrivacyPolicy/>} />
         <Route path='/policyform'  element={<PrivacyAgreementForm/>} />
       </Routes>

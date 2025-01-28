@@ -170,7 +170,7 @@ const ProductDetails = () => {
               </button>
             </div>
             <Link
-              to="/delivery route"
+              to="/delivery-route"
               state={{
                 product: product,
                 quantity: quantity,
