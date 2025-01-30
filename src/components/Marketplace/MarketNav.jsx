@@ -4,8 +4,18 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import logo from '../../assets/farmersmartlogo.png';
 import SearchBar from './SearchBar';
+import { useNavigate } from 'react-router-dom';
+import { useProfile } from '../ProfileContext/ProfileContext';
 
 const MarketNav = ({ setSearchResults }) => {
+  const navigate = useNavigate()
+  const {clearProfile} = useProfile()
+
+  const handleLogout = () => {
+    clearProfile()
+    navigate('/login')
+  }
+
   return (
     <Navbar fluid rounded className="bg-[#0B2B17] p-4 shadow-md">
       {/* Left Section - Logo */}
@@ -33,8 +43,8 @@ const MarketNav = ({ setSearchResults }) => {
             <div className="text-[#0B2B17] border-2 border-[#0d4e25] px-6 py-2 rounded-md mx-4 my-2 font-semibold">
               <Dropdown.Item href="/user">Dashboard</Dropdown.Item>
             </div>
-            <div className="text-[#0B2B17] tracking-wider border-2 border-[#c1e849] bg-[#c1e849] px-6 py-2 rounded-md mx-4 my-2 font-semibold">
-              <Dropdown.Item href="/login">Log out</Dropdown.Item>
+            <div onClick={handleLogout} className="text-[#0B2B17] tracking-wider border-2 border-[#c1e849] bg-[#c1e849] px-6 py-2 rounded-md mx-4 my-2 font-semibold">
+              <Dropdown.Item href=''>Log out</Dropdown.Item>
             </div>
           </Dropdown>
         </div>

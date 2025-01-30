@@ -257,7 +257,6 @@ const Signup = () => {
                         placeholder="Other Name"
                         value={formData.users_on}
                         onChange={handleChange}
-                        required
                       />
                     </div>
                   </div>

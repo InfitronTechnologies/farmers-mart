@@ -228,6 +228,7 @@ import MarketNav from "./MarketNav";
 import Footer from "../LandingPage/Footer";
 import { useLocation } from "react-router-dom";
 import PaystackPayment from './PaystackPayment';
+import {useProfile} from '../ProfileContext/ProfileContext'
 import axios from "axios";
 
 const CheckoutPage = () => {
@@ -235,6 +236,7 @@ const CheckoutPage = () => {
     const initialState = location.state || JSON.parse(sessionStorage.getItem("checkoutState"));
     const { product, quantity, id, costData, deliveryForm } = initialState || {};
     const [state, setState] = useState(null);
+    const {userEmail} = useProfile() 
 
     const [formData, setFormData] = useState({
         users_id: deliveryForm?.users_id,
@@ -321,7 +323,7 @@ const CheckoutPage = () => {
         try {
             console.log("Submitting checkout data:", checkoutData);
             const response = await axios.post(url, checkoutData);
-            console.log("Checkout response:", response.data.data);
+            console.log("Checkout response:", response.data);
         } catch (error) {
             console.error("Error submitting checkout data:", error);
         }
@@ -375,6 +377,25 @@ const CheckoutPage = () => {
                                 <p>{`${deliveryForm?.address}, ${state} State.`}</p>
                             </div>
                         </div>
+                        {/* Payment Button */}
+                        <div className="w-full bg-[#0b2b17] text-2xl font-bold text-white py-3 rounded-full shadow hover:bg-green-800 transition text-center mt-4">
+                            {formValid ? (
+                                <PaystackPayment
+                                    amount={totalAmount}
+                                    email={userEmail}
+                                    metadata={{ name: formData.user_full_name }}
+                                    onSuccess={handleSuccess}
+                                    onClose={handleClose}
+                                />
+                            ) : (
+                                <button
+                                    disabled
+                                    className="bg-gray-400 text-white py-3 px-6 rounded-md shadow cursor-not-allowed"
+                                >
+                                    Fill in your details to pay
+                                </button>
+                            )}
+                        </div>
                     </div>
 
                     {/* Right Section - Order Summary */}
@@ -412,25 +433,6 @@ const CheckoutPage = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-            {/* Payment Button */}
-            <div className="flex justify-center mt-8">
-                {formValid ? (
-                    <PaystackPayment
-                        amount={totalAmount}
-                        email="adamng000@gmail.com"
-                        metadata={{ name: formData.user_full_name }}
-                        onSuccess={handleSuccess}
-                        onClose={handleClose}
-                    />
-                ) : (
-                    <button
-                        disabled
-                        className="bg-gray-400 text-white py-3 px-6 rounded-md shadow cursor-not-allowed"
-                    >
-                        Fill in your details to pay
-                    </button>
-                )}
             </div>
             <Footer />
         </div>
