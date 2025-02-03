@@ -245,6 +245,7 @@ const CheckoutPage = () => {
         farmer_id: product?.farmer_id,
         logistic_id: "",
         partner_id: "",
+        units: quantity,
         vat: costData?.vat,
         amt_charge: String(costData?.amt_charge),
         total_amt: "",

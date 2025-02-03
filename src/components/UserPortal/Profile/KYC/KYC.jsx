@@ -14,10 +14,6 @@ const KYC = () => {
   console.log(kycLevel)
   
   // Handle progression to the next level (or success page)
-  const goToNextLevel = () => {
-    navigate('/user'); // Example navigation after KYC completion
-  };
-
   return (
     <div className="kyc-container">
       <h1 className="text-center text-2xl font-bold">Complete Your KYC</h1>

@@ -18,7 +18,7 @@ import PrivacyPolicy from './components/PrivacyPolicy/PrivacyPolicy'
 import PrivacyAgreementForm from './components/PrivacyPolicy/PrivacyAgreementForm'
 import DeliveryRoute from './components/Marketplace/DeliveryRoute'
 import PaymentGateway from './components/Marketplace/PaystackPayment'
-import DeliveryProof from './components/UserPortal/ConsumerMenu/DeliveryProof'
+import { ToastContainer } from "react-toastify";
 
 
 function App() {
@@ -27,6 +27,7 @@ function App() {
     
   return (
     <div className='font-roboto'>
+      <ToastContainer />
       <Routes>
         <Route path='/' element={<Home/>} />
         <Route path='/signup' element={<Signup/>}/>

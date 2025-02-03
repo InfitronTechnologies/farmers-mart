@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useProfile } from '../../../ProfileContext/ProfileContext';
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LevelTwo = ({userId, userToken}) => {
   const [countries, setCountries] = useState([])
@@ -93,9 +95,19 @@ const LevelTwo = ({userId, userToken}) => {
         
         if (response.data.status === 1) {
           console.log(response)
-          setKycLevel(Number(kycLevel) + 1)
-          clearProfile(); // Clears session storage and context state
-          navigate('/login');
+          toast.success("KYC Level 2 successfully updated!", { // Display a success toast
+            position: "top-right", // Customize position
+            autoClose: 2000, 
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          setTimeout(() => {
+            clearProfile(); // Clears session storage and context state
+            navigate("/login")
+          }, 2500)
         } else {
             throw new Error(response.data.message || 'KYC submission failed');
         }

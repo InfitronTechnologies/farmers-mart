@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useProfile } from '../../../ProfileContext/ProfileContext';
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const LevelOne = ({ userId, userToken, goToNextLevel }) => {
   const [picture, setPicture] = useState(null);
@@ -66,7 +68,18 @@ const LevelOne = ({ userId, userToken, goToNextLevel }) => {
       // Check if KYC submission was successful
       if (kycResponse.data.status === 1) {
           console.log(kycResponse)
+          toast.success("KYC Level 1 updated", { // Display a success toast
+            position: "top-right", // Customize position
+            autoClose: 2000, 
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+        setTimeout(() => {
           setKycLevel(kycLevel + 1)
+        }, 2500)
       } else {
           throw new Error(kycResponse.data.message || 'KYC submission failed');
       }
