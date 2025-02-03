@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Sidebar } from "flowbite-react";
 import { useProfile } from "../ProfileContext/ProfileContext";
-import { Agriculture, Dashboard, Handshake, LocalShipping, Login, Logout, Menu, Person, Person2, ShoppingBag, Storefront, SupportAgent, Forum, Newspaper } from '@mui/icons-material';
+import { Agriculture, Dashboard, Handshake, LocalShipping, Login, Logout, Menu, Person, Person2, ShoppingBag, Storefront, SupportAgent, Forum, Newspaper, AccountBalanceWallet } from '@mui/icons-material';
 import { Link, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import UserOverview from './UserOverview/UserOverview';
 import ProfileOverview from './Profile/ProfileOverview';
@@ -35,6 +35,8 @@ import NewsData from "./News/NewsData";
 import PartnerAvailableProduce from "./PartnerMenu/PartnerAvailableProduct.jsx";
 import FarmerProductDetails from './FarmerMenu/FarmerProductDetails'
 import PartnerProductDetails from "./PartnerMenu/PartnerProductDetails.jsx";
+import DeliveryProof from "./ConsumerMenu/DeliveryProof.jsx";
+import Wallet from "./Wallet/Wallet.jsx";
 
 
 
@@ -88,6 +90,9 @@ function SideBar() {
                   </Sidebar.Item>
                   <Sidebar.Item href="#" icon={Login}>
                     Login History
+                  </Sidebar.Item>
+                  <Sidebar.Item href="/user/wallet" icon={AccountBalanceWallet}>
+                    Wallet
                   </Sidebar.Item>
                   <Sidebar.Item href="/marketplace" icon={Storefront}>
                     Marketplace
@@ -181,6 +186,7 @@ function SideBar() {
             <Route path='partner/offers' element={<FarmerPartnerMatching/>} /> 
             <Route path='buyer/' element={<ConsumerDashboard/>} /> 
             <Route path='buyer/orders' element={<Orders/>} /> 
+            <Route path='buyer/orders/pod'  element={<DeliveryProof/>} />
             <Route path='buyer/farmers-profile' element={<FarmerProfiles/>} /> 
             <Route path='createforum' element={<ForumCategories/>} />
             <Route path='createforum/:subcategoryId' element={<SubcategoryForum/> } />
@@ -192,6 +198,7 @@ function SideBar() {
             <Route path='news/:newsId' element={<NewsData/>} />
             <Route path='/my-products/:id'  element={<FarmerProductDetails/> } />
             <Route path='partner/services/:id'  element={<PartnerProductDetails/> } />
+            <Route path='wallet'  element={<Wallet/>} />
           </Routes>  
         </div>
       </div> 

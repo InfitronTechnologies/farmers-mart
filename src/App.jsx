@@ -18,6 +18,7 @@ import PrivacyPolicy from './components/PrivacyPolicy/PrivacyPolicy'
 import PrivacyAgreementForm from './components/PrivacyPolicy/PrivacyAgreementForm'
 import DeliveryRoute from './components/Marketplace/DeliveryRoute'
 import PaymentGateway from './components/Marketplace/PaystackPayment'
+import DeliveryProof from './components/UserPortal/ConsumerMenu/DeliveryProof'
 
 
 function App() {

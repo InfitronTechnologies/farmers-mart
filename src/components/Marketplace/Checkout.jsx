@@ -378,19 +378,21 @@ const CheckoutPage = () => {
                             </div>
                         </div>
                         {/* Payment Button */}
-                        <div className="w-full bg-[#0b2b17] text-2xl font-bold text-white py-3 rounded-full shadow hover:bg-green-800 transition text-center mt-4">
+                        <div>
                             {formValid ? (
-                                <PaystackPayment
+                                <div className ="w-full bg-[#0b2b17] text-xl font-bold text-white py-3 rounded-full shadow hover:bg-green-800 transition text-center mt-4">
+                                    <PaystackPayment
                                     amount={totalAmount}
                                     email={userEmail}
                                     metadata={{ name: formData.user_full_name }}
                                     onSuccess={handleSuccess}
                                     onClose={handleClose}
-                                />
+                                    />
+                                </div>
                             ) : (
                                 <button
                                     disabled
-                                    className="bg-gray-400 text-white py-3 px-6 rounded-md shadow cursor-not-allowed"
+                                    className="w-full mt-4 bg-gray-400 text-white py-3 px-6 rounded-full shadow cursor-not-allowed"
                                 >
                                     Fill in your details to pay
                                 </button>

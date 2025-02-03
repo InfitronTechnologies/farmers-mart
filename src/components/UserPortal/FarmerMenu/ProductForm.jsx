@@ -160,9 +160,7 @@ function ProductForm() {
       const createProductUrl = process.env.NODE_ENV === "production"
       ? "https://ourservicestech.com.ng/farmmart_api/v2/product/create_product"
       : "/farmmart_api/v2/product/create_product";
-      console.log(updatedProduct)
       const response = await axios.post(createProductUrl, updatedProduct);
-      console.log(response.data)
       const productId =  response.data.product_id
       try {
         const itemUrl = process.env.NODE_ENV === "production"

@@ -1,94 +1,91 @@
-import React, { useState } from 'react';
-import { Package, Truck, CheckCircle } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardActions, Avatar, Typography, Button, Badge, Tabs, Tab, Box } from '@mui/material';
+import React, { useEffect, useState } from "react";
+import { useProfile } from "../../ProfileContext/ProfileContext";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const orders = [
-  { id: 'ORD001', items: ['Tomatoes', 'Eggs'], total: '₦2,500', status: 'Processing', date: '2024-10-01' },
-  { id: 'ORD002', items: ['Milk', 'Corn'], total: '₦1,700', status: 'Shipped', date: '2024-09-28' },
-  { id: 'ORD003', items: ['Mangoes'], total: '₦1,500', status: 'Delivered', date: '2024-09-25' },
-  { id: 'ORD004', items: ['Tomatoes', 'Milk', 'Eggs'], total: '₦3,800', status: 'Processing', date: '2024-10-02' },
-];
-
-const StatusIcon = ({ status }) => {
-  switch (status) {
-    case 'Processing':
-      return <Package className="h-5 w-5 text-yellow-500" />;
-    case 'Shipped':
-      return <Truck className="h-5 w-5 text-blue-500" />;
-    case 'Delivered':
-      return <CheckCircle className="h-5 w-5 text-green-500" />;
-    default:
-      return null;
-  }
-};
-
-const OrderCard = ({ order }) => (
-  <Card variant="outlined" sx={{ mb: 4 }}>
-    <CardHeader
-      avatar={<Avatar>{order.id.slice(-3)}</Avatar>}
-      title={<Typography variant="h6">Order {order.id}</Typography>}
-      subheader={<Badge color={
-        order.status === 'Delivered' ? 'success' :
-        order.status === 'Shipped' ? 'info' : 'warning'
-      }>
-        <StatusIcon status={order.status} />
-        <span>{order.status}</span>
-      </Badge>}
-    />
-    <CardContent>
-      <Typography variant="body2" color="text.secondary">
-        Items: {order.items.join(', ')}
-      </Typography>
-      <Typography variant="body2" color="text.secondary">
-        Date: {order.date}
-      </Typography>
-      <Typography variant="h6" sx={{ mt: 2 }}>
-        Total: {order.total}
-      </Typography>
-    </CardContent>
-    <CardActions>
-      <Button variant="outlined" fullWidth>View Details</Button>
-    </CardActions>
-  </Card>
-);
 
 const Orders = () => {
-  const [activeTab, setActiveTab] = useState('all');
+  const [orders, setOrders] = useState([])
+  const { userId } = useProfile()
+  const navigate = useNavigate()
 
-  const filteredOrders = orders.filter(order => 
-    activeTab === 'all' || order.status.toLowerCase() === activeTab
-  );
+  useEffect(() => {
+    const getOrders = async () => {
+      const url = process.env.NODE_ENV === 'production'
+        ? `https://ourservicestech.com.ng/farmmart_api/v2/order/select_order_by_user_id?id=${userId}`
+        : `/farmmart_api/v2/order/select_order_by_user_id?id=${userId}`
 
-  const handleTabChange = (event, newValue) => {
-    setActiveTab(newValue);
-  };
+      try {
+        const response = await axios.get(url)
+        setOrders(response.data.data)
+        console.log(response.data.data)
+      } catch (error) {
+        console.error('Error getting order: ', error)
+      }
+    }
+    getOrders()
+  }, [])
 
+ 
   return (
-    <div style={{ padding: '24px', backgroundColor: '#f5f5f5' }}>
-      <Typography variant="h3" gutterBottom>Order Management</Typography>
-
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
-        <Tabs value={activeTab} onChange={handleTabChange} aria-label="order status tabs">
-          <Tab label="All Orders" value="all" />
-          <Tab label="Processing" value="processing" />
-          <Tab label="Shipped" value="shipped" />
-          <Tab label="Delivered" value="delivered" />
-        </Tabs>
-      </Box>
-
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-        {filteredOrders.map(order => (
-          <OrderCard key={order.id} order={order} />
+    <div className="min-h-screen bg-gray-50 py-10 px-6 md:px-16">
+      <h1 className="text-3xl font-bold text-[#0B2B17] mb-6 text-center">My Orders</h1>
+      <div className="max-w-4xl mx-auto space-y-6">
+        {orders.map((order) => (
+          <div
+            key={order.id}
+            className="bg-white shadow-md rounded-lg p-6 border border-gray-200"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <span className="text-sm text-gray-500">Amount Paid</span>
+                <p className="text-lg font-semibold text-green-700">₦{order.amt_paid}</p>
+              </div>
+              <div>
+                <span className="text-sm text-gray-500">Status</span>
+                <p
+                  className={`text-lg font-semibold ${order.status === "Delivered"
+                      ? "text-green-600"
+                      : order.status === "pending"
+                        ? "text-red-600"
+                        : "text-yellow-600"
+                    }`}
+                >
+                  {order.status}
+                </p>
+              </div>
+              <div>
+                <span className="text-sm text-gray-500">Billing Address</span>
+                <p className="text-lg text-gray-700">{order.bill_address}</p>
+              </div>
+            </div>
+            <div className="mt-4 flex justify-between">
+              <button className="px-4 py-2 bg-[#0B2B17] text-white text-sm font-medium rounded-md shadow hover:bg-green-800 transition">
+                Details
+              </button>
+              {order.status == "processing"
+                ?
+                <button
+                  className="px-4 py-2 bg-green-700 text-white text-sm font-medium rounded-md shadow hover:bg-green-800 transition"
+                  onClick={() => {
+                    navigate("pod", {
+                      state: {
+                        order: order
+                      },
+                    })
+                  }}
+                >
+                  Proof of Delivery
+                </button>
+                :
+                <div></div>
+              } 
+            </div>
+          </div>
         ))}
-      </Box>
-
-      {filteredOrders.length === 0 && (
-        <Typography align="center" color="text.secondary" sx={{ mt: 8 }}>
-          No orders found in this category.
-        </Typography>
-      )}
+      </div>
     </div>
-  );
-};
+  )
+}
 
-export default Orders;
+export default Orders

@@ -1,9 +1,11 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useProfile } from '../../../ProfileContext/ProfileContext';
+import { useNavigate } from 'react-router-dom';
 
 const LevelFour = ({userId, userToken}) => {
-    const {kycLevel, setKycLevel} = useProfile()
+    const {kycLevel, setKycLevel, clearProfile} = useProfile()
+    const navigate = useNavigate()
     const [banks, setBanks] = useState([])
     const [errorMessage, setErrorMessage] = useState(null); // Error message state for validation errors
     const [formData, setFormData] = useState({
@@ -64,6 +66,8 @@ const LevelFour = ({userId, userToken}) => {
                 console.log(response)
                 setKycLevel(Number(kycLevel) + 1)
                 setErrorMessage(null); // Clear error message after successful submission
+                clearProfile(); // Clears session storage and context state
+                navigate('/login');
             } else {
                 throw new Error(response.data.message || 'KYC submission failed');
             }

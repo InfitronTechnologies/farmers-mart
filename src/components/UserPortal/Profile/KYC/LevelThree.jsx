@@ -1,9 +1,11 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { useProfile } from '../../../ProfileContext/ProfileContext';
+import { useNavigate } from 'react-router-dom';
 
 const LevelThree = ({userId, userToken}) => {
-    const {kycLevel, setKycLevel} = useProfile()
+    const {kycLevel, setKycLevel, clearProfile} = useProfile()
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({
         users_id : userId,
         users_token	: userToken,
@@ -38,6 +40,8 @@ const LevelThree = ({userId, userToken}) => {
 
             if (response.data.status === 1) {
                 setKycLevel(Number(kycLevel) + 1)
+                clearProfile(); // Clears session storage and context state
+                navigate('/login');
             } else {
                 throw new Error(response.data.message || 'KYC submission failed');
             }

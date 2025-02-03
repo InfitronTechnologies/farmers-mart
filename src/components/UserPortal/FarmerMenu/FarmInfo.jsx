@@ -52,19 +52,19 @@ function FarmInfo() {
     setIsKycModalOpen(false);
   };
 
-  setDefaults({
-    key: "AIzaSyDnZ0jjDNaK_tCT1UsV_JWU0V5zH9mgqnU", // Your API key here.
-    language: "en", // Default language for responses.
-    region: "es", // Default region for responses.
-  });
+  // setDefaults({
+  //   key: "AIzaSyDnZ0jjDNaK_tCT1UsV_JWU0V5zH9mgqnU", // Your API key here.
+  //   language: "en", // Default language for responses.
+  //   region: "es", // Default region for responses.
+  // });
 
 
-  fromAddress("Ikeja City Mall")
-  .then(({ results }) => {
-    const { lat, lng } = results[0].geometry.location;
-    console.log(lat, lng);
-  })
-  .catch(console.error)
+  // fromAddress("Ikeja City Mall")
+  // .then(({ results }) => {
+  //   const { lat, lng } = results[0].geometry.location;
+  //   console.log(lat, lng);
+  // })
+  // .catch(console.error)
 
   useEffect(() => {
 
