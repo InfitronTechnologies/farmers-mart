@@ -9,9 +9,10 @@ import fish from '../../assets/fish.jpg';
 import egg from '../../assets/egg.jpg';
 import tomato from '../../assets/tomato.jpg';
 import potato from '../../assets/potatoes.jpg'
+import { useNavigate } from 'react-router-dom';
 
 function Deals() {
-
+  const navigate = useNavigate()
   const settings = {
     dots: true,
     infinite: true,
@@ -25,7 +26,10 @@ function Deals() {
   };
 
   return (
-    <div className="mx-4 md:mx-12">
+    <div 
+      className="mx-4 md:mx-12"
+      onClick={() => navigate("/login")}
+    >
       <div className="py-8 md:mx-auto">
         <div className="md:w-2/3 mb-12">
           <h1 className="text-xl md:text-3xl font-semibold leading-snug">

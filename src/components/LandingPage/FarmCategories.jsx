@@ -1,10 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Business } from '@mui/icons-material'; 
 import { farmcategories } from '../../constants/constant';
+import axios from 'axios';
 
 const FarmCategories = () => {
+    const [profileCount, setProfileCount] = useState({})
     // Reference for the scrollable div
   const scrollRef = useRef(null);
 
@@ -23,6 +25,24 @@ const FarmCategories = () => {
       behavior: 'smooth',
     });
   };
+
+  useEffect(() => {
+    const getProfileCount = async() => {
+        const url = process.env.NODE_ENV === "production"
+        ? `https://ourservicestech.com.ng/farmmart_api/v2/list_all_profile`
+        : `/farmmart_api/v2/list_all_profile`;
+  
+        try {
+          const response = await axios.get(url);
+          const count = response.data.data;
+          setProfileCount(count)
+        } catch (error) {
+          console.error("Error fetching states:", error);
+        }
+    };
+    getProfileCount()
+  },[])
+
   return(
     <div className='mx-auto py-2 md:py-8'>
         <section className="flex flex-col mx-auto md:w-5/6 md:mb-8 md:flex-row items-center justify-between px-6 py-8 md:py-12 bg-white">
@@ -36,20 +56,20 @@ const FarmCategories = () => {
             {/* Right Side - Stats */}
             <div className="flex flex-wrap md-ml:12 gap-6 md:gap-12">
                 <div className="flex flex-col md:w-1/3 items-start">
-                    <h2 className="text-farmersmartDarkGreen text-2xl md:text-4xl font-bold">500+</h2>
+                    <h2 className="text-farmersmartDarkGreen text-2xl md:text-4xl font-bold">{profileCount.farmer}</h2>
                     <p className="text-sm md:text-base">Farmers</p>
                 </div>
                 <div className="flex flex-col md:w-1/3 items-start">
-                    <h2 className="text-farmersmartDarkGreen text-2xl md:text-4xl font-bold">754+</h2>
+                    <h2 className="text-farmersmartDarkGreen text-2xl md:text-4xl font-bold">{profileCount.farm}</h2>
                     <p className="text-sm md:text-base">Farms</p>
                 </div>
                 <div className="flex flex-col md:w-1/3 items-start">
-                    <h2 className="text-farmersmartDarkGreen text-2xl md:text-4xl font-bold">2500+</h2>
+                    <h2 className="text-farmersmartDarkGreen text-2xl md:text-4xl font-bold">{profileCount.product}</h2>
                     <p className="text-sm md:text-base">Farm produce</p>
                 </div>
                 <div className="flex flex-col md:w-1/3 items-start">
-                    <h2 className="text-farmersmartDarkGreen text-2xl md:text-4xl font-bold">200+</h2>
-                    <p className="text-sm md:text-base">Regions and location</p>
+                    <h2 className="text-farmersmartDarkGreen text-2xl md:text-4xl font-bold">{profileCount.logistic}</h2>
+                    <p className="text-sm md:text-base">Logistics</p>
                 </div>
             </div>
         </section>

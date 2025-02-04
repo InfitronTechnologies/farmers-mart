@@ -69,7 +69,7 @@ function NavBar({ bgColor }) {
               </div>
             </div>
             <div className='flex flex-row flex-1 justify-end items-center font-semibold mt-4'>
-              <div className='mr-4 py-2 px-4 hover:cursor-pointer border-2 text-farmersmartDarkGreen border-farmersmartYellow rounded-3xl md:hover:text-farmersmartGreen'>
+              <div className='mr-4 py-2 px-4 hover:cursor-pointer border-2 text-white border-farmersmartYellow rounded-3xl md:hover:text-farmersmartGreen'>
                 <Link to='/login'>
                     LOGIN
                 </Link>
