@@ -6,25 +6,46 @@ import { Link, useLocation, } from 'react-router-dom';
 function PartnerAvailableProduce() {
   const { partnerId } = useProfile();
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true); // Add a loading state
+  const [error, setError] = useState(null);
   const location = useLocation()
 
   useEffect(() => {
-    const url =
-      process.env.NODE_ENV === 'production'
-        ? `https://ourservicestech.com.ng/farmmart_api/v2/product/select_by_partner_id_get_product?id=${partnerId}`
-        : `/farmmart_api/v2/product/select_by_partner_id_get_product?id=${partnerId}`;
-
     const fetchProducts = async () => {
+      setLoading(true); // Set loading to true before fetching
+      setError(null);    // Clear any previous errors
+
+console.log(partnerId)
+
+      const url =
+      process.env.NODE_ENV === 'production'
+      ? `https://ourservicestech.com.ng/farmmart_api/v2/product/select_by_partner_id_get_product?id=${partnerId}`
+      : `/farmmart_api/v2/product/select_by_partner_id_get_product?id=${partnerId}`;
+      
       try {
         const response = await axios.get(url);
-        setProducts(response.data.data);
+        setProducts(response.data.data || []);
       } catch (error) {
         console.error('Error fetching Products', error);
+        setError(error.message || "An error occurred.")
+      } finally {
+        setLoading(false)
       }
     };
-
-    fetchProducts();
+    if (partnerId) { // Only fetch if farmerId is available
+      fetchProducts();
+    } else {
+      setLoading(false); // If no farmerId, not loading
+    }
   }, [partnerId]);
+  
+  if (loading) {
+    return <div className="text-center text-gray-500 mt-8">Loading products...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center text-red-500 mt-8">Error: {error}</div>;
+  }
 
   return (
     <div className="container mx-auto p-6">
@@ -83,7 +104,7 @@ function PartnerAvailableProduce() {
         </div>
       ) : (
         <div className="text-center text-gray-500 mt-8">
-          No products available.
+          No products available. Create a product!
         </div>
       )}
     </div>

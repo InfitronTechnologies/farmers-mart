@@ -4,16 +4,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import logo from '../../assets/farmersmartlogo.png';
 import SearchBar from './SearchBar';
-import { useNavigate } from 'react-router-dom';
 import { useProfile } from '../ProfileContext/ProfileContext';
 
 const MarketNav = ({ setSearchResults }) => {
-  const navigate = useNavigate()
-  const {clearProfile} = useProfile()
+  const {logout} = useProfile()
 
   const handleLogout = () => {
-    clearProfile()
-    navigate('/login')
+    logout()
   }
 
   return (

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useProfile } from '../../ProfileContext/ProfileContext';
 import axios from 'axios';
 import KycModal from '../KycModal/KycModal';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   setKey,
   setDefaults,
@@ -25,6 +27,7 @@ function FarmInfo() {
   const [countries, setCountries] = useState([])
   const [landTypeId, setLandTypeId] = useState([])
   const {userId, userToken, kycLevel} = useProfile()
+  const navigate = useNavigate()
   const [farmerId, setFarmerId] = useState()
   const [farms, setFarms] = useState([]);
   const [isKycModalOpen, setIsKycModalOpen] = useState(false);
@@ -237,9 +240,32 @@ function FarmInfo() {
         const url = process.env.NODE_ENV === 'production'
             ? 'https://ourservicestech.com.ng/farmmart_api/v2/farm/create_farm'
             : '/farmmart_api/v2/farm/create_farm';
-        console.log(updatedFarm)
         const response = await axios.post(url, updatedFarm);
-        console.log(response.data)
+        toast.success("Farm Created!", { // Display a success toast
+          position: "top-right", // Customize position
+          autoClose: 2000, 
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setTimeout(() => {
+          setIsFormVisible(false)
+          setNewFarm({
+            users_id : userId,
+            users_token	: userToken,
+            farmer_id	: farmerId,
+            image_name 	: '',
+            farm_address : "",
+            farm_land_type_id : "",
+            farm_land_type_number	: "",
+            country : "",
+            state	: "",
+            farm_lat : "",
+            farm_long	: "",
+          });
+        }, 2500)
       } catch (err) {
         console.error(err);
         setError(err.message || 'Something went wrong. Please try again.');

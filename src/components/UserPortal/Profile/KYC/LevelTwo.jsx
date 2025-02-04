@@ -9,6 +9,7 @@ const LevelTwo = ({userId, userToken}) => {
   const [countries, setCountries] = useState([])
   const [states, setStates] = useState([])
   const {kycLevel, setKycLevel, clearProfile} = useProfile()
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
     users_id : userId,
@@ -76,13 +77,13 @@ const LevelTwo = ({userId, userToken}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
 
     try {
         const apiUrl = process.env.NODE_ENV === 'production'
             ? 'https://ourservicestech.com.ng/farmmart_api/v2/kyc/level_two'
             : '/farmmart_api/v2/kyc/level_two';
 
-            console.log(formData)
         const response = await axios.post( apiUrl, formData, {
           headers: {
             'Content-Type': 'application/json',
@@ -91,10 +92,8 @@ const LevelTwo = ({userId, userToken}) => {
             'charset':'UFT-8'
           }
         });
-        console.log("Submission successful:", response.data);
         
         if (response.data.status === 1) {
-          console.log(response)
           toast.success("KYC Level 2 successfully updated!", { // Display a success toast
             position: "top-right", // Customize position
             autoClose: 2000, 
@@ -298,9 +297,10 @@ const LevelTwo = ({userId, userToken}) => {
         {/* Submit Button */}
         <button
           type="submit"
+          disabled={loading}
           className="w-full bg-green-800 text-white font-medium py-2 px-4 rounded-md hover:bg-green-700 focus:ring focus:ring-green-300"
         >
-          Submit
+          {loading ? "Submitting" : "Submit"}
         </button>
       </form>
     </div>

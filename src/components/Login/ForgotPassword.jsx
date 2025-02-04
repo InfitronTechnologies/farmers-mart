@@ -1,119 +1,168 @@
-// ForgotPassword.js
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-  const navigate = useNavigate()
+  const [step, setStep] = useState(1); // Step 1: Email, Step 2: OTP, Step 3: New Password
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [usersId, setUsersId] = useState("");
+  const [token, setToken] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const apiUrl = process.env.NODE_ENV === "production"
+    ? "https://ourservicestech.com.ng/farmmart_api/v2/account"
+    : "/farmmart_api/v2/account";
 
+  // Step 1: Send OTP to Email
+  const handleSendOtp = async () => {
+    try {
+      const response = await axios.post(`${apiUrl}/select_by_email_forget_password`, { email });
+
+      if (response.status === 200) {
+        toast.success("OTP sent to your email!");
+        setStep(2);
+      } else {
+        toast.error(response.data.message || "Failed to send OTP.");
+      }
+    } catch (error) {
+      toast.error("Error sending OTP. Please try again.");
+      console.error("Send OTP error:", error);
+    }
+  };
+
+  // Step 2: Verify OTP
+  const handleVerifyOtp = async () => {
+    try {
+      const response = await axios.post(`${apiUrl}/select_by_forget_otp`, { otp });
+
+      if (response.status === 200) {
+        console.log(response)
+        toast.success("OTP verified! Set your new password.");
+        setToken(response.data.data.token);
+        setUsersId(response.data.data.users_id);
+        setStep(3);
+      } else {
+        toast.error(response.data.message || "Invalid OTP.");
+      }
+    } catch (error) {
+      toast.error("Error verifying OTP.");
+      console.error("Verify OTP error:", error);
+    }
+  };
+
+  // Step 3: Reset Password
+  const handleResetPassword = async () => {
     if (newPassword !== confirmPassword) {
-      setError('Passwords do not match');
+      toast.error("Passwords do not match!");
       return;
     }
 
-    const requestData = {
-      email,
-      new_password: newPassword,
-    };
-
-    const apiUrl = process.env.NODE_ENV === 'production'
-      ? 'https://ourservicestech.com.ng/farmmart_api/v2/account/forget_password'
-      : '/farmmart_api/v2/account/forget_password';
-
     try {
-      const response = await axios.post(apiUrl, requestData, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Headers': '*',
-          'Access-Control-Allow-Origin': '*',
-          'charset':'UFT-8'
-        }
+      const response = await axios.post(`${apiUrl}/forget_new_password`, {
+        new_password: newPassword,
+        confirm_password: confirmPassword,
+        token: token,
+        users_id: usersId,
       });
 
-      if (response.status == 200) {
-        setSuccess('Password reset successfully. Please log in with your new password.');
-        setError('');
-        setEmail('');
-        setNewPassword('');
-        setConfirmPassword('');
-        setTimeout(() => {
-            navigate('/login')
-        }, 300);
+      console.log(response)
 
+      if (response.status === 200) {
+        toast.success("Password reset successfully! Redirecting...");
+        setTimeout(() => navigate("/login"), 3000);
       } else {
-        setError(response.data.message || 'Password reset failed');
-        setSuccess('');
+        toast.error(response.data.message || "Password reset failed.");
       }
-    } catch (err) {
-      setError('An error occurred. Please try again.');
-      setSuccess('');
-      console.error('Forgot password error:', err);
+    } catch (error) {
+      toast.error("Error resetting password.");
+      console.error("Reset password error:", error);
     }
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-xl font-bold mb-4">Forgot Password</h2>
-      
-      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-4">
-        {/* Error Message */}
-        {error && <p className="text-red-500 mb-4">{error}</p>}
-        
-        {/* Success Message */}
-        {success && <p className="text-green-500 mb-4">{success}</p>}
-        
-        {/* Email */}
-        <div className="mb-4">
-          <label className="block mb-2">Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="border p-2 w-full"
-            placeholder="Enter your email"
-            required
-          />
-        </div>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
+          {step === 1 ? "Forgot Password" : step === 2 ? "Enter OTP" : "Reset Password"}
+        </h2>
 
-        {/* New Password */}
-        <div className="mb-4">
-          <label className="block mb-2">New Password</label>
-          <input
-            type="password"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            className="border p-2 w-full"
-            placeholder="Enter new password"
-            required
-          />
-        </div>
-        
-        {/* Confirm Password */}
-        <div className="mb-4">
-          <label className="block mb-2">Confirm New Password</label>
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            className="border p-2 w-full"
-            placeholder="Confirm new password"
-            required
-          />
-        </div>
+        {/* Step 1: Enter Email */}
+        {step === 1 && (
+          <div>
+            <label className="block mb-2 text-gray-600">Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+              placeholder="Enter your email"
+              required
+            />
+            <button
+              onClick={handleSendOtp}
+              className="mt-4 w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
+            >
+              Send OTP
+            </button>
+          </div>
+        )}
 
-        {/* Submit Button */}
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-          Reset Password
-        </button>
-      </form>
+        {/* Step 2: Enter OTP */}
+        {step === 2 && (
+          <div>
+            <label className="block mb-2 text-gray-600">OTP</label>
+            <input
+              type="text"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+              placeholder="Enter OTP"
+              required
+            />
+            <button
+              onClick={handleVerifyOtp}
+              className="mt-4 w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
+            >
+              Verify OTP
+            </button>
+          </div>
+        )}
+
+        {/* Step 3: Reset Password */}
+        {step === 3 && (
+          <div>
+            <label className="block mb-2 text-gray-600">New Password</label>
+            <input
+              type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+              placeholder="Enter new password"
+              required
+            />
+            <label className="block mt-4 mb-2 text-gray-600">Confirm New Password</label>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+              placeholder="Confirm new password"
+              required
+            />
+            <button
+              onClick={handleResetPassword}
+              className="mt-4 w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
+            >
+              Reset Password
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

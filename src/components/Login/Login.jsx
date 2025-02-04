@@ -25,6 +25,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
   
     const loginData = {
       email,
@@ -39,11 +40,11 @@ const Login = () => {
       const response = await axios.post('https://ourservicestech.com.ng/farmmart_api/v2/account/login_account', loginData);
       if (response.data.status === 1) {
         const { id, users_token, profile, users_email, users_fn, users_ln, kyc_level, app_ids, users_activation } = response.data.data;
-        // if (users_activation == 0){
-        //   clearProfile()
-        //   setError('Your account is not active')       
+        if (users_activation == 0){
+          clearProfile()
+          setError('Your account is not active')       
             
-        // }else{
+        }else{
           const idOfPartner = app_ids.partner
           const idOfFarmer = app_ids.farmer
           // Store user information in localStorage
@@ -58,14 +59,17 @@ const Login = () => {
           setFarmerId(idOfFarmer)
           // Navigate to the user dashboard or home
           navigate('/user', { state: { selectedProfiles: profile } });
-        // }
+        }
         
       } else {
         setError('Invalid email or password');
+        
       }
     } catch (err) {
       console.error('Login error:', err);
-      setError('Invalid email or password' || 'Login failed. Please try again.');
+      setError("Invalid email or password.")
+    } finally{
+      setLoading(false)
     }
   };
   
@@ -168,9 +172,10 @@ const Login = () => {
                 <div className="flex justify-center mt-8 bg-farmersmartDarkGreen w-full py-4 rounded-3xl">
                   <button
                     type="submit"
+                    disabled={loading}
                     className="text-white text-xl w-full font-semibold rounded-full"
                   >
-                    Log In
+                    {loading ? "Logging In" : "Log In"}
                   </button>
                 </div>
 

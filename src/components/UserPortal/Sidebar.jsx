@@ -45,35 +45,21 @@ function SideBar() {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate()
   const location = useLocation();
-  const {selectedProfiles, userFirstName, userLastName, clearProfile, kycLevel} = useProfile()
+  const {selectedProfiles, userFirstName, userLastName, logout, kycLevel} = useProfile()
 
   const addProduct = (product) => {
     setProducts([...products, product]);
   };
 
   const handleLogout = () => {
-    clearProfile(); // Clears session storage and context state
-    navigate('/login'); // Redirect the user to the login page
+    logout(); // Redirect the user to the login page
   };
   
-  // useEffect(() => {
-  //     if (selectedProfiles.length > 0) {
-  //         localStorage.setItem("selectedProfiles", JSON.stringify(selectedProfiles));
-  //     } else {
-  //         // Fallback to retrieve from localStorage if navigated without state
-  //         const storedProfiles = JSON.parse(localStorage.getItem("selectedProfiles"));
-  //         if (storedProfiles) {
-  //             setSelectedProfiles(storedProfiles);
-  //         }
-  //     }
-  //     console.log("Selected Profiles:", selectedProfiles);
-  // }, [selectedProfiles]);
-
   return (
     <div className="">
       <Menu className="fixed mb-8" onClick={() => setCollapsed(!collapsed)} />
       <div className="flex flex-row">
-        <div className={`z-10 ${collapsed ? 'hidden' : 'block'}`}>          
+        <div className={`z-10 ${collapsed ? 'hidden' : 'block'} text-xs`}>          
           <Sidebar className="fixed h-screen mt-8" collapsed={collapsed}>
             <Sidebar.Items>
               <Sidebar.ItemGroup>

@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 const LevelThree = ({userId, userToken}) => {
     const {kycLevel, setKycLevel, clearProfile} = useProfile()
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false)
     const [formData, setFormData] = useState({
         users_id : userId,
         users_token	: userToken,
@@ -24,6 +25,7 @@ const LevelThree = ({userId, userToken}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true)
 
         try {
             const apiUrl =  process.env.NODE_ENV === 'production' 
@@ -81,9 +83,10 @@ const LevelThree = ({userId, userToken}) => {
                 </div>
                 <button
                     type="submit"
+                    disabled={loading}
                     className="w-full bg-green-800 text-white font-medium py-2 px-4 rounded-md hover:bg-green-700 focus:ring focus:ring-green-300"
                 >
-                    Submit
+                 {loading ? "Submitting" : "Submit"}
                 </button>
             </form>
         </div>

@@ -5,26 +5,45 @@ import { Link, useLocation } from 'react-router-dom';
 
 function AvailableProduce() {
   const { farmerId } = useProfile();
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);  
+  const [loading, setLoading] = useState(true); // Add a loading state
+  const [error, setError] = useState(null);
   const location = useLocation()
 
   useEffect(() => {
-    const url =
+    const fetchProducts = async () => {
+      setLoading(true); // Set loading to true before fetching
+      setError(null);    // Clear any previous errors
+
+      const url =
       process.env.NODE_ENV === 'production'
         ? `https://ourservicestech.com.ng/farmmart_api/v2/product/select_by_farmer_id_get_product?id=${farmerId}`
         : `/farmmart_api/v2/product/select_by_farmer_id_get_product?id=${farmerId}`;
 
-    const fetchProducts = async () => {
       try {
         const response = await axios.get(url);
-        setProducts(response.data.data);
+        setProducts(response.data.data || []);
       } catch (error) {
         console.error('Error fetching Products', error);
+        setError(error.message || "An error occurred.")
+      } finally {
+        setLoading(false)
       }
     };
-
-    fetchProducts();
+    if (farmerId) { // Only fetch if farmerId is available
+      fetchProducts();
+    } else {
+      setLoading(false); // If no farmerId, not loading
+    }
   }, [farmerId]);
+
+  if (loading) {
+    return <div className="text-center text-gray-500 mt-8">Loading products...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center text-red-500 mt-8">Error: {error}</div>;
+  }
 
   return (
     <div className="container mx-auto p-6">
@@ -83,7 +102,7 @@ function AvailableProduce() {
         </div>
       ) : (
         <div className="text-center text-gray-500 mt-8">
-          No products available.
+          No products available, Create Farm and upload products.
         </div>
       )}
     </div>

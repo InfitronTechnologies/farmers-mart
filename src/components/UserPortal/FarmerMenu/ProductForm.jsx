@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useProfile } from '../../ProfileContext/ProfileContext';
 import axios from 'axios';
 import ProductItems from '../ProductItems/ProductItems';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ProductForm() {
   const location = useLocation();
@@ -185,7 +187,18 @@ function ProductForm() {
         }
         sendItemsOneByOne(productItems, itemUrl, productId)
           .then(() => {
-            console.log("All items sent successfully!");
+            toast.success("Product created successfully!", { // Display a success toast
+              position: "top-right", // Customize position
+              autoClose: 2000, 
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+            setTimeout(() => {
+              navigate("/marketplace")
+            }, 2500)
           })
           .catch(error => {
             console.error("An unexpected error occurred:", error);

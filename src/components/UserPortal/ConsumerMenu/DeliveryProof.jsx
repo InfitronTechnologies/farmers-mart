@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useProfile } from "../../ProfileContext/ProfileContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const DeliveryProof = ({ onSubmit }) => {
   const location = useLocation()
@@ -12,6 +13,7 @@ const DeliveryProof = ({ onSubmit }) => {
   const [status, setStatus] = useState([])
   const [image, setImage] = useState()
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     users_id : userId,
     users_token : userToken,
@@ -105,11 +107,23 @@ const DeliveryProof = ({ onSubmit }) => {
       ? "https://ourservicestech.com.ng/farmmart_api/v2/pod/create_pod"
       : "/farmmart_api/v2/pod/create_pod";
 
-      console.log(proofForm)
       const response = await axios.post(url, proofForm)
-      console.log(response.data)      
+      toast.success("Proof of Delivery is Successful", { // Display a success toast
+        position: "top-right", // Customize position
+        autoClose: 2000, 
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      setTimeout(() => {
+        navigate("/user/wallet")
+      }, 2500)      
     } catch (error) {
       console.log("Errors must always happen", error)
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -171,7 +185,7 @@ const DeliveryProof = ({ onSubmit }) => {
           </label>
           <input
             id="plot_number"
-            name="block_number"
+            name="plot_number"
             value={formData.plot_number}
             onChange={handleChange}
             className="w-full border border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-green-500"

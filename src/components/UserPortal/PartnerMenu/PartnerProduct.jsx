@@ -4,6 +4,8 @@ import { useProfile } from '../../ProfileContext/ProfileContext';
 import axios from 'axios';
 import KycModal from '../KycModal/KycModal';
 import ProductItems from '../ProductItems/ProductItems';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function PartnerProduct() {
   const location = useLocation();
@@ -201,7 +203,18 @@ function PartnerProduct() {
           }
           sendItemsOneByOne(productItems, itemUrl, productId)
             .then(() => {
-              console.log("All items sent successfully!");
+              toast.success("Product created successfully!", { // Display a success toast
+                position: "top-right", // Customize position
+                autoClose: 2000, 
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              });
+              setTimeout(() => {
+                navigate("/marketplace")
+              }, 2500)
             })
             .catch(error => {
               console.error("An unexpected error occurred:", error);
@@ -368,7 +381,7 @@ function PartnerProduct() {
                value={newProduct.min_qty}
                onChange={handleInputChange}
                className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
-               placeholder="Enter Normal Price"
+               placeholder=""
              />
            </div>
    
@@ -380,7 +393,7 @@ function PartnerProduct() {
                value={newProduct.max_qty}
                onChange={handleInputChange}
                className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
-               placeholder="Enter Promo Price"
+               placeholder=""
              />
            </div>
    

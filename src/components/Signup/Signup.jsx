@@ -10,6 +10,7 @@ import Footer from '../LandingPage/Footer';
 import { EmailOutlined, PersonOutlined, PhoneOutlined, Visibility } from '@mui/icons-material';
 import { useProfile } from '../ProfileContext/ProfileContext';
 import NavBar from '../LandingPage/NavBar';
+import PasswordInput from './PasswordInput';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -327,7 +328,7 @@ const Signup = () => {
                 {/* Password Field */}
                 <div className="mb-4">
                   <div className='relative'>
-                    <input
+                    {/* <input
                       className="w-full p-2 border-1 rounded-xl text-black bg-white focus:border-farmersmartDarkGreen 
                       focus:outline-none focus:ring-0 focus:border-2"
                       type="password"
@@ -337,12 +338,23 @@ const Signup = () => {
                       value={formData.users_password}
                       onChange={handleChange}
                       required
-                  />
+                  /> */}
+                    <PasswordInput
+                      className=""
+                      type="password"
+                      id="users_password"
+                      name="users_password"
+                      placeholder="Password"
+                      value={formData.users_password}
+                      onChange={handleChange}
+                      required
+                      password={formData.password}
+                      setPassword={(password) => setFormData({ ...formData, password })}
+                    />
                     <span className="absolute inset-y-0 right-2 top-2">
                       <Visibility className='text-[#6D6969] font-thin text-sm'/>
                     </span>
                   </div>
-
                 </div>
 
                 {/* Confirm Password Field */}
@@ -370,8 +382,8 @@ const Signup = () => {
                 <div className="flex justify-center mt-8 bg-farmersmartDarkGreen w-full py-4 rounded-3xl">
                   <button
                     type="submit"
-                    className="text-white text-xl w-full font-semibold rounded-full"
-                    disabled={!passwordMatch || loading}  // Disable button during loading or if passwords don't match
+                    className="text-white text-xl w-full font-semibold rounded-full disabled:opacity-50"
+                    disabled={!passwordMatch || loading || formData.users_password.length < 8 || !/[A-Z]/.test(formData.users_password) || !/[a-z]/.test(formData.users_password) || !/\d/.test(formData.users_password)}  // Disable button during loading or if passwords don't match
                   >
                     {loading ? 'Signing Up...' : 'Continue'}
                   </button>                
