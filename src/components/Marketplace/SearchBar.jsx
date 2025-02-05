@@ -1,11 +1,18 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Search} from '@mui/icons-material'; // MUI Icons
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SearchBar = ({ setSearchResults }) => {
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
 
   const handleSearch = async () => {
     if (!query.trim()) return; // Prevent empty search
@@ -21,9 +28,23 @@ const SearchBar = ({ setSearchResults }) => {
       const response =  await axios.post(url, {
         product_name: query
       })
-      console.log(response.data.data)
-      // Filter products and update `setFilteredProducts`
-      setSearchResults(response.data.data)
+      if(response.data){
+        // Filter products and update `setFilteredProducts`
+        setSearchResults(response.data.data)
+      }else{
+        toast.error("Product not available!",  { 
+          position: "top-right", // Customize position
+          autoClose: 2000, 
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        })
+        setTimeout(() => {
+          navigate("/marketplace")
+        }, 2500)
+      }
     } catch (error) {
       console.error('Search Error:', error)
     } finally{
@@ -38,6 +59,7 @@ const SearchBar = ({ setSearchResults }) => {
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        onKeyDown={handleKeyDown}
         placeholder="Search for produce..."
         className="w-full h-12 pl-5 pr-10 rounded-full text-gray-700 text-sm md:text-base shadow-md focus:ring-1 focus:ring-green-400 focus:outline-none"
       />

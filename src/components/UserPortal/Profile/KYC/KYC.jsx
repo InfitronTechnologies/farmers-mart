@@ -19,7 +19,7 @@ const KYC = () => {
       <h1 className="text-center text-2xl font-bold">Complete Your KYC</h1>
       <div className="kyc-steps">
         {/* Render different levels of the KYC process */}
-        {(kycLevel == null) && (
+        {(kycLevel == null || kycLevel == 0 || kycLevel == "0") && (
           <LevelOne
             userId={userId}
             userToken={userToken}

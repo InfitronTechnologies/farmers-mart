@@ -4,7 +4,7 @@ import { useProfile } from '../ProfileContext/ProfileContext';
 import axios from 'axios';
 import logo from '../../assets/farmersmartlogo.png'
 import bgImage from '../../assets/bg-login.png'
-import {Menu, Visibility} from '@mui/icons-material';
+import {Menu, Visibility, VisibilityOff} from '@mui/icons-material';
 import Footer from '../LandingPage/Footer';
 import NavBar from '../LandingPage/NavBar';
 
@@ -14,10 +14,11 @@ const Login = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false)
+  const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
   const {setSelectedProfiles, setUserId, setUserToken, 
         setUserEmail, setUserFirstName, setUserLastName,
-        setKycLevel, setPartnerId, setFarmerId, clearProfile}  = useProfile()
+        setKycLevel, setPartnerId, setFarmerId, logout}  = useProfile()
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -41,7 +42,7 @@ const Login = () => {
       if (response.data.status === 1) {
         const { id, users_token, profile, users_email, users_fn, users_ln, kyc_level, app_ids, users_activation } = response.data.data;
         if (users_activation == 0){
-          clearProfile()
+          logout()
           setError('Your account is not active')       
             
         }else{
@@ -137,15 +138,18 @@ const Login = () => {
                     <input
                       className="w-full p-2 border-1 rounded-xl text-black bg-white focus:border-farmersmartDarkGreen 
                       focus:outline-none focus:ring-0 focus:border-2"
-                      type="password"
+                      type={isVisible ? "text" : "password"}
                       id="password"
                       placeholder="Password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
                     />
-                    <span className="absolute inset-y-0 right-1 top-2">
-                      <Visibility className="text-[#6D6969] text-sm" />
+                    <span 
+                      className="absolute inset-y-0 right-1 top-2"
+                      onClick={() => setIsVisible(!isVisible)}
+                    >
+                      {isVisible ? <VisibilityOff className='text-[#6D6969] font-thin text-sm'/> : <Visibility className='text-[#6D6969] font-thin text-sm'/>}
                     </span>
                   </div>
                 </div>

@@ -39,12 +39,13 @@ function App() {
         <Route path="/faq" element={<Faq />} />
         <Route path="/policy" element={<PrivacyPolicy />} />
         <Route path="/policyform" element={<PrivacyAgreementForm />} />
+        <Route path="/select_profile" element={<ProfileSelection />} />
+        <Route path="/account-activation" element={<AccountActivation />} />
+
 
         {/* Private Routes - Wrapped Individually */}
         <Route path="/user/*" element={<PrivateRoute><Sidebar selectedProfiles={selectedProfiles} /></PrivateRoute>} />
         <Route path="/marketplace" element={<PrivateRoute><Marketplace /></PrivateRoute>} />
-        <Route path="/select_profile" element={<PrivateRoute><ProfileSelection /></PrivateRoute>} />
-        <Route path="/account-activation" element={<PrivateRoute><AccountActivation /></PrivateRoute>} />
         <Route path="/products/:id" element={<PrivateRoute><ProductDetails /></PrivateRoute>} />
         <Route path="/checkout" element={<PrivateRoute><CheckoutPage /></PrivateRoute>} />
         <Route path="/delivery-route" element={<PrivateRoute><DeliveryRoute /></PrivateRoute>} />

@@ -23,17 +23,17 @@ const ProfileSelection = ({ onNext }) => {
 
   const handleSubmit = async () => {
     if (!userId) {
-      setError('User ID is not available.');
+      setError('User is not available.');
       return;
     }
 
     // Prepare the profile data for the backend
     const profileData = {
       users_id: userId,
-      buyer: selectedProfiles.includes('Buyer') ? 1 : 0,
-      farmer: selectedProfiles.includes('Farmer') ? 1 : 0,
-      logistic: selectedProfiles.includes('Logistics') ? 1 : 0,
-      partner: selectedProfiles.includes('Partner') ? 1 : 0,
+      buyer: String(selectedProfiles.includes('Buyer') ? 1 : 0),
+      farmer: String(selectedProfiles.includes('Farmer') ? 1 : 0),
+      logistic: String(selectedProfiles.includes('Logistics') ? 1 : 0),
+      partner: String(selectedProfiles.includes('Partner') ? 1 : 0),
     };
 
     const apiUrl = process.env.NODE_ENV === 'production' 
@@ -41,14 +41,8 @@ const ProfileSelection = ({ onNext }) => {
       : '/farmmart_api/v2/account/create_account_profile';
 
     try {
-      const response = await axios.post(apiUrl, profileData, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Headers': '*',
-          'Access-Control-Allow-Origin': '*',
-          'charset':'UFT-8'
-        }
-      });
+      console.log(profileData)
+      const response = await axios.post(apiUrl, profileData);
 
       if (response.status === 200) {
         localStorage.setItem("selectedProfiles", JSON.stringify(selectedProfiles));

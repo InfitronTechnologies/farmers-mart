@@ -4,13 +4,11 @@ import axios from 'axios';
 import logo from '../../assets/farmersmartlogo.png'
 import otp from '../../assets/otp.png'
 import EastIcon from '@mui/icons-material/East';
-import {Menu }from '@mui/icons-material';
 import bgImage from '../../assets/bg-login.png'
 import Footer from '../LandingPage/Footer';
-import { EmailOutlined, PersonOutlined, PhoneOutlined, Visibility } from '@mui/icons-material';
+import { EmailOutlined, PersonOutlined, PhoneOutlined, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useProfile } from '../ProfileContext/ProfileContext';
 import NavBar from '../LandingPage/NavBar';
-import PasswordInput from './PasswordInput';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -25,8 +23,16 @@ const Signup = () => {
 
 	})
 
+  const [showCriteria, setShowCriteria] = useState(false)
+  const [validations, setValidations] = useState({
+    length: false,
+    uppercase: false,
+    lowercase: false,
+    number: false,
+  });
+
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordMatch, setPasswordMatch] = useState(null);
+  const [passwordMatch, setPasswordMatch] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);   
   const [loading, setLoading] = useState(false);
@@ -35,6 +41,7 @@ const Signup = () => {
   const {setUserId, setUserEmail} = useProfile()  
   const navigate = useNavigate();  // Hook to navigate between pages
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const apiUrl = process.env.NODE_ENV === 'production' 
@@ -117,19 +124,41 @@ const Signup = () => {
   };
 
   // Function to handle password input
-  const handlePasswordChange = (e) => {
-    const password = e.target.value;
-    setPasswordMatch(password === confirmPassword);
-  };
+  // const handlePasswordChange = (e) => {
+  //   const password = e.target.value;
+  //   setPasswordMatch(password === confirmPassword);
+  // };
   
 
-  // Function to handle confirm password and check if they match
+  // // Function to handle confirm password and check if they match
+  // const handleConfirmPasswordChange = (e) => {
+  //   setConfirmPassword(e.target.value);
+  //   setPasswordMatch(e.target.value === formData.users_password);
+  //   setFormData({ ...formData, users_retp_password: e.target.value });
+
+  // };
+
+  const handlePasswordChange = (e) => {
+    const password = e.target.value;
+    setFormData({ ...formData, users_password: password });
+    setPasswordMatch(password === confirmPassword); // Check match when password changes
+    setValidations({
+      length: password.length >= 8,
+      uppercase: /[A-Z]/.test(password),
+      lowercase: /[a-z]/.test(password),
+      number: /\d/.test(password),
+    });
+    setShowCriteria(true)
+  };
+  
   const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value);
-    setPasswordMatch(e.target.value === formData.users_password);
+    const confirmPwd = e.target.value;
+    setConfirmPassword(confirmPwd);
+    setPasswordMatch(formData.users_password === confirmPwd); // Ensure match check
     setFormData({ ...formData, users_retp_password: e.target.value });
 
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -328,33 +357,43 @@ const Signup = () => {
                 {/* Password Field */}
                 <div className="mb-4">
                   <div className='relative'>
-                    {/* <input
+                    <input
                       className="w-full p-2 border-1 rounded-xl text-black bg-white focus:border-farmersmartDarkGreen 
                       focus:outline-none focus:ring-0 focus:border-2"
-                      type="password"
+                      type={isVisible ? "text" : "password"}
                       id="users_password"
                       name="users_password"
                       placeholder="Password"
                       value={formData.users_password}
-                      onChange={handleChange}
+                      onChange={handlePasswordChange}
                       required
-                  /> */}
-                    <PasswordInput
-                      className=""
-                      type="password"
-                      id="users_password"
-                      name="users_password"
-                      placeholder="Password"
-                      value={formData.users_password}
-                      onChange={handleChange}
-                      required
-                      password={formData.password}
-                      setPassword={(password) => setFormData({ ...formData, password })}
                     />
-                    <span className="absolute inset-y-0 right-2 top-2">
-                      <Visibility className='text-[#6D6969] font-thin text-sm'/>
+                    <span 
+                      className="absolute inset-y-0 right-2 top-2"
+                      onClick={() => setIsVisible(!isVisible)}
+                    >
+                      {isVisible ? <VisibilityOff className='text-[#6D6969] font-thin text-sm'/> : <Visibility className='text-[#6D6969] font-thin text-sm'/>}  
                     </span>
                   </div>
+                  {showCriteria 
+                    ?
+                    <ul className="text-xs text-left">
+                        <li className={validations.length ? "text-green-500" : "text-red-500"}>
+                        ✔️ At least 8 characters
+                        </li>
+                        <li className={validations.uppercase ? "text-green-500" : "text-red-500"}>
+                        ✔️ At least one uppercase letter (A-Z)
+                        </li>
+                        <li className={validations.lowercase ? "text-green-500" : "text-red-500"}>
+                        ✔️ At least one lowercase letter (a-z)
+                        </li>
+                        <li className={validations.number ? "text-green-500" : "text-red-500"}>
+                        ✔️ At least one number (0-9)
+                        </li>
+                    </ul>
+                    :
+                    <div></div>
+                  }
                 </div>
 
                 {/* Confirm Password Field */}
@@ -365,15 +404,18 @@ const Signup = () => {
                       focus:outline-none focus:ring-0 focus:border-2 
                         ${passwordMatch === false ? 'border-2 border-red-600' : ''} 
                         ${passwordMatch === true ? 'border-2 border-green-600' : ''}`}
-                      type="password"
+                      type={isVisible ? "text" : "password"}
                       id="users_retp_password"
                       placeholder="Confirm password"
                       value={formData.users_retp_password}
                       onChange={handleConfirmPasswordChange}
                       required
                     />
-                    <span className="absolute inset-y-0 right-2 top-2">
-                      <Visibility className='text-[#6D6969] font-thin text-sm'/>
+                    <span 
+                      className="absolute inset-y-0 right-2 top-2"
+                      onClick={() => setIsVisible(!isVisible)}
+                    >
+                      {isVisible ? <VisibilityOff className='text-[#6D6969] font-thin text-sm'/> : <Visibility className='text-[#6D6969] font-thin text-sm'/>}
                     </span>
                   </div>
                 </div>

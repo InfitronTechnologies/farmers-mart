@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Avatar, Button } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 
 const ProfileSummary = ({ userName, userImage }) => {
+  useEffect(() =>{
+
+  }, [])
+  
   return (
     <div className="flex items-center p-4 bg-white shadow-md rounded-md">
       <Avatar src={userImage} alt={userName} className="w-16 h-16" />

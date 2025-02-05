@@ -7,12 +7,14 @@ import MarketNav from './MarketNav';
 import { dummyProducts } from '../../constants/constant';
 import { Menu } from '@mui/icons-material'; // Material UI Menu Icon
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Marketplace = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [isSidebarVisible, setIsSidebarVisible] = useState(true); // Sidebar visibility state
   const [categoryName, setCategoryName] = useState ('')
   const [subcategories, setSubcategories] = useState([])
+  const navigate = useNavigate()
 
   useEffect(() => {
     const getLatestProducts = async () => {
@@ -60,6 +62,7 @@ const Marketplace = () => {
       <div className="flex justify-between p-4 mt-20 mx-4">
         <div 
           className="text-3xl font-semibold tracking-wide"
+          onClick={() => navigate("/marketplace")}
         >
           Market Place
         </div>
