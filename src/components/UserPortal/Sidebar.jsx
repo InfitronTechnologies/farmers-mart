@@ -74,9 +74,9 @@ function SideBar() {
                   <Sidebar.Item href="/user" icon={Person2}>
                     User Overview
                   </Sidebar.Item>
-                  <Sidebar.Item href="#" icon={Login}>
+                  {/* <Sidebar.Item href="#" icon={Login}>
                     Login History
-                  </Sidebar.Item>
+                  </Sidebar.Item> */}
                   <Sidebar.Item href="/user/wallet" icon={AccountBalanceWallet}>
                     Wallet
                   </Sidebar.Item>
@@ -92,14 +92,14 @@ function SideBar() {
                     <Sidebar.Item href="/user/farm-dashboard">Dashboard </Sidebar.Item>
                     <Sidebar.Item href="/user/farm">Farm Management </Sidebar.Item>
                     <Sidebar.Item href="/user/my-products">Available Produces </Sidebar.Item>
-                    <Sidebar.Item href="#">Orders </Sidebar.Item>
+                    {/* <Sidebar.Item href="#">Orders </Sidebar.Item> */}
                   </Sidebar.Collapse>
                   )}
                   {(selectedProfiles.buyer  == "1") &&(
                   <Sidebar.Collapse icon={ShoppingBag} label="Buyer">
                     <Sidebar.Item href="/user/buyer">Dashboard </Sidebar.Item>
                     <Sidebar.Item href="/user/buyer/orders">Orders </Sidebar.Item>
-                    <Sidebar.Item href="/user/buyer/farmers-profile">Farmers Profile </Sidebar.Item>
+                    {/* <Sidebar.Item href="/user/buyer/farmers-profile">Farmers Profile </Sidebar.Item> */}
                   </Sidebar.Collapse>
                   )}
                   {(selectedProfiles.logistic  == "1") &&(
@@ -113,26 +113,26 @@ function SideBar() {
                   {(selectedProfiles.partner  == "1") &&(
                   <Sidebar.Collapse icon={Handshake} label="Partner">
                     <Sidebar.Item href="/user/partner"> Dashboard </Sidebar.Item>
-                    <Sidebar.Item href="/user/partner/services"> Services </Sidebar.Item>
+                    {/* <Sidebar.Item href="/user/partner/services"> Services </Sidebar.Item> */}
                     <Sidebar.Item href="/user/partner/add-service"> Add Services </Sidebar.Item>
-                    <Sidebar.Item href="/user/partner/offers"> Farmer Offers</Sidebar.Item>
+                    {/* <Sidebar.Item href="/user/partner/offers"> Farmer Offers</Sidebar.Item> */}
                   </Sidebar.Collapse>
                   )}
                 </Sidebar.ItemGroup>
               )}  
               <Sidebar.ItemGroup>
                 <Sidebar.Collapse icon={Person} label="Profile">
-                {(kycLevel >= 2) &&(<Sidebar.Item href="/user/profile"> Overview </Sidebar.Item>)}
-                {(kycLevel >= 2) &&(<Sidebar.Item href="/user/profile/bank"> Bank Details </Sidebar.Item>)}
+                {/* {(kycLevel >= 2) &&(<Sidebar.Item href="/user/profile"> Overview </Sidebar.Item>)} */}
+                {/* {(kycLevel >= 2) &&(<Sidebar.Item href="/user/profile/bank"> Bank Details </Sidebar.Item>)} */}
                 <Sidebar.Item href="/user/profile/kyc">KYC</Sidebar.Item>
                 {(kycLevel >= 2) &&(<Sidebar.Item href="/user/password_reset"> Reset Password </Sidebar.Item>)}
-                {(kycLevel >= 2) &&(<Sidebar.Item href="#"> Profile Picture </Sidebar.Item>)}
+                {/* {(kycLevel >= 2) &&(<Sidebar.Item href="#"> Profile Picture </Sidebar.Item>)} */}
                 </Sidebar.Collapse>
                 {(kycLevel >= 2) &&(
                   <div>
-                    <Sidebar.Item href="#" icon={SupportAgent}>
+                    {/* <Sidebar.Item href="#" icon={SupportAgent}>
                       Customer Support
-                    </Sidebar.Item>
+                    </Sidebar.Item> */}
                     <Sidebar.Collapse icon={Forum} label='Forum'>
                       <Sidebar.Item href="/user/createforum" >Create Forum </Sidebar.Item>
                       <Sidebar.Item href="/user/forums" >Your Forums </Sidebar.Item>

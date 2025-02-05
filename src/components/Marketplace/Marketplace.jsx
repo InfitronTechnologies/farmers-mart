@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Marketplace = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
   const [isSidebarVisible, setIsSidebarVisible] = useState(true); // Sidebar visibility state
   const [categoryName, setCategoryName] = useState ('')
   const [subcategories, setSubcategories] = useState([])
@@ -24,7 +25,8 @@ const Marketplace = () => {
 
       try {
         const response = await axios.get(url)
-        setFilteredProducts(response.data.data) 
+        setFilteredProducts(response.data.data)
+        setAllProducts(response.data.data)
       } catch (error) {
         console.error('Product Error', error)
       } 
@@ -86,7 +88,7 @@ const Marketplace = () => {
               />
               <PriceFilter 
                 setFilteredProducts={setFilteredProducts} 
-                products={filteredProducts}/>
+                products={allProducts}/>
             </div>
           </div>
           )}
@@ -99,35 +101,6 @@ const Marketplace = () => {
             {/* Sorting Bar */}
             <div className="flex flex-col md:flex-row justify-between items-center mb-6">
               <h2 className="text-xl font-bold">{categoryName == '' ? "Produce": categoryName}</h2>
-              {/* <div className="flex flex-row flex-wrap items-center md:space-x-4">
-                <select
-                  className="p-2 border rounded-xl border-white m-1"
-                  value={sortOption}
-                  onChange={handleSort}
-                >
-                  <option value="">Sort by</option>
-                  <option value="price">Price</option>
-                  <option value="name">Name</option>
-                </select>
-                <select
-                  className="p-2 border rounded-xl border-white m-1"
-                  value={sortOption}
-                  onChange={handleSort}
-                >
-                  <option value="">Type</option>
-                  <option value="price">Crop</option>
-                  <option value="name">Animal</option>
-                </select>
-                <select
-                  className="p-2 border rounded-xl border-white m-1"
-                  value={sortOption}
-                  onChange={handleSort}
-                >
-                  <option value="">Price</option>
-                  <option value="price">Cheap</option>
-                  <option value="name">Expensive</option>
-                </select>
-              </div> */}
             </div>
 
             <div className='flex flex-row mb-4'>

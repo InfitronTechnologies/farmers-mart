@@ -8,23 +8,26 @@ import { useProfile } from '../../ProfileContext/ProfileContext';
 import axios from 'axios';
 
 const UserOverview = () => {
-  const { userFirstName, userLastName, kycLevel } = useProfile();
+  const { userFirstName, userLastName, kycLevel, userImage } = useProfile();
 
-  // useEffect(() => {
-  //   const getProfilePicture = async () => {
-  //     const url  =  process.env.NODE_ENV === 'production'
-  //     ? 'https://ourservicestech.com.ng/farmmart_api/images/user/profile/'
-  //     : '/farmmart_api/images/user/profile/';
+  useEffect(() => {
+    console.log(userImage)
+    const getProfilePicture = async () => {
+      const url  =  process.env.NODE_ENV === 'production'
+      ? `https://ourservicestech.com.ng/farmmart_api/images/user/profile/${userImage}`
+      : `/farmmart_api/images/user/profile/${userImage}`;
 
-  //     const response = await axios.get(url)
-  //   }
-  //   getProfilePicture()
-  // },[])
+      const response = await axios.get(url)
+    }
+    getProfilePicture()
+  },[])
   
   return (
     <div className="p-4">
       <ProfileSummary 
-      userName= {` ${userFirstName} ${userLastName}`} userImage="" />
+        userName= {` ${userFirstName} ${userLastName}`} 
+        userImage="" 
+      />
       {(kycLevel < 2) &&(
         <div className="flex flex-col items-center justify-center h-auto mt-16">
           <div className="text-center bg-white p-6 rounded-lg shadow-md border border-gray-300 max-w-md">
@@ -40,9 +43,9 @@ const UserOverview = () => {
       {(kycLevel >= 2) &&(
         <div>
           <AccountStatistics />
-          <RecentActivity />
+          {/* <RecentActivity /> */}
           {/* <QuickActions /> */}
-          <Notifications />
+          {/* <Notifications /> */}
         </div>
       )}
     </div> 

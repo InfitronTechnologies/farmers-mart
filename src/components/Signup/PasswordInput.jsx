@@ -10,7 +10,6 @@ const PasswordInput = ({ password, setPassword }) => {
     });
 
     const validatePassword = (value) => {
-        setPassword(value);
 
         setValidations({
         length: value.length >= 8,

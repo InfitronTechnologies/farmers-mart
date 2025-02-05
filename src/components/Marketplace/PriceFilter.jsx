@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const PriceFilter = ({ products, setFilteredProducts }) => {
   const [lowerPrice, setLowerPrice] = useState('');
   const [higherPrice, setHigherPrice] = useState('');
+  const navigate = useNavigate() 
 
   const filterPrice = () => {
     // Convert lowerPrice and higherPrice to numbers
@@ -23,8 +27,27 @@ const PriceFilter = ({ products, setFilteredProducts }) => {
     );
 
     // Update the parent component with the filtered products
-    setFilteredProducts(filteredProducts);
-    console.log("Filtered Products:", filteredProducts);
+    if (filteredProducts.length === 0) {
+      toast.error("No product within price range", { // Display a success toast
+        position: "top-right", // Customize position
+        autoClose: 2500, 
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      setTimeout(() => {
+        setErrorMessage(null); // Clear error message after successful submission
+        setFilteredProducts(products)
+      }, 3000)
+      setHigherPrice('')
+      setLowerPrice('')
+    } else {
+      setFilteredProducts(filteredProducts);
+      setHigherPrice('')
+      setLowerPrice('')
+    }
   };
 
   return (

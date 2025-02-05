@@ -22,6 +22,7 @@ export const ProfileProvider = ({ children }) => {
   const [kycLevel, setKycLevel] = useState(() => sessionStorage.getItem('kycLevel') || null);
   const [partnerId, setPartnerId] = useState(() => sessionStorage.getItem('partnerId') || null);
   const [farmerId, setFarmerId] = useState(() => sessionStorage.getItem('farmerId') || null);
+  const [userImage, setUserImage] = useState(() => sessionStorage.getItem('userImage') || null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // Persist data in sessionStorage whenever they change
@@ -47,6 +48,7 @@ export const ProfileProvider = ({ children }) => {
     sessionStorage.setItem('kycLevel', kycLevel);
     sessionStorage.setItem('partnerId', partnerId)
     sessionStorage.setItem('farmerId', farmerId)
+    sessionStorage.setItem('userImage', userImage)
     setIsAuthenticated(!!userToken);
   } else {
     setIsAuthenticated(false);
@@ -96,6 +98,8 @@ export const ProfileProvider = ({ children }) => {
         setPartnerId,
         farmerId,
         setFarmerId,
+        userImage,
+        setUserImage,
         isAuthenticated,
         login,
         logout

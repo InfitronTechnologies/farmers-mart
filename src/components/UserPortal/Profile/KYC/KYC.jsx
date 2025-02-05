@@ -49,7 +49,9 @@ const KYC = () => {
             userToken={userToken}
           />
         )}
-        {/* <div className='text-4xl font-bold text-farmersmartDarkGreen'>KYC COMPLETED</div> */}
+        {(kycLevel == 5 || kycLevel == '5') && (
+        <div className='text-4xl font-bold text-farmersmartDarkGreen'>KYC COMPLETED</div>
+        )}
       </div>
     </div>
   );

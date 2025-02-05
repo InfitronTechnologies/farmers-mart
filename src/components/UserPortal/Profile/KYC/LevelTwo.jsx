@@ -80,38 +80,41 @@ const LevelTwo = ({userId, userToken}) => {
     setLoading(true)
 
     try {
-        const apiUrl = process.env.NODE_ENV === 'production'
-            ? 'https://ourservicestech.com.ng/farmmart_api/v2/kyc/level_two'
-            : '/farmmart_api/v2/kyc/level_two';
+      const apiUrl = process.env.NODE_ENV === 'production'
+          ? 'https://ourservicestech.com.ng/farmmart_api/v2/kyc/level_two'
+          : '/farmmart_api/v2/kyc/level_two';
 
-        const response = await axios.post( apiUrl, formData, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Headers': '*',
-            'Access-Control-Allow-Origin': '*',
-            'charset':'UFT-8'
-          }
-        });
-        
-        if (response.data.status === 1) {
-          toast.success("KYC Level 2 successfully updated!", { // Display a success toast
-            position: "top-right", // Customize position
-            autoClose: 2000, 
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-          setTimeout(() => {
-            clearProfile(); // Clears session storage and context state
-            navigate("/login")
-          }, 2500)
-        } else {
-            throw new Error(response.data.message || 'KYC submission failed');
+      const response = await axios.post( apiUrl, formData, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Allow-Origin': '*',
+          'charset':'UFT-8'
         }
-    } catch (error) {
-      console.error("Error submitting form:", error.response?.data || error.message);
+      });
+      
+      if (response.data.status === 1) {
+        toast.success("KYC Level 2 successfully updated!", { // Display a success toast
+          position: "top-right", // Customize position
+          autoClose: 2000, 
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setTimeout(() => {
+          clearProfile(); // Clears session storage and context state
+          navigate("/login")
+        }, 2500)
+      } else {
+          throw new Error(response.data.message || 'KYC submission failed');
+      }
+    } catch (err) {
+      console.error(err);
+      setError(err.message || 'Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 

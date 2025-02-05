@@ -12,13 +12,13 @@ const ProfileSummary = ({ userName, userImage }) => {
       <Avatar src={userImage} alt={userName} className="w-16 h-16" />
       <div className="ml-4">
         <h2 className="text-xl font-semibold">{userName}</h2>
-        <Button
+        {/* <Button
           variant="outlined"
           startIcon={<EditIcon />}
           className="mt-2 text-xs"
         >
           Edit Profile
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

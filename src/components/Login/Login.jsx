@@ -18,7 +18,7 @@ const Login = () => {
   const navigate = useNavigate();
   const {setSelectedProfiles, setUserId, setUserToken, 
         setUserEmail, setUserFirstName, setUserLastName,
-        setKycLevel, setPartnerId, setFarmerId, logout}  = useProfile()
+        setKycLevel, setPartnerId, setFarmerId,setUserImage, logout}  = useProfile()
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -40,7 +40,7 @@ const Login = () => {
     try {
       const response = await axios.post('https://ourservicestech.com.ng/farmmart_api/v2/account/login_account', loginData);
       if (response.data.status === 1) {
-        const { id, users_token, profile, users_email, users_fn, users_ln, kyc_level, app_ids, users_activation } = response.data.data;
+        const { id, users_token, profile, users_email, users_fn, users_ln, kyc_level, app_ids, users_activation, users_images } = response.data.data;
         if (users_activation == 0){
           logout()
           setError('Your account is not active')       
@@ -58,6 +58,7 @@ const Login = () => {
           setKycLevel(Number(kyc_level));
           setPartnerId(idOfPartner)
           setFarmerId(idOfFarmer)
+          setUserImage(users_images)
           // Navigate to the user dashboard or home
           navigate('/user', { state: { selectedProfiles: profile } });
         }

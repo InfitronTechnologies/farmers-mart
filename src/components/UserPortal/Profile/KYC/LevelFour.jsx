@@ -83,9 +83,13 @@ const LevelFour = ({userId, userToken}) => {
             } else {
                 throw new Error(response.data.message || 'KYC submission failed');
             }
-        } catch (error) {
-            console.error("Error submitting form:", error.response?.data || error.message);             
+        } catch (err) {
+            console.error(err);
+            setError(err.message || 'Something went wrong. Please try again.');
+        } finally {
+            setLoading(false);
         }
+
     }
 
     return(
