@@ -32,14 +32,7 @@ const LevelThree = ({userId, userToken}) => {
             ?'https://ourservicestech.com.ng/farmmart_api/v2/kyc/level_three'
             :'/farmmart_api/v2/kyc/level_three'
 
-            const response = await axios.post(apiUrl, formData, {
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Access-Control-Allow-Headers': '*',
-                  'Access-Control-Allow-Origin': '*',
-                  'charset':'UFT-8'
-                }
-              })
+            const response = await axios.post(apiUrl, formData)
             console.log("Submission successful:", response.data);
 
             if (response.data.status === 1) {

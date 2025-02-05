@@ -84,14 +84,7 @@ const LevelTwo = ({userId, userToken}) => {
           ? 'https://ourservicestech.com.ng/farmmart_api/v2/kyc/level_two'
           : '/farmmart_api/v2/kyc/level_two';
 
-      const response = await axios.post( apiUrl, formData, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Headers': '*',
-          'Access-Control-Allow-Origin': '*',
-          'charset':'UFT-8'
-        }
-      });
+      const response = await axios.post( apiUrl, formData);
       
       if (response.data.status === 1) {
         toast.success("KYC Level 2 successfully updated!", { // Display a success toast
