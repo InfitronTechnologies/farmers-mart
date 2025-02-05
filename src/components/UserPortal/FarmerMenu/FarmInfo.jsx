@@ -186,7 +186,6 @@ function FarmInfo() {
 
   const handleAddFarmClick = () => {
     setIsFormVisible(true);
-    console.log(newFarm)
   };
 
   const handleInputChange = (e) => {
@@ -265,6 +264,7 @@ function FarmInfo() {
             farm_lat : "",
             farm_long	: "",
           });
+          window.location.reload()
         }, 2500)
       } catch (err) {
         console.error(err);
@@ -416,15 +416,15 @@ function FarmInfo() {
             <thead>
               <tr>
                 <th className='text-left'>S/N</th>
-                <th className='text-left'>Farm Image</th>
+                {/* <th className='text-left'>Farm Image</th> */}
                 <th className='text-left'>Farm Address</th>
                 <th className='text-left'>Farm Land Type</th>
                 <th className='text-left'>Number</th>
                 <th className='text-left'>Country</th>
                 <th className='text-left'>State</th>
                 <th className='text-left'>Created Date</th>
-                <th className='text-left'>Action</th>
-                <th className='text-left'>Action</th>
+                {/* <th className='text-left'>Action</th>
+                <th className='text-left'>Action</th> */}
                 <th className='text-left'>Add</th>
               </tr>
             </thead>
@@ -432,7 +432,7 @@ function FarmInfo() {
               {farms.map((farm, index) => (
                 <tr key={farm.id}>
                   <td>{index + 1}</td>
-                  <td>{farm.image_path_name}</td>
+                  {/* <td>{farm.image_path_name}</td> */}
                   <td>{farm.farm_address}</td>
                   <td>{farm.farm_land_type}</td>
                   <td>{farm.farm_land_type_number}</td>

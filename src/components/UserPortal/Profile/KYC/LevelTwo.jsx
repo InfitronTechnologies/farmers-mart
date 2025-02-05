@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 const LevelTwo = ({userId, userToken}) => {
   const [countries, setCountries] = useState([])
   const [states, setStates] = useState([])
-  const {kycLevel, setKycLevel, clearProfile} = useProfile()
+  const {kycLevel, setKycLevel, logout} = useProfile()
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
@@ -97,7 +97,7 @@ const LevelTwo = ({userId, userToken}) => {
           progress: undefined,
         });
         setTimeout(() => {
-          clearProfile(); // Clears session storage and context state
+          logout(); // Clears session storage and context state
           navigate("/login")
         }, 2500)
       } else {
