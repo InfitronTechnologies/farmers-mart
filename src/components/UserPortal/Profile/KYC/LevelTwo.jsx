@@ -10,6 +10,7 @@ const LevelTwo = ({userId, userToken}) => {
   const [states, setStates] = useState([])
   const {kycLevel, setKycLevel, logout} = useProfile()
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
     users_id : userId,
