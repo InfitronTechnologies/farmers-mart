@@ -2,19 +2,21 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import MarketNav from "./MarketNav";
 import Footer from "../LandingPage/Footer";
-import { IconButton } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
 import axios from "axios";
 import ProductItemsDisplay from "./ProductItemsDisplay";
+import Loading from '../Loading'
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [minQty, setMinQty] = useState(1);
+  const [maxQty, setMaxQty] = useState(10);
+  const [units, setUnits] = useState(1)
   const [productImages, setProductImages] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [productItemsData, setProductItemsData] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   // Fetch product details
   useEffect(() => {
@@ -28,6 +30,13 @@ const ProductDetails = () => {
         const response = await axios.get(url);
         const productData = response.data.data;
         setProduct(productData);
+        console.log(productData);
+        setMinQty(Number(productData.min_qty));
+        setMaxQty(Number(productData.max_qty));
+        setUnits(Number(productData.units))
+
+        // Ensure quantity is set within min-max range
+        setQuantity(Number(productData.min_qty));
 
         // Extract images and filter out null or undefined values
         const images = [
@@ -56,11 +65,18 @@ const ProductDetails = () => {
       }
     } 
     fetchProductItems()
+
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
   }, [id]);
 
   // Handle quantity adjustments
-  const handleIncrease = () => setQuantity((prev) => prev + 1);
-  const handleDecrease = () => setQuantity((prev) => Math.max(1, prev - 1));
+  const handleIncrease = () =>
+    setQuantity((prev) => Math.min(maxQty, prev + 1));
+  
+  const handleDecrease = () =>
+    setQuantity((prev) => Math.max(minQty, prev - 1));
 
   // Handle slideshow navigation
   const nextImage = () =>
@@ -75,7 +91,7 @@ const ProductDetails = () => {
       <div className="fixed top-0 left-0 w-full z-30 bg-white shadow-md">
         <MarketNav />
       </div>
-    
+      <Loading isLoading={isLoading} />
       <div
         className="text-3xl md:text-4xl tracking-wider mt-28 lg:ml-16 font-extrabold text-farmersmartDarkGreen text-center lg:text-left"
         style={{ fontFamily: "Montserrat" }}
@@ -146,29 +162,42 @@ const ProductDetails = () => {
     
           {/* Quantity Selector */}
           <div className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0 sm:space-x-8">
-            <div className="flex items-center border border-farmersmartLightGreen rounded-full">
-              <button
-                onClick={handleDecrease}
-                className="p-3 bg-farmersmartLightGreen text-farmersmartDarkGreen font-bold hover:bg-farmersmartGreen hover:text-white transition rounded-l-full"
-              >
-                -
-              </button>
-              <input
-                type="number"
-                value={quantity}
-                onChange={(e) =>
-                  setQuantity(Math.max(1, parseInt(e.target.value) || 1))
-                }
-                className="w-16 text-center bg-white text-lg font-semibold focus:outline-none"
-                min="1"
-              />
-              <button
-                onClick={handleIncrease}
-                className="p-3 bg-farmersmartLightGreen text-farmersmartDarkGreen font-bold hover:bg-farmersmartGreen hover:text-white transition rounded-r-full"
-              >
-                +
-              </button>
-            </div>
+          <div className="flex items-center border border-farmersmartLightGreen rounded-full">
+            <button
+              onClick={handleDecrease}
+              disabled={quantity <= minQty}
+              className={`p-3 ${
+                quantity > minQty
+                  ? "bg-farmersmartLightGreen text-farmersmartDarkGreen hover:bg-farmersmartGreen hover:text-white transition"
+                  : "bg-gray-200 text-gray-500 cursor-not-allowed"
+              } rounded-l-full`}
+            >
+              -
+            </button>
+            <input
+              type="number"
+              value={quantity}
+              onChange={(e) => {
+                let newQty = parseInt(e.target.value) || minQty;
+                newQty = Math.max(minQty, Math.min(maxQty, newQty)); // Ensure within limits
+                setQuantity(newQty);
+              }}
+              className="w-16 text-center bg-white text-lg font-semibold focus:outline-none"
+              min={minQty}
+              max={maxQty}
+            />
+            <button
+              onClick={handleIncrease}
+              disabled={quantity >= maxQty || quantity >= units}
+              className={`p-3 ${
+                quantity < maxQty && quantity <units
+                  ? "bg-farmersmartLightGreen text-farmersmartDarkGreen hover:bg-farmersmartGreen hover:text-white transition"
+                  : "bg-gray-200 text-gray-500 cursor-not-allowed"
+              } rounded-r-full`}
+            >
+              +
+            </button>
+          </div>
             <Link
               to="/delivery-route"
               state={{
@@ -177,8 +206,11 @@ const ProductDetails = () => {
                 id: id,
               }}
             >
-              <button className="bg-[#ff7300] text-white text-lg font-semibold px-12 py-3 rounded-full shadow-md hover:bg-[#ff8c33] transition duration-300">
-                Buy
+              <button 
+                className={`${units>=1 ? "bg-[#ff7300]" : "bg-gray-700"} text-white text-lg font-semibold px-12 py-3 rounded-full shadow-md hover:bg-[#ff8c33] transition duration-300`}
+                disabled={units<1}
+              >
+                {units<1 ? 'Out of Stock' : "Buy"}
               </button>
             </Link>
           </div>

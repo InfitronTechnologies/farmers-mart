@@ -55,20 +55,6 @@ function FarmInfo() {
     setIsKycModalOpen(false);
   };
 
-  // setDefaults({
-  //   key: "AIzaSyDnZ0jjDNaK_tCT1UsV_JWU0V5zH9mgqnU", // Your API key here.
-  //   language: "en", // Default language for responses.
-  //   region: "es", // Default region for responses.
-  // });
-
-
-  // fromAddress("Ikeja City Mall")
-  // .then(({ results }) => {
-  //   const { lat, lng } = results[0].geometry.location;
-  //   console.log(lat, lng);
-  // })
-  // .catch(console.error)
-
   useEffect(() => {
 
     //Getting Farmers current location
@@ -209,6 +195,21 @@ function FarmInfo() {
       }else{
         setNewFarm({...newFarm, image_name: picture.name})
       }
+
+      //Getting Latitude and longitude
+      setDefaults({
+        key: "AIzaSyCRh3XfyH83ETdeX6qw1WlZ6l0IvW8fzMg", // Your API key here.
+        language: "en", // Default language for responses.
+        region: "es", // Default region for responses.
+      });
+    
+    
+      fromAddress(newFarm.farm_address)
+      .then(({ results }) => {
+        const { lat, lng } = results[0].geometry.location;
+        console.log(lat, lng);
+      })
+      .catch(console.error)
 
       setLoading(true);
       setError(null); // Clear previous errors

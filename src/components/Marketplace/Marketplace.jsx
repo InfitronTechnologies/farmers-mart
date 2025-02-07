@@ -4,10 +4,10 @@ import ProductGrid from './ProductGrid';
 import CategoryFilter from './CategoryFilter';
 import PriceFilter from './PriceFilter'; // Price filter component
 import MarketNav from './MarketNav';
-import { dummyProducts } from '../../constants/constant';
 import { Menu } from '@mui/icons-material'; // Material UI Menu Icon
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../Loading';
 
 const Marketplace = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -15,6 +15,7 @@ const Marketplace = () => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(true); // Sidebar visibility state
   const [categoryName, setCategoryName] = useState ('')
   const [subcategories, setSubcategories] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -32,6 +33,10 @@ const Marketplace = () => {
       } 
     }
     getLatestProducts();
+
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
   },[])
 
     // Toggle sidebar visibility
@@ -70,6 +75,8 @@ const Marketplace = () => {
         </div>
         <Menu onClick={toggleSidebar} aria-label="toggle sidebar" fontSize="large" />
       </div>
+
+      <Loading isLoading={isLoading} />
 
       <div className="md:px-4 bg-white text-gray-700 min-h-screen mb-8">
         <div className="relative flex flex-row gap-8">

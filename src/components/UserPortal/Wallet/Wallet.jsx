@@ -16,6 +16,7 @@ const Wallet = () => {
             
             try {
                 const response = await axios.get(walletUrl)
+                console.log(response)
                 const walletDetails = response.data.data
                 setWalletData(walletDetails)
             } catch (error) {

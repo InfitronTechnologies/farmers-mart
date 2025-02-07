@@ -60,9 +60,18 @@ const Orders = () => {
               </div>
             </div>
             <div className="mt-4 flex justify-between">
-              {/* <button className="px-4 py-2 bg-[#0B2B17] text-white text-sm font-medium rounded-md shadow hover:bg-green-800 transition">
+              <button 
+                className="px-4 py-2 bg-[#0B2B17] text-white text-sm font-medium rounded-md shadow hover:bg-green-800 transition"
+                onClick={() => {
+                  navigate("details", {
+                    state: {
+                      order: order
+                    },
+                  })
+                }}
+              >
                 Details
-              </button> */}
+              </button>
               {order.status == "processing"
                 ?
                 <button

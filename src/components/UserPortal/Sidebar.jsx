@@ -12,7 +12,6 @@ import FarmerDashboard from "./FarmerMenu/FarmerDashboard";
 import ProductForm from "./FarmerMenu/ProductForm";
 import AvailableProduce from "./FarmerMenu/AvailableProduce";
 import LogisticsDashboard from "./LogisticsMenu/LogisticsDashboard";
-import OrderDetails from "./LogisticsMenu/OrdersDetails";
 import OrdersPage from "./LogisticsMenu/OrdersPage";
 import InsuranceCases from "./LogisticsMenu/InsurnaceCases";
 import LogisticsRevenue from "./LogisticsMenu/LogisticsRevenue";
@@ -36,6 +35,7 @@ import PartnerAvailableProduce from "./PartnerMenu/PartnerAvailableProduct.jsx";
 import FarmerProductDetails from './FarmerMenu/FarmerProductDetails'
 import PartnerProductDetails from "./PartnerMenu/PartnerProductDetails.jsx";
 import DeliveryProof from "./ConsumerMenu/DeliveryProof.jsx";
+import OrderDetails from "./ConsumerMenu/OrderDetails.jsx";
 import Wallet from "./Wallet/Wallet.jsx";
 
 
@@ -89,7 +89,7 @@ function SideBar() {
                 <Sidebar.ItemGroup>              
                 {(selectedProfiles.farmer  == "1")&&(
                   <Sidebar.Collapse icon={Agriculture} label="Farmer">
-                    <Sidebar.Item href="/user/farm-dashboard">Dashboard </Sidebar.Item>
+                    {/* <Sidebar.Item href="/user/farm-dashboard">Dashboard </Sidebar.Item> */}
                     <Sidebar.Item href="/user/farm">Farm Management </Sidebar.Item>
                     <Sidebar.Item href="/user/my-products">Available Produces </Sidebar.Item>
                     {/* <Sidebar.Item href="#">Orders </Sidebar.Item> */}
@@ -97,17 +97,17 @@ function SideBar() {
                   )}
                   {(selectedProfiles.buyer  == "1") &&(
                   <Sidebar.Collapse icon={ShoppingBag} label="Buyer">
-                    <Sidebar.Item href="/user/buyer">Dashboard </Sidebar.Item>
+                    {/* <Sidebar.Item href="/user/buyer">Dashboard </Sidebar.Item> */}
                     <Sidebar.Item href="/user/buyer/orders">Orders </Sidebar.Item>
                     {/* <Sidebar.Item href="/user/buyer/farmers-profile">Farmers Profile </Sidebar.Item> */}
                   </Sidebar.Collapse>
                   )}
                   {(selectedProfiles.logistic  == "1") &&(
                   <Sidebar.Collapse icon={LocalShipping} label="Logistics">
-                    <Sidebar.Item href="/user/logistics">Dashboard </Sidebar.Item>
+                    {/* <Sidebar.Item href="/user/logistics">Dashboard </Sidebar.Item>
                     <Sidebar.Item href="/user/logistics/orders">Order Management </Sidebar.Item>
                     <Sidebar.Item href="/user/logistics/revenue">Revenue </Sidebar.Item>
-                    <Sidebar.Item href="/user/logistics/insurance"> Insurance Cases </Sidebar.Item>
+                    <Sidebar.Item href="/user/logistics/insurance"> Insurance Cases </Sidebar.Item> */}
                   </Sidebar.Collapse>
                   )}
                   {(selectedProfiles.partner  == "1") &&(
@@ -163,7 +163,6 @@ function SideBar() {
             <Route path="my-products" element={<AvailableProduce products={products} />}/>
             <Route path='logistics' element={<LogisticsDashboard/>} />
             <Route path='logistics/orders' element={<OrdersPage/>} />
-            <Route path='logistics/orders/:orderId' element={<OrderDetails />} /> 
             <Route path='logistics/insurance' element={<InsuranceCases/>} /> 
             <Route path='logistics/revenue' element={<LogisticsRevenue/>} /> 
             <Route path='partner/' element={<PartnerDashboard/>} /> 
@@ -173,6 +172,7 @@ function SideBar() {
             <Route path='buyer/' element={<ConsumerDashboard/>} /> 
             <Route path='buyer/orders' element={<Orders/>} /> 
             <Route path='buyer/orders/pod'  element={<DeliveryProof/>} />
+            <Route path='buyer/orders/details'  element={<OrderDetails/>} />
             <Route path='buyer/farmers-profile' element={<FarmerProfiles/>} /> 
             <Route path='createforum' element={<ForumCategories/>} />
             <Route path='createforum/:subcategoryId' element={<SubcategoryForum/> } />

@@ -364,7 +364,6 @@ function ProductForm() {
             value={newProduct.min_qty}
             onChange={handleInputChange}
             className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
-            placeholder="Enter Normal Price"
           />
         </div>
 
@@ -376,19 +375,18 @@ function ProductForm() {
             value={newProduct.max_qty}
             onChange={handleInputChange}
             className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
-            placeholder="Enter Promo Price"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Product Weight</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">Product Weight (kg)</label>
           <input
             type="text"
             name="product_weight"
             value={newProduct.product_weight}
             onChange={handleInputChange}
             className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
-            placeholder="Enter Units"
+            placeholder="Enter weight"
           />
         </div>
       </div>

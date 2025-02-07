@@ -69,6 +69,7 @@ const DeliveryRoute = () => {
         : `/farmmart_api/v2/router/deli_move`;
   
     try {
+      console.log(deliveryForm)
       const response = await axios.post(url, deliveryForm);
       const pricing = response.data.data; // Extract the pricing data
       return { success: true, pricing, deliveryForm }; // Return both success status and pricing data

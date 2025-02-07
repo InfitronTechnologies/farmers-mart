@@ -1,10 +1,12 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import Loading from '../Loading';
 
 const CategoryFilter = ({ setFilteredProducts, setCategoryName, setSubcategories }) => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const url = process.env.NODE_ENV === 'production'
@@ -22,6 +24,10 @@ const CategoryFilter = ({ setFilteredProducts, setCategoryName, setSubcategories
       }
     };
     ShowCategories();
+
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
   },[])
 
   const handleCategoryChange = async (name, id) => {
@@ -65,6 +71,7 @@ const CategoryFilter = ({ setFilteredProducts, setCategoryName, setSubcategories
   return (
     <div>
       <h3 className="text-lg font-bold mb-4">Categories</h3>
+      <Loading isLoading={isLoading} />
       {loading ? (
         <p>Loading categories...</p>
       ) : categories.length === 0 ? (
