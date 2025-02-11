@@ -42,7 +42,7 @@ const WhatWeStandFor = () => {
             <HandshakeIcon fontSize="large" className="mb-4" />
             <h3 className="text-xl font-semibold mb-2">Trusting Partners</h3>
             <p className="text-sm">
-              Working with us to provide the next level convienience and returns to bothe consumers and Farmers.      </p>
+              Working with us to provide the next level convienience and returns to both consumers and farmers. </p>
           </div>
         </div>
       </div>
