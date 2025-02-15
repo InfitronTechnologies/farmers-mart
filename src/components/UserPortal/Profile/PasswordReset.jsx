@@ -29,8 +29,8 @@ function PasswordReset() {
     };
 
     const apiUrl = process.env.NODE_ENV === 'production'
-      ? 'https://ourservicestech.com.ng/farmmart_api/v2/account/reset_password'
-      : '/farmmart_api/v2/account/reset_password';
+      ? `${import.meta.env.VITE_API_BASE_URL}/account/reset_password`
+      : '/v2/account/reset_password';
 
     try {
       const response = await axios.post(apiUrl, requestData);

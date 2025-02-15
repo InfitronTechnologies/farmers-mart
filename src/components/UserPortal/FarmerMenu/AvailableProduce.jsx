@@ -17,8 +17,8 @@ function AvailableProduce() {
 
       const url =
       process.env.NODE_ENV === 'production'
-        ? `https://ourservicestech.com.ng/farmmart_api/v2/product/select_by_farmer_id_get_product?id=${farmerId}`
-        : `/farmmart_api/v2/product/select_by_farmer_id_get_product?id=${farmerId}`;
+        ? `${import.meta.env.VITE_API_BASE_URL}/product/select_by_farmer_id_get_product?id=${farmerId}`
+        : `/v2/product/select_by_farmer_id_get_product?id=${farmerId}`;
 
       try {
         const response = await axios.get(url);
@@ -68,7 +68,7 @@ function AvailableProduce() {
                   <td className="px-4 py-2 text-gray-700">{index + 1}</td>
                   <td className="px-4 py-2">
                     <img
-                      src={`https://ourservicestech.com.ng/farmmart_api/images/product/${product.product_image_f}`}
+                      src={`${import.meta.env.VITE_API_BASE_URL}/images/product/${product.product_image_f}`}
                       alt={product.product_name}
                       className="h-16 w-16 object-cover rounded-md border"
                     />

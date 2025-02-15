@@ -19,8 +19,8 @@ const SearchBar = ({ setSearchResults }) => {
 
     // Perform search logic here based on query
     const url = process.env.NODE_ENV === 'production' 
-    ? 'https://ourservicestech.com.ng/farmmart_api/v2/product/search_product_post'
-    : '/farmmart_api/v2/product/search_product_post'
+    ? `${import.meta.env.VITE_API_BASE_URL}/product/search_product_post`
+    : '/v2/product/search_product_post'
 
     setLoading(true);
 

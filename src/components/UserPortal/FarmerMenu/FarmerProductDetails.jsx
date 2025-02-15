@@ -10,8 +10,8 @@ const FarmerProductDetails = () => {
     const fetchProduct = async () => {
       const url =
         process.env.NODE_ENV === "production"
-          ? `https://ourservicestech.com.ng/farmmart_api/v2/product/select_by_id_get_product?id=${id}`
-          : `/farmmart_api/v2/product/select_by_id_get_product?id=${id}`;
+          ? `${import.meta.env.VITE_API_BASE_URL}/product/select_by_id_get_product?id=${id}`
+          : `/v2/product/select_by_id_get_product?id=${id}`;
 
       try {
         const response = await axios.get(url);
@@ -36,7 +36,7 @@ const FarmerProductDetails = () => {
           {/* Product Image */}
           <div className="w-full lg:w-1/3 mb-6 lg:mb-0">
             <img
-              src={`https://ourservicestech.com.ng/farmmart_api/images/product/${product.product_image_f}`}
+              src={`${import.meta.env.VITE_API_BASE_URL}/images/product/${product.product_image_f}`}
               alt={product.product_name}
               className="rounded-lg shadow-md object-cover w-full h-72"
             />
@@ -96,7 +96,7 @@ const FarmerProductDetails = () => {
               .map((image, index) => (
                 <img
                   key={index}
-                  src={`https://ourservicestech.com.ng/farmmart_api/images/product/${image}`}
+                  src={`${import.meta.env.VITE_API_BASE_URL}/images/product/${image}`}
                   alt={`Additional product image ${index + 1}`}
                   className="rounded-lg shadow-md object-cover w-full h-48"
                 />

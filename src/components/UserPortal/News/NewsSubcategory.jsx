@@ -26,25 +26,6 @@ const NewsSubcategory = () => {
   const [showForm, setShowForm] = useState(false); // Toggle form visibility
   const [loading, setLoading] = useState(false); // For form submission state
 
-  // Fetch posts for the subcategory on component mount
-  // useEffect(() => {
-  //   const apiUrl =
-  //     process.env.NODE_ENV === "production"
-  //       ? `https://ourservicestech.com.ng/farmmart_api/v2/posts/by_subcategory?id=${subcategoryId}`
-  //       : `/farmmart_api/v2/posts/by_subcategory?id=${subcategoryId}`;
-
-  //   axios
-  //     .get(apiUrl)
-  //     .then((response) => {
-  //       setPosts(response.data.data); // Assuming API returns an array of posts
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching posts:", error);
-  //     })
-  //     .finally(() => {
-  //       setLoadingPosts(false); // Stop loading spinner
-  //     });
-  // }, [subcategoryId]);
 
   // Handle form input changes
   const handleChange = (e) => {
@@ -77,8 +58,8 @@ const NewsSubcategory = () => {
     try {
       // Step 1: Upload the image
       const uploadUrl = process.env.NODE_ENV === 'production'
-          ? 'https://ourservicestech.com.ng/farmmart_api/v2/uploadimage'
-          : '/farmmart_api/v2/uploadimage';
+          ? `${import.meta.env.VITE_API_BASE_URL}/uploadimage`
+          : '/v2/uploadimage';
 
       const uploadData = new FormData();
       uploadData.append("upimg", picture);
@@ -107,8 +88,8 @@ const NewsSubcategory = () => {
 
       // Step 2: Submit news Details    
       const apiUrl = process.env.NODE_ENV === 'production'
-      ? 'https://ourservicestech.com.ng/farmmart_api/v2/news/create_news'
-      : '/farmmart_api/v2/news/create_news'
+      ? `${import.meta.env.VITE_API_BASE_URL}/news/create_news`
+      : '/v2/news/create_news'
 
       console.log(updatednewsData)
       

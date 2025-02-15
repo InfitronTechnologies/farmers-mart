@@ -13,8 +13,8 @@ const Forums = () => {
       setError(null);
       const apiUrl =
         process.env.NODE_ENV === "production"
-          ? "https://ourservicestech.com.ng/farmmart_api/v2/forum/list_last10_forum"
-          : "/farmmart_api/v2/forum/list_last10_forum";
+          ? `${import.meta.env.VITE_API_BASE_URL}/forum/list_last10_forum`
+          : "/v2/forum/list_last10_forum";
 
       try {
         try {

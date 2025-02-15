@@ -26,3 +26,6 @@ dist-ssr
 
 /dist
 /build
+
+#Ignore environment variables
+.env

@@ -28,8 +28,8 @@ const LevelOne = ({ userId, userToken, goToNextLevel }) => {
     try {
       // Step 1: Upload the image
       const uploadUrl = process.env.NODE_ENV === 'production'
-          ? 'https://ourservicestech.com.ng/farmmart_api/v2/uploadimage'
-          : '/farmmart_api/v2/uploadimage';
+          ? `${import.meta.env.VITE_API_BASE_URL}/uploadimage`
+          : '/v2/uploadimage';
 
       const uploadData = new FormData();
       uploadData.append("upimg", picture);
@@ -48,8 +48,8 @@ const LevelOne = ({ userId, userToken, goToNextLevel }) => {
 
       // Step 2: Submit KYC Level One
       const kycUrl = process.env.NODE_ENV === 'production'
-          ? 'https://ourservicestech.com.ng/farmmart_api/v2/kyc/level_one'
-          : '/farmmart_api/v2/kyc/level_one';
+          ? `${import.meta.env.VITE_API_BASE_URL}/kyc/level_one`
+          : '/v2/kyc/level_one';
 
       const kycResponse = await axios.post(kycUrl, {
           users_id: userId,

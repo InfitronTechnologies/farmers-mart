@@ -34,19 +34,13 @@ const Footer = () => {
 
         {/* Customer Service Links */}
         <div>
-          <h4 className="text-lg font-semibold mb-4">CUSTOMER SERVICE</h4>
-          <ul>
-            <li>
-              <a href="#" className="text-gray-700 hover:text-gray-500 text-sm">
-                Help Center
-              </a>
-            </li>
-            <li className="mt-2">
-              <a href="#" className="text-gray-700 hover:text-gray-500 text-sm">
-                Contact Us
-              </a>
-            </li>
-          </ul>
+          <h4 className="text-lg font-semibold mb-4">CONTACT US</h4>
+            <p className="text-sm text-gray-700 mt-2">
+              Phone: +234-02013301080
+            </p>
+            <p className="text-sm text-gray-700 mt-2">
+              Email: info@FarmersMart.ng
+            </p>
         </div>
 
         {/* Policy Links */}
@@ -55,7 +49,7 @@ const Footer = () => {
           <ul>
             <li>
               <a href="#" className="text-gray-700 hover:text-gray-500 text-sm">
-                Privacy
+                Privacy Policy
               </a>
             </li>
           </ul>
@@ -63,16 +57,11 @@ const Footer = () => {
 
         {/* Service Center Information */}
         <div>
-          <h4 className="text-lg font-semibold mb-4">SERVICE CENTER</h4>
+          <h4 className="text-lg font-semibold mb-4">OFFICE ADDRESS</h4>
           <p className="text-sm text-gray-700">
-            Address: 8, Olarewaju Street, off Billings Way Oregun, Lagos State
+            Number 8, Olarewaju Street, off Billings Way Oregun, Lagos State
           </p>
-          <p className="text-sm text-gray-700 mt-2">
-            Phone: +234-02013301080
-          </p>
-          <p className="text-sm text-gray-700 mt-2">
-            Email: info@FarmersMart.ng
-          </p>
+          
         </div>
       </div>
     </footer>

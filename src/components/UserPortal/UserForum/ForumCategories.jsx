@@ -19,8 +19,8 @@ const ForumCategories = () => {
   useEffect(() => {
     const apiUrl =
       process.env.NODE_ENV === "production"
-        ? "https://ourservicestech.com.ng/farmmart_api/v2/category/list_all_category"
-        : "/farmmart_api/v2/category/list_all_category";
+        ? `${import.meta.env.VITE_API_BASE_URL}/category/list_all_category`
+        : "/v2/category/list_all_category";
 
     axios
       .get(apiUrl)
@@ -37,8 +37,8 @@ const ForumCategories = () => {
     setLoadingSubcategories(true);
     const apiUrl =
       process.env.NODE_ENV === "production"
-        ? `https://ourservicestech.com.ng/farmmart_api/v2/subcategory/select_by_cat_subcat?id=${categoryId}`
-        : `/farmmart_api/v2/subcategory/select_by_cat_subcat?id=${categoryId}`;
+        ? `${import.meta.env.VITE_API_BASE_URL}/subcategory/select_by_cat_subcat?id=${categoryId}`
+        : `/v2/subcategory/select_by_cat_subcat?id=${categoryId}`;
 
     axios
       .get(apiUrl)

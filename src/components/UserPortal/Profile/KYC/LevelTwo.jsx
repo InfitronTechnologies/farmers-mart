@@ -31,8 +31,8 @@ const LevelTwo = ({userId, userToken}) => {
 
   useEffect(() => {
       const countriesUrl = process.env.NODE_ENV === 'production' 
-      ? 'https://ourservicestech.com.ng/farmmart_api/v2/select_list_country'
-      : '/farmmart_api/v2/select_list_country';
+      ? `${import.meta.env.VITE_API_BASE_URL}/select_list_country`
+      : '/v2/select_list_country';
 
       const fetchCountries = async () => {
 
@@ -59,8 +59,8 @@ const LevelTwo = ({userId, userToken}) => {
       if (formData.country_id) {
         const statesUrl =
           process.env.NODE_ENV === "production"
-            ? `https://ourservicestech.com.ng/farmmart_api/v2/select_list_state_by_country_id?id=${formData.country_id}`
-            : `/farmmart_api/v2/select_list_state_by_country_id?id=${formData.country_id}`;
+            ? `${import.meta.env.VITE_API_BASE_URL}/select_list_state_by_country_id?id=${formData.country_id}`
+            : `/v2/select_list_state_by_country_id?id=${formData.country_id}`;
   
         try {
           const response = await axios.get(statesUrl);
@@ -82,8 +82,8 @@ const LevelTwo = ({userId, userToken}) => {
 
     try {
       const apiUrl = process.env.NODE_ENV === 'production'
-          ? 'https://ourservicestech.com.ng/farmmart_api/v2/kyc/level_two'
-          : '/farmmart_api/v2/kyc/level_two';
+          ? `${import.meta.env.VITE_API_BASE_URL}/kyc/level_two`
+          : '/v2/kyc/level_two';
 
       const response = await axios.post( apiUrl, formData);
       

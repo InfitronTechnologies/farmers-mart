@@ -6,11 +6,12 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/farmmart_api': {
-        target: 'https://ourservicestech.com.ng',
+      '/api': {
+        target: 'https://farmersmart.com.ng',
         changeOrigin: true,
         secure: false,
       }
     }
-  },
+  }
+  
 })

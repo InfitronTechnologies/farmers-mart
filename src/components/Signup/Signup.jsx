@@ -44,9 +44,7 @@ const Signup = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const apiUrl = process.env.NODE_ENV === 'production' 
-    ? 'https://ourservicestech.com.ng/farmmart_api/v2/select_list_state'
-    : '/farmmart_api/v2/select_list_state';
+    const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/select_list_state`
 
     const fetchStates = async () => {
       try {
@@ -94,9 +92,7 @@ const Signup = () => {
     e.preventDefault();
     setLoading(true);
 
-    const apiUrl = process.env.NODE_ENV === 'production' 
-      ? 'https://ourservicestech.com.ng/farmmart_api/v2/account/account_otp_active'
-      : '/farmmart_api/v2/account/account_otp_active';
+    const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/account/account_otp_active`
 
     try {
       const response = await axios.post(apiUrl, { code: otpCode.join('') });
@@ -122,21 +118,6 @@ const Signup = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
-  // Function to handle password input
-  // const handlePasswordChange = (e) => {
-  //   const password = e.target.value;
-  //   setPasswordMatch(password === confirmPassword);
-  // };
-  
-
-  // // Function to handle confirm password and check if they match
-  // const handleConfirmPasswordChange = (e) => {
-  //   setConfirmPassword(e.target.value);
-  //   setPasswordMatch(e.target.value === formData.users_password);
-  //   setFormData({ ...formData, users_retp_password: e.target.value });
-
-  // };
 
   const handlePasswordChange = (e) => {
     const password = e.target.value;
@@ -168,12 +149,12 @@ const Signup = () => {
       return;
     }
 
-    const apiUrl = process.env.NODE_ENV === 'production' 
-      ? 'https://ourservicestech.com.ng/farmmart_api/v2/account/create_account'
-      : '/farmmart_api/v2/account/create_account';
+    const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/account/create_account`
 
     setLoading(true);
     try {
+      console.log(apiUrl)
+      console.log(formData)
       const response = await axios.post(apiUrl, formData);
 
       if(response.data.status == 0){

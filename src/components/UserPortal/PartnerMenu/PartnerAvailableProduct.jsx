@@ -19,8 +19,8 @@ console.log(partnerId)
 
       const url =
       process.env.NODE_ENV === 'production'
-      ? `https://ourservicestech.com.ng/farmmart_api/v2/product/select_by_partner_id_get_product?id=${partnerId}`
-      : `/farmmart_api/v2/product/select_by_partner_id_get_product?id=${partnerId}`;
+      ? `${import.meta.env.VITE_API_BASE_URL}/product/select_by_partner_id_get_product?id=${partnerId}`
+      : `/v2/product/select_by_partner_id_get_product?id=${partnerId}`;
       
       try {
         const response = await axios.get(url);
@@ -70,7 +70,7 @@ console.log(partnerId)
                   <td className="px-4 py-2 text-gray-700">{index + 1}</td>
                   <td className="px-4 py-2">
                     <img
-                      src={`https://ourservicestech.com.ng/farmmart_api/images/product/${product.product_image_f}`}
+                      src={`${import.meta.env.VITE_API_BASE_URL}/images/product/${product.product_image_f}`}
                       alt={product.product_name}
                       className="h-16 w-16 object-cover rounded-md border"
                     />

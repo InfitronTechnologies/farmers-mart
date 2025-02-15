@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const PaystackPayment = ({ amount, email, metadata, onSuccess, onClose }) => {
     const navigate = useNavigate()
-    const publicKey = 'pk_test_9765106bb6b676cf27cb0e7ca666061f5fba7a78'; // Accessing env variable in Vite
+    const publicKey = import.meta.env.VITE_PAYSTACK_SECRET_KEY; // Accessing env variable in Vite
 
     const handlePaystackSuccess = (reference) => {
         console.log(reference);

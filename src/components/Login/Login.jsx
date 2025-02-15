@@ -32,13 +32,11 @@ const Login = () => {
       email,
       password,
     };
-  
-    const apiUrl = process.env.NODE_ENV === 'production'
-      ? 'https://ourservicestech.com.ng/farmmart_api/v2/account/login_account'
-      : '/farmmart_api/v2/account/login_account';
-  
+    
     try {
-      const response = await axios.post('https://ourservicestech.com.ng/farmmart_api/v2/account/login_account', loginData);
+      const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/account/login_account`
+      
+      const response = await axios.post(apiUrl, loginData);
       if (response.data.status === 1) {
         const { id, users_token, profile, users_email, users_fn, users_ln, kyc_level, app_ids, users_activation, users_images } = response.data.data;
         if (users_activation == 0){

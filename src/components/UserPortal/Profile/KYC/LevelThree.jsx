@@ -29,8 +29,8 @@ const LevelThree = ({userId, userToken}) => {
 
         try {
             const apiUrl =  process.env.NODE_ENV === 'production' 
-            ?'https://ourservicestech.com.ng/farmmart_api/v2/kyc/level_three'
-            :'/farmmart_api/v2/kyc/level_three'
+            ?`${import.meta.env.VITE_API_BASE_URL}/kyc/level_three`
+            :'/v2/kyc/level_three'
 
             const response = await axios.post(apiUrl, formData)
             console.log("Submission successful:", response.data);

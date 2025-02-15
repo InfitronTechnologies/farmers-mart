@@ -36,10 +36,8 @@ const ProfileSelection = ({ onNext }) => {
       partner: String(selectedProfiles.includes('Partner') ? 1 : 0),
     };
 
-    const apiUrl = process.env.NODE_ENV === 'production' 
-      ? 'https://ourservicestech.com.ng/farmmart_api/v2/account/create_account_profile'
-      : '/farmmart_api/v2/account/create_account_profile';
-
+    const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/account/create_account_profile`
+    
     try {
       console.log(profileData)
       const response = await axios.post(apiUrl, profileData);

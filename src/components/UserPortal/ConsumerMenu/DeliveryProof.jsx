@@ -38,8 +38,8 @@ const DeliveryProof = ({ onSubmit }) => {
   useEffect(() => {
     const getStatus = async () => {
       const url = process.env.NODE_ENV === "production"
-      ? `https://ourservicestech.com.ng/farmmart_api/v2/select_list_status`
-      : `/farmmart_api/v2/select_list_status`;
+      ? `${import.meta.env.VITE_API_BASE_URL}/select_list_status`
+      : `/v2/select_list_status`;
 
       try {
         const response = await axios.get(url);
@@ -53,8 +53,8 @@ const DeliveryProof = ({ onSubmit }) => {
 
     const fetchStates = async () => {
       const statesUrl = process.env.NODE_ENV === "production"
-      ? `https://ourservicestech.com.ng/farmmart_api/v2/select_list_state`
-      : `/farmmart_api/v2/select_list_state`;
+      ? `${import.meta.env.VITE_API_BASE_URL}/select_list_state`
+      : `/v2/select_list_state`;
 
       try {
         const response = await axios.get(statesUrl);
@@ -84,8 +84,8 @@ const DeliveryProof = ({ onSubmit }) => {
 
     try {
       const uploadUrl = process.env.NODE_ENV === "production" 
-      ? "https://ourservicestech.com.ng/farmmart_api/v2/uploadimage" 
-      : "/farmmart_api/v2/uploadimage";
+      ? `${import.meta.env.VITE_API_BASE_URL}/uploadimage`
+      : "/v2/uploadimage";
   
       const uploadData = new FormData();        
         uploadData.append("pod_img", image)
@@ -104,8 +104,8 @@ const DeliveryProof = ({ onSubmit }) => {
       }
 
       const url = process.env.NODE_ENV === "production"
-      ? "https://ourservicestech.com.ng/farmmart_api/v2/pod/create_pod"
-      : "/farmmart_api/v2/pod/create_pod";
+      ? `${import.meta.env.VITE_API_BASE_URL}/pod/create_pod`
+      : "/v2/pod/create_pod";
 
       const response = await axios.post(url, proofForm)
       toast.success("Proof of Delivery is Successful", { // Display a success toast

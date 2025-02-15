@@ -12,8 +12,8 @@ const Orders = () => {
   useEffect(() => {
     const getOrders = async () => {
       const url = process.env.NODE_ENV === 'production'
-        ? `https://ourservicestech.com.ng/farmmart_api/v2/order/select_order_by_user_id?id=${userId}`
-        : `/farmmart_api/v2/order/select_order_by_user_id?id=${userId}`
+        ? `${import.meta.env.VITE_API_BASE_URL}/order/select_order_by_user_id?id=${userId}`
+        : `/v2/order/select_order_by_user_id?id=${userId}`
 
       try {
         const response = await axios.get(url)

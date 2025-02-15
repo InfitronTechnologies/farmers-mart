@@ -57,8 +57,8 @@ function PartnerProduct() {
   useEffect(() => {
     const fetchProductType = async () => {
       const url = process.env.NODE_ENV === 'production' 
-      ? 'https://ourservicestech.com.ng/farmmart_api/v2/list_all_product_type'
-      : '/farmmart_api/v2/list_all_product_type'
+      ? `${import.meta.env.VITE_API_BASE_URL}/list_all_product_type`
+      : '/v2/list_all_product_type'
 
       try {
         const response = await axios.get(url);
@@ -71,8 +71,8 @@ function PartnerProduct() {
 
     const fetchCategories = async () => {
       const categoriesUrl = process.env.NODE_ENV === 'production' 
-      ? 'https://ourservicestech.com.ng/farmmart_api/v2/category/list_all_category'
-      : '/farmmart_api/v2/category/list_all_category'
+      ? `${import.meta.env.VITE_API_BASE_URL}/category/list_all_category`
+      : '/v2/category/list_all_category'
 
       try {
         const response = await axios.get(categoriesUrl);
@@ -90,8 +90,8 @@ function PartnerProduct() {
       if (newProduct.category_id) {
         const subcategoriesUrl =
           process.env.NODE_ENV === "production"
-            ? `https://ourservicestech.com.ng/farmmart_api/v2/subcategory/select_by_cat_subcat?id=${newProduct.category_id}`
-            : `/farmmart_api/v2/subcategory/select_by_cat_subcat?id=${newProduct.category_id}`;
+            ? `${import.meta.env.VITE_API_BASE_URL}/subcategory/select_by_cat_subcat?id=${newProduct.category_id}`
+            : `/v2/subcategory/select_by_cat_subcat?id=${newProduct.category_id}`;
   
         try {
           const response = await axios.get(subcategoriesUrl);
@@ -146,8 +146,8 @@ function PartnerProduct() {
       try {
         // 1. Upload Images
         const uploadUrl = process.env.NODE_ENV === "production" 
-        ? "https://ourservicestech.com.ng/farmmart_api/v2/uploadimage" 
-        : "/farmmart_api/v2/uploadimage";
+        ? `${import.meta.env.VITE_API_BASE_URL}/uploadimage`
+        : "/v2/uploadimage";
     
         const uploadData = new FormData();        
           uploadData.append("pf_img", pictures.front); // Front image
@@ -173,8 +173,8 @@ function PartnerProduct() {
 
         // 2. Create the Product
         const createProductUrl = process.env.NODE_ENV === "production"
-        ? "https://ourservicestech.com.ng/farmmart_api/v2/product/create_partner_product"
-        : "/farmmart_api/v2/product/create_partner_product";
+        ? `${import.meta.env.VITE_API_BASE_URL}/product/create_partner_product`
+        : "/v2/product/create_partner_product";
 
         console.log(updatedProduct)
         const response = await axios.post(createProductUrl, updatedProduct);
@@ -182,8 +182,8 @@ function PartnerProduct() {
         const productId =  response.data.product_id
         try {
           const itemUrl = process.env.NODE_ENV === "production"
-          ? "https://ourservicestech.com.ng/farmmart_api/v2/product_item/create_product_items"
-          : "/farmmart_api/v2/product_item/create_product_items";        
+          ? `${import.meta.env.VITE_API_BASE_URL}/product_item/create_product_items`
+          : "/v2/product_item/create_product_items";        
   
           async function sendItemsOneByOne(productItems, itemUrl, productId) {
             for (const item of productItems) {

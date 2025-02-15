@@ -26,26 +26,6 @@ const SubcategoryForum = () => {
   const [showForm, setShowForm] = useState(false); // Toggle form visibility
   const [loading, setLoading] = useState(false); // For form submission state
 
-  // Fetch posts for the subcategory on component mount
-  // useEffect(() => {
-  //   const apiUrl =
-  //     process.env.NODE_ENV === "production"
-  //       ? `https://ourservicestech.com.ng/farmmart_api/v2/posts/by_subcategory?id=${subcategoryId}`
-  //       : `/farmmart_api/v2/posts/by_subcategory?id=${subcategoryId}`;
-
-  //   axios
-  //     .get(apiUrl)
-  //     .then((response) => {
-  //       setPosts(response.data.data); // Assuming API returns an array of posts
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching posts:", error);
-  //     })
-  //     .finally(() => {
-  //       setLoadingPosts(false); // Stop loading spinner
-  //     });
-  // }, [subcategoryId]);
-
   // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -77,8 +57,8 @@ const SubcategoryForum = () => {
     try {
       // Step 1: Upload the image
       const uploadUrl = process.env.NODE_ENV === 'production'
-          ? 'https://ourservicestech.com.ng/farmmart_api/v2/uploadimage'
-          : '/farmmart_api/v2/uploadimage';
+          ? `${import.meta.env.VITE_API_BASE_URL}/uploadimage`
+          : '/v2/uploadimage';
 
       const uploadData = new FormData();
       uploadData.append("upimg", picture);
@@ -107,8 +87,8 @@ const SubcategoryForum = () => {
 
       // Step 2: Submit Forum Details    
       const apiUrl = process.env.NODE_ENV === 'production'
-      ? 'https://ourservicestech.com.ng/farmmart_api/v2/forum/create_forum'
-      : '/farmmart_api/v2/forum/create_forum'
+      ? `${import.meta.env.VITE_API_BASE_URL}/forum/create_forum`
+      : '/v2/forum/create_forum'
 
       console.log(updatedForumData)
       

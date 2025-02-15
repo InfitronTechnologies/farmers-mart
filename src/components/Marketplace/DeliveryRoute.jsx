@@ -26,10 +26,7 @@ const DeliveryRoute = () => {
 
   useEffect(() => {
     const fetchDeliveryTypeId = async () => {
-      const url =
-        process.env.NODE_ENV === "production"
-          ? `https://ourservicestech.com.ng/farmmart_api/v2/list_all_delivery_type`
-          : `/farmmart_api/v2/list_all_delivery_type`;
+      const url = `${import.meta.env.VITE_API_BASE_URL}/list_all_delivery_type`
 
       const response = await axios.get(url);
       setDeliveryRoute(response.data.data);
@@ -37,10 +34,7 @@ const DeliveryRoute = () => {
     fetchDeliveryTypeId();
 
     const fetchStates = async () => {
-      const statesUrl =
-        process.env.NODE_ENV === "production"
-          ? `https://ourservicestech.com.ng/farmmart_api/v2/select_list_state_by_country_id?id=162`
-          : `/farmmart_api/v2/select_list_state_by_country_id?id=162`;
+      const statesUrl = `${import.meta.env.VITE_API_BASE_URL}/select_list_state_by_country_id?id=162`
 
       try {
         const response = await axios.get(statesUrl);
@@ -62,11 +56,7 @@ const DeliveryRoute = () => {
 
   const handleSubmit = async () => {
     const deliveryForm = { ...formData };
-      
-    const url =
-      process.env.NODE_ENV === "production"
-        ? `https://ourservicestech.com.ng/farmmart_api/v2/router/deli_move`
-        : `/farmmart_api/v2/router/deli_move`;
+         const url =`${import.meta.env.VITE_API_BASE_URL}/router/deli_move`
   
     try {
       console.log(deliveryForm)

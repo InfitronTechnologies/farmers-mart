@@ -43,9 +43,7 @@ const AccountActivation = () => {
     e.preventDefault();
     setLoading(true);
 
-    const apiUrl = process.env.NODE_ENV === 'production' 
-      ? 'https://ourservicestech.com.ng/farmmart_api/v2/account/account_otp_active'
-      : '/farmmart_api/v2/account/account_otp_active';
+    const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/account/account_otp_active`
 
     try {
       const response = await axios.post(apiUrl, { code: otpCode.join('') });

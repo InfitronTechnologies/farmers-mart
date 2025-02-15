@@ -14,9 +14,7 @@ const ForgotPassword = () => {
   const [token, setToken] = useState("");
   const navigate = useNavigate();
 
-  const apiUrl = process.env.NODE_ENV === "production"
-    ? "https://ourservicestech.com.ng/farmmart_api/v2/account"
-    : "/farmmart_api/v2/account";
+  const apiUrl =`${import.meta.env.VITE_API_BASE_URL}/account`
 
   // Step 1: Send OTP to Email
   const handleSendOtp = async () => {

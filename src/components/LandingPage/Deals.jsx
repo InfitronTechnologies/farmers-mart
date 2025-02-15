@@ -5,10 +5,10 @@ import potatoes from '../../assets/potato-farm.jpg';
 import onion from '../../assets/onion.jpg';
 import pepper from '../../assets/pepper.jpg';
 import vegetables from '../../assets/vegetables.jpg';
-import fish from '../../assets/fish.jpg';
-import egg from '../../assets/egg.jpg';
+import egg from '../../assets/egg.png';
 import tomato from '../../assets/tomato.jpg';
 import potato from '../../assets/potatoes.jpg'
+import crayfish from "../../assets/crayfish.png"
 import { useNavigate } from 'react-router-dom';
 
 function Deals() {
@@ -125,12 +125,12 @@ function Deals() {
             <div className="flex flex-col w-full h-full overflow-hidden">
               <div className='max-w-full h-60'>
                 <img
-                  src={fish}
+                  src={crayfish}
                   alt="Fish"
                   className="object-cover h-full w-full rounded-lg"
                 />
               </div>
-              <div className='relative max-w-full h-36 my-auto'>
+              <div className='relative max-w-full h-auto my-auto'>
                 <img
                   src={egg}
                   alt="Egg"

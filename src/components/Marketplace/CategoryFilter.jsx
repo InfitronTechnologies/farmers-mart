@@ -9,9 +9,7 @@ const CategoryFilter = ({ setFilteredProducts, setCategoryName, setSubcategories
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const url = process.env.NODE_ENV === 'production'
-    ? 'https://ourservicestech.com.ng/farmmart_api/v2/category/list_all_category'
-    : '/farmmart_api/v2/category/list_all_category'
+    const url = `${import.meta.env.VITE_API_BASE_URL}/category/list_all_category`
 
     const ShowCategories = async () => {
       try {
@@ -33,9 +31,7 @@ const CategoryFilter = ({ setFilteredProducts, setCategoryName, setSubcategories
   const handleCategoryChange = async (name, id) => {
     setSelectedCategory(id);
     // Implement the logic to filter products by category here
-    const url = process.env.NODE_ENV === 'production'
-    ? `https://ourservicestech.com.ng/farmmart_api/v2/product/select_by_cat_id_get_product?id=${id}`
-    : `/farmmart_api/v2/product/select_by_cat_id_get_product?id=${id}`
+    const url = `${import.meta.env.VITE_API_BASE_URL}/product/select_by_cat_id_get_product?id=${id}`
 
     try{  
       const response = await axios.get(url)
@@ -48,10 +44,7 @@ const CategoryFilter = ({ setFilteredProducts, setCategoryName, setSubcategories
   // Fetch subcategories when a category is selected
   const fetchSubcategories = () => {
     // setLoadingSubcategories(true);
-    const apiUrl =
-      process.env.NODE_ENV === "production"
-        ? `https://ourservicestech.com.ng/farmmart_api/v2/subcategory/select_by_cat_subcat?id=${id}`
-        : `/farmmart_api/v2/subcategory/select_by_cat_subcat?id=${id}`;
+    const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/subcategory/select_by_cat_subcat?id=${id}`
 
     axios
       .get(apiUrl)

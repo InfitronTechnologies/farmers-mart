@@ -13,8 +13,8 @@ const AllNews = () => {
       setError(null);
       const apiUrl =
         process.env.NODE_ENV === "production"
-          ? "https://ourservicestech.com.ng/farmmart_api/v2/news/list_last10_news"
-          : "/farmmart_api/v2/news/list_last10_news";
+          ? `${import.meta.env.VITE_API_BASE_URL}/news/list_last10_news`
+          : "/v2/news/list_last10_news";
 
       const fetchednewss = [];
       try {

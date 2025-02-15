@@ -24,8 +24,8 @@ const LevelFive = ({userId, userToken}) => {
         e.preventDefault();
 
         const apiUrl =  process.env.NODE_ENV === 'production' 
-        ?'https://ourservicestech.com.ng/farmmart_api/v2/kyc/level_five'
-        :'/farmmart_api/v2/kyc/level_five'
+        ?`${import.meta.env.VITE_API_BASE_URL}/kyc/level_five`
+        :'/v2/kyc/level_five'
 
         try {
             const response = await axios.post(apiUrl, formData)

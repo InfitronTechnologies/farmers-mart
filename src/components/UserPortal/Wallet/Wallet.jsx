@@ -11,8 +11,8 @@ const Wallet = () => {
     useEffect(() => {
         const getWallet = async () => {
             const walletUrl = process.env.NODE_ENV === "production"
-            ? `https://ourservicestech.com.ng/farmmart_api/v2/wallet/select_wallet_by_user_id?users_id=${userId}&users_token=${userToken}`
-            : `/farmmart_api/v2/wallet/select_wallet_by_user_id?users_id=${userId}&users_token=${userToken}`;
+            ? `${import.meta.env.VITE_API_BASE_URL}/wallet/select_wallet_by_user_id?users_id=${userId}&users_token=${userToken}`
+            : `/v2/wallet/select_wallet_by_user_id?users_id=${userId}&users_token=${userToken}`;
             
             try {
                 const response = await axios.get(walletUrl)
@@ -29,8 +29,8 @@ const Wallet = () => {
     useEffect(() => {
         const getWalletTransactions = async () => {
             const transactionsUrl = process.env.NODE_ENV === "production"
-            ? `https://ourservicestech.com.ng/farmmart_api/v2/transaction/select_by_wallet_id?id=${walletData.id}&users_id=${userId}&users_token=${userToken}`
-            : `/farmmart_api/v2/transaction/select_by_wallet_id?id=${walletData.id}&users_id=${userId}&users_token=${userToken}`;
+            ? `${import.meta.env.VITE_API_BASE_URL}/transaction/select_by_wallet_id?id=${walletData.id}&users_id=${userId}&users_token=${userToken}`
+            : `/v2/transaction/select_by_wallet_id?id=${walletData.id}&users_id=${userId}&users_token=${userToken}`;
 
             try {
                 const response = await axios.get(transactionsUrl)

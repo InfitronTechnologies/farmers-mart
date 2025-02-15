@@ -21,8 +21,8 @@ const LevelFour = ({userId, userToken}) => {
 
     useEffect(() => {
         const bankUrl =  process.env.NODE_ENV === 'production' 
-        ?'https://ourservicestech.com.ng/farmmart_api/v2/list_all_bank'
-        :'/farmmart_api/v2/list_all_bank'
+        ?`${import.meta.env.VITE_API_BASE_URL}/list_all_bank`
+        :'/v2/list_all_bank'
 
         const getBanks = async () => {
             try {
@@ -58,8 +58,8 @@ const LevelFour = ({userId, userToken}) => {
         }
 
         const apiUrl =  process.env.NODE_ENV === 'production' 
-        ?'https://ourservicestech.com.ng/farmmart_api/v2/kyc/level_four'
-        :'/farmmart_api/v2/kyc/level_four'
+        ?`${import.meta.env.VITE_API_BASE_URL}/kyc/level_four`
+        :'/v2/kyc/level_four'
 
         try {
             const response = await axios.post(apiUrl, formData)

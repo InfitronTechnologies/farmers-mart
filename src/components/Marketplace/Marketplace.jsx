@@ -21,8 +21,8 @@ const Marketplace = () => {
   useEffect(() => {
     const getLatestProducts = async () => {
       const url = process.env.NODE_ENV === 'production'
-      ? `https://ourservicestech.com.ng/farmmart_api/v2/product/list_20_product`
-      : `/farmmart_api/v2/product/list_20_product`
+      ? `${import.meta.env.VITE_API_BASE_URL}/product/list_20_product`
+      : `/v2/product/list_20_product`
 
       try {
         const response = await axios.get(url)
@@ -46,8 +46,8 @@ const Marketplace = () => {
 
   const handleSubcategoryProducts = async (name, id) => {
     const url = process.env.NODE_ENV === 'production'
-    ? `https://ourservicestech.com.ng/farmmart_api/v2/product/select_by_subcat_id_get_product?id=${id}`
-    : `/farmmart_api/v2/product/select_by_subcat_id_get_product?id=${id}`
+    ? `${import.meta.env.VITE_API_BASE_URL}/product/select_by_subcat_id_get_product?id=${id}`
+    : `/v2/product/select_by_subcat_id_get_product?id=${id}`
 
     try{  
       const response = await axios.get(url)
