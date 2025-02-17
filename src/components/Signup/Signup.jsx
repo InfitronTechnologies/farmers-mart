@@ -12,16 +12,16 @@ import NavBar from '../LandingPage/NavBar';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-	users_fn 			:  "",
-	users_ln 			:  "",
-	users_on 			:  "",
-	users_phone 		:  "",
-	users_email 		:  "",
-	users_password  	:  "",
-	users_retp_password :  "",
-	state_id 			: ""
+    users_fn: "",
+    users_ln: "",
+    users_on: "",
+    users_phone: "",
+    users_email: "",
+    users_password: "",
+    users_retp_password: "",
+    state_id: ""
 
-	})
+  })
 
   const [showCriteria, setShowCriteria] = useState(false)
   const [validations, setValidations] = useState({
@@ -34,11 +34,11 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordMatch, setPasswordMatch] = useState(false);
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState(false);   
+  const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [states, setStates] = useState([])
   const [isOtpOverlayVisible, setIsOtpOverlayVisible] = useState(false);
-  const {setUserId, setUserEmail} = useProfile()  
+  const { setUserId, setUserEmail } = useProfile()
   const navigate = useNavigate();  // Hook to navigate between pages
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -88,28 +88,6 @@ const Signup = () => {
     }
   };
 
-  const handleActivation = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/account/account_otp_active`
-
-    try {
-      const response = await axios.post(apiUrl, { code: otpCode.join('') });
-      if (response.status === 200) {
-        setSuccess(true);
-        if (response.data.status === 1) {
-          navigate('/select_profile');
-        }
-        setError('');
-      }
-    } catch (error) {
-      setError(error.response?.data?.message || 'Invalid OTP');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   }
@@ -131,7 +109,7 @@ const Signup = () => {
     });
     setShowCriteria(true)
   };
-  
+
   const handleConfirmPasswordChange = (e) => {
     const confirmPwd = e.target.value;
     setConfirmPassword(confirmPwd);
@@ -139,7 +117,7 @@ const Signup = () => {
     setFormData({ ...formData, users_retp_password: e.target.value });
 
   };
-  
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -157,7 +135,7 @@ const Signup = () => {
       console.log(formData)
       const response = await axios.post(apiUrl, formData);
 
-      if(response.data.status == 0){
+      if (response.data.status == 0) {
         setError(response.data.message)
         return
       }
@@ -181,7 +159,30 @@ const Signup = () => {
       setLoading(false);
     }
   };
- 
+
+  const handleActivation = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/account/account_otp_active`
+
+    try {
+      const response = await axios.post(apiUrl, { code: otpCode.join('') });
+      console.log(response.data)
+      if (response.status === 200) {
+        setSuccess(true);
+        if (response.data.status === 1) {
+          navigate('/select_profile');
+        }
+        setError('');
+      }
+    } catch (error) {
+      setError(error.response?.data?.message || 'Invalid OTP');
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   return (
     <div>
@@ -227,12 +228,12 @@ const Signup = () => {
                       id="users_fn"
                       name="users_fn"
                       placeholder="First Name"
-                      value={formData.users_fn }
+                      value={formData.users_fn}
                       onChange={handleChange}
                       required
                     />
                     <span className="absolute inset-y-0 right-2 top-2">
-                      <PersonOutlined className='text-black'/>
+                      <PersonOutlined className='text-black' />
                     </span>
                   </div>
                 </div>
@@ -251,7 +252,7 @@ const Signup = () => {
                       required
                     />
                     <span className="absolute inset-y-0 right-2 top-2">
-                      <PersonOutlined className='text-black'/>
+                      <PersonOutlined className='text-black' />
                     </span>
                   </div>
                 </div>
@@ -305,7 +306,7 @@ const Signup = () => {
                       required
                     />
                     <span className="absolute inset-y-0 right-2 top-2">
-                      <EmailOutlined className='text-[#6D6969] font-thin text-sm'/>
+                      <EmailOutlined className='text-[#6D6969] font-thin text-sm' />
                     </span>
                   </div>
                 </div>
@@ -349,28 +350,28 @@ const Signup = () => {
                       onChange={handlePasswordChange}
                       required
                     />
-                    <span 
+                    <span
                       className="absolute inset-y-0 right-2 top-2"
                       onClick={() => setIsVisible(!isVisible)}
                     >
-                      {isVisible ? <VisibilityOff className='text-[#6D6969] font-thin text-sm'/> : <Visibility className='text-[#6D6969] font-thin text-sm'/>}  
+                      {isVisible ? <VisibilityOff className='text-[#6D6969] font-thin text-sm' /> : <Visibility className='text-[#6D6969] font-thin text-sm' />}
                     </span>
                   </div>
-                  {showCriteria 
+                  {showCriteria
                     ?
                     <ul className="text-xs text-left">
-                        <li className={validations.length ? "text-green-500" : "text-red-500"}>
+                      <li className={validations.length ? "text-green-500" : "text-red-500"}>
                         ✔️ At least 8 characters
-                        </li>
-                        <li className={validations.uppercase ? "text-green-500" : "text-red-500"}>
+                      </li>
+                      <li className={validations.uppercase ? "text-green-500" : "text-red-500"}>
                         ✔️ At least one uppercase letter (A-Z)
-                        </li>
-                        <li className={validations.lowercase ? "text-green-500" : "text-red-500"}>
+                      </li>
+                      <li className={validations.lowercase ? "text-green-500" : "text-red-500"}>
                         ✔️ At least one lowercase letter (a-z)
-                        </li>
-                        <li className={validations.number ? "text-green-500" : "text-red-500"}>
+                      </li>
+                      <li className={validations.number ? "text-green-500" : "text-red-500"}>
                         ✔️ At least one number (0-9)
-                        </li>
+                      </li>
                     </ul>
                     :
                     <div></div>
@@ -392,11 +393,11 @@ const Signup = () => {
                       onChange={handleConfirmPasswordChange}
                       required
                     />
-                    <span 
+                    <span
                       className="absolute inset-y-0 right-2 top-2"
                       onClick={() => setIsVisible(!isVisible)}
                     >
-                      {isVisible ? <VisibilityOff className='text-[#6D6969] font-thin text-sm'/> : <Visibility className='text-[#6D6969] font-thin text-sm'/>}
+                      {isVisible ? <VisibilityOff className='text-[#6D6969] font-thin text-sm' /> : <Visibility className='text-[#6D6969] font-thin text-sm' />}
                     </span>
                   </div>
                 </div>
@@ -409,7 +410,7 @@ const Signup = () => {
                     disabled={!passwordMatch || loading || formData.users_password.length < 8 || !/[A-Z]/.test(formData.users_password) || !/[a-z]/.test(formData.users_password) || !/\d/.test(formData.users_password)}  // Disable button during loading or if passwords don't match
                   >
                     {loading ? 'Signing Up...' : 'Continue'}
-                  </button>                
+                  </button>
                 </div>
                 <div className="mt-4 text-black text-center text-lg">
                   Have an account?{" "}
@@ -419,58 +420,58 @@ const Signup = () => {
             </div>
           </div>
         </div>
-    </div>
-    <Footer/>
+      </div>
+      <Footer />
 
-    {isOtpOverlayVisible && (
-      <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white z-10 p-10 rounded-3xl shadow-lg w-full max-w-md text-center">
-        <div className=' w-full'>
-          <img 
-          src={otp}
-          alt=""
-          className='mx-auto w-20'  
-        />
-        </div>
-        <p className="text-gray-600 mx-auto text-base w-2/3 mt-6 mb-8">Please enter the OTP sent to your email</p>
+      {isOtpOverlayVisible && (
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white z-10 p-10 rounded-3xl shadow-lg w-full max-w-md text-center">
+            <div className=' w-full'>
+              <img
+                src={otp}
+                alt=""
+                className='mx-auto w-20'
+              />
+            </div>
+            <p className="text-gray-600 mx-auto text-base w-2/3 mt-6 mb-8">Please enter the OTP sent to your email</p>
 
-        {success && <p className="text-green-600 font-semibold">Your account has been activated!</p>}
-        {error && <p className="text-red-500 mb-4">{error}</p>}
+            {success && <p className="text-green-600 font-semibold">Your account has been activated!</p>}
+            {error && <p className="text-red-500 mb-4">{error}</p>}
 
-        <form onSubmit={handleActivation} className="space-y-6">
-          <div className="flex justify-between mb-4">
-            {otpCode.map((_, index) => (
-              <input
-                key={index}
-                id={`otp-${index}`}
-                type="text"
-                value={otpCode[index]}
-                onChange={(e) => handleOtpChange(e, index)}
-                onKeyDown={(e) => handleKeyDown(e, index)}
-                maxLength="1"
-                className="w-12 h-12 text-center border-2 border-farmersmartDarkGreen rounded-lg text-xl 
+            <form onSubmit={handleActivation} className="space-y-6">
+              <div className="flex justify-between mb-4">
+                {otpCode.map((_, index) => (
+                  <input
+                    key={index}
+                    id={`otp-${index}`}
+                    type="text"
+                    value={otpCode[index]}
+                    onChange={(e) => handleOtpChange(e, index)}
+                    onKeyDown={(e) => handleKeyDown(e, index)}
+                    maxLength="1"
+                    className="w-12 h-12 text-center border-2 border-farmersmartDarkGreen rounded-lg text-xl 
                           focus:outline-none focus:border-3 focus:border-farmersmartDarkGreen focus:ring-0 
                           shadow-md shadow-gray-400"
-                required
-              />
-            ))}
-          </div>
+                    required
+                  />
+                ))}
+              </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="relative bg-farmersmartDarkGreen text-white text-xl font-semibold 
+              <button
+                type="submit"
+                disabled={loading}
+                className="relative bg-farmersmartDarkGreen text-white text-xl font-semibold 
             py-3 px-10 rounded-full transition duration-300 w-4/5 mx-auto"
-          >
-            {loading ? 'Verifying...' : 'Verify'}
-            <EastIcon className='absolute right-10'/>
-          </button>
-        </form>
-      </div>
-      </div>
+              >
+                {loading ? 'Verifying...' : 'Verify'}
+                <EastIcon className='absolute right-10' />
+              </button>
+            </form>
+          </div>
+        </div>
       )}
 
-  </div>
+    </div>
   );
 };
 

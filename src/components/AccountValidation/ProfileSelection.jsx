@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Checkbox} from '@mui/material';
+import { Checkbox } from '@mui/material';
 import NavBar from '../LandingPage/NavBar';
 import Footer from '../LandingPage/Footer';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import bgImage from '../../assets/login-bg.png'
 import { useProfile } from '../ProfileContext/ProfileContext';
+import { EmailOutlined } from '@mui/icons-material';
 
 const ProfileSelection = ({ onNext }) => {
   const [selectedProfiles, setSelectedProfiles] = useState([]);
   const [error, setError] = useState(null);
-  const {userId} = useProfile()
+  const [userEmail, setUserEmail] = useState('')
+  const { userId } = useProfile()
   const navigate = useNavigate(); // Correctly initialize useNavigate
 
   const handleProfileChange = (profile) => {
@@ -30,6 +32,7 @@ const ProfileSelection = ({ onNext }) => {
     // Prepare the profile data for the backend
     const profileData = {
       users_id: userId,
+      users_email: userEmail,
       buyer: String(selectedProfiles.includes('Buyer') ? 1 : 0),
       farmer: String(selectedProfiles.includes('Farmer') ? 1 : 0),
       logistic: String(selectedProfiles.includes('Logistics') ? 1 : 0),
@@ -37,10 +40,11 @@ const ProfileSelection = ({ onNext }) => {
     };
 
     const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/account/create_account_profile`
-    
+
     try {
       console.log(profileData)
       const response = await axios.post(apiUrl, profileData);
+      console.log(response.data)
 
       if (response.status === 200) {
         localStorage.setItem("selectedProfiles", JSON.stringify(selectedProfiles));
@@ -59,13 +63,31 @@ const ProfileSelection = ({ onNext }) => {
       <div className="relative min-h-screen flex items-center justify-center">
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-          backgroundImage: `url(${bgImage})`
-        }}>
+            backgroundImage: `url(${bgImage})`
+          }}>
         </div>
         <div className="z-10 mx-auto w-1/2">
           <div className="bg-farmersmartPaleGreen w-full shadow-lg p-8 rounded-3xl max-w-md mx-auto mt-12">
             <h2 className="text-2xl font-semibold text-center mb-6">Select Profiles</h2>
             {error && <p className="text-red-500 text-center">{error}</p>}
+            <div className="mb-4">
+              <div className='relative'>
+                <input
+                  className="w-full p-2 border-1 rounded-xl text-black bg-white focus:border-farmersmartDarkGreen 
+                                  focus:outline-none focus:ring-0 focus:border-2"
+                  type="email"
+                  id="userEmail"
+                  name="userEmail"
+                  placeholder="Please enter your email"
+                  value={userEmail}
+                  onChange={(e) => setUserEmail(e.target.value)}
+                  required
+                />
+                <span className="absolute inset-y-0 right-2 top-2">
+                  <EmailOutlined className='text-[#6D6969] font-thin text-sm' />
+                </span>
+              </div>
+            </div>
             <div className="space-y-4">
               {['Farmer', 'Buyer', 'Logistics', 'Partner'].map((profile) => (
                 <div key={profile} className="flex items-center">
