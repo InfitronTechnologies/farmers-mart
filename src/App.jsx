@@ -12,7 +12,6 @@ import Faq from './components/SubPages/Faq';
 import Marketplace from './components/Marketplace/Marketplace';
 import ProductDetails from './components/Marketplace/ProductDetails';
 import ProfileSelection from './components/AccountValidation/ProfileSelection';
-import AccountActivation from './components/AccountValidation/AccountActivation';
 import CheckoutPage from './components/Marketplace/Checkout';
 import PrivacyPolicy from './components/PrivacyPolicy/PrivacyPolicy';
 import PrivacyAgreementForm from './components/PrivacyPolicy/PrivacyAgreementForm';
@@ -40,8 +39,6 @@ function App() {
         <Route path="/policy" element={<PrivacyPolicy />} />
         <Route path="/policyform" element={<PrivacyAgreementForm />} />
         <Route path="/select_profile" element={<ProfileSelection />} />
-        <Route path="/account-activation" element={<AccountActivation />} />
-
 
         {/* Private Routes - Wrapped Individually */}
         <Route path="/user/*" element={<PrivateRoute><Sidebar selectedProfiles={selectedProfiles} /></PrivateRoute>} />
