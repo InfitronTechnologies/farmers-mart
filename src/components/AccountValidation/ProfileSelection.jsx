@@ -48,7 +48,6 @@ const ProfileSelection = ({ onNext }) => {
 
       if (response.status === 200) {
         localStorage.setItem("selectedProfiles", JSON.stringify(selectedProfiles));
-        // onNext(); // Calls onNext if passed as prop
         navigate('/policyform'); // Navigates to the next page
       }
     } catch (err) {
