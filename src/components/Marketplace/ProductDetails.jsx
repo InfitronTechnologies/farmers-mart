@@ -21,10 +21,7 @@ const ProductDetails = () => {
   // Fetch product details
   useEffect(() => {
     const fetchProductDetails = async () => {
-      const url =
-        process.env.NODE_ENV === "production"
-          ? `${import.meta.env.VITE_API_BASE_URL}/product/select_by_id_get_product?id=${id}`
-          : `/v2/product/select_by_id_get_product?id=${id}`;
+      const url = `${import.meta.env.VITE_API_BASE_URL}/product/select_by_id_get_product?id=${id}`
 
       try {
         const response = await axios.get(url);
@@ -52,9 +49,7 @@ const ProductDetails = () => {
     fetchProductDetails();
 
     const fetchProductItems = async () => {
-      const url = process.env.NODE_ENV === "production"
-      ? `${import.meta.env.VITE_API_BASE_URL}/product_item/select_by_product_id_product_items`
-      : `/v2/product_item/select_by_product_id_product_items`;
+      const url = `${import.meta.env.VITE_API_BASE_URL}/product_item/select_by_product_id_product_items`
       try{
         const response =  await axios.post(url, {
           id: id
@@ -106,7 +101,7 @@ const ProductDetails = () => {
             {productImages.length > 0 ? (
               <>
                 <img
-                  src={`${import.meta.env.VITE_API_BASE_URL}/images/product/${productImages[currentImageIndex]}`}
+                  src={`https://farmersmart.com.ng/images/product/${productImages[currentImageIndex]}`}
                   alt={`Product Image ${currentImageIndex + 1}`}
                   className="rounded-lg object-cover w-full max-w-xs sm:max-w-md h-80 sm:h-96"
                 />

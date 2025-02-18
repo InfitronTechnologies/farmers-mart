@@ -11,10 +11,7 @@ const Forums = () => {
     const fetchForums = async () => {
       setLoading(true);
       setError(null);
-      const apiUrl =
-        process.env.NODE_ENV === "production"
-          ? `${import.meta.env.VITE_API_BASE_URL}/forum/list_last10_forum`
-          : "/v2/forum/list_last10_forum";
+      const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/forum/list_last10_forum`
 
       try {
         try {

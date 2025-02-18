@@ -28,9 +28,7 @@ const LevelThree = ({userId, userToken}) => {
         setLoading(true)
 
         try {
-            const apiUrl =  process.env.NODE_ENV === 'production' 
-            ?`${import.meta.env.VITE_API_BASE_URL}/kyc/level_three`
-            :'/v2/kyc/level_three'
+            const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/kyc/level_three`
 
             const response = await axios.post(apiUrl, formData)
             console.log("Submission successful:", response.data);

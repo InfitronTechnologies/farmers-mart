@@ -7,7 +7,7 @@ const ProductCard = ({ product }) => {
     <div>
       <div className="relative">
         <img
-          src={`${import.meta.env.VITE_API_BASE_URL}/images/product/${product.product_image_f}`}
+          src={`https://farmersmart.com.ng/images/product/${product.product_image_f}`}
           alt={product.product_name}
           className="relative w-full h-40 object-cover mb-4 rounded-t-2xl"
         />

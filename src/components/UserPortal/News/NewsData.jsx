@@ -28,9 +28,7 @@ const NewsData = () => {
     setError(null);
 
     const handleAllComments = async () => {
-        const url  = process.env.NODE_ENV === "production"
-        ? `${import.meta.env.VITE_API_BASE_URL}/news_data/select_by_news_id?id=${newsId}`
-        : `/v2/news_data/select_by_news_id?id=${newsId}`;
+        const url  = `${import.meta.env.VITE_API_BASE_URL}/news_data/select_by_news_id?id=${newsId}`
       
         try {
             const response = await axios.get(url);
@@ -73,9 +71,7 @@ const NewsData = () => {
       return;
     }
 
-    const commentUrl = process.env.NODE_ENV === 'production'
-      ? `${import.meta.env.VITE_API_BASE_URL}/news_data/create_news_data`
-      : '/v2/news_data/create_news_data';
+    const commentUrl = `${import.meta.env.VITE_API_BASE_URL}/news_data/create_news_data`
 
     setLoading(true);
     setError(null);

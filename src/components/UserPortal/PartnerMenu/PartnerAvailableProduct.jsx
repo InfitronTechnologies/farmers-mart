@@ -17,10 +17,7 @@ function PartnerAvailableProduce() {
 
 console.log(partnerId)
 
-      const url =
-      process.env.NODE_ENV === 'production'
-      ? `${import.meta.env.VITE_API_BASE_URL}/product/select_by_partner_id_get_product?id=${partnerId}`
-      : `/v2/product/select_by_partner_id_get_product?id=${partnerId}`;
+      const url =`${import.meta.env.VITE_API_BASE_URL}/product/select_by_partner_id_get_product?id=${partnerId}`
       
       try {
         const response = await axios.get(url);

@@ -11,10 +11,7 @@ const AllNews = () => {
     const fetchnewss = async () => {
       setLoading(true);
       setError(null);
-      const apiUrl =
-        process.env.NODE_ENV === "production"
-          ? `${import.meta.env.VITE_API_BASE_URL}/news/list_last10_news`
-          : "/v2/news/list_last10_news";
+      const apiUrl =`${import.meta.env.VITE_API_BASE_URL}/news/list_last10_news`
 
       const fetchednewss = [];
       try {

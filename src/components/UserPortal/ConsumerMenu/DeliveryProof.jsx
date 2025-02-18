@@ -37,9 +37,7 @@ const DeliveryProof = ({ onSubmit }) => {
 
   useEffect(() => {
     const getStatus = async () => {
-      const url = process.env.NODE_ENV === "production"
-      ? `${import.meta.env.VITE_API_BASE_URL}/select_list_status`
-      : `/v2/select_list_status`;
+      const url = `${import.meta.env.VITE_API_BASE_URL}/select_list_status`
 
       try {
         const response = await axios.get(url);
@@ -52,9 +50,7 @@ const DeliveryProof = ({ onSubmit }) => {
     getStatus()
 
     const fetchStates = async () => {
-      const statesUrl = process.env.NODE_ENV === "production"
-      ? `${import.meta.env.VITE_API_BASE_URL}/select_list_state`
-      : `/v2/select_list_state`;
+      const statesUrl = `${import.meta.env.VITE_API_BASE_URL}/select_list_state`
 
       try {
         const response = await axios.get(statesUrl);
@@ -83,9 +79,7 @@ const DeliveryProof = ({ onSubmit }) => {
     setLoading(true)
 
     try {
-      const uploadUrl = process.env.NODE_ENV === "production" 
-      ? `${import.meta.env.VITE_API_BASE_URL}/uploadimage`
-      : "/v2/uploadimage";
+      const uploadUrl =`${import.meta.env.VITE_API_BASE_URL}/uploadimage`
   
       const uploadData = new FormData();        
         uploadData.append("pod_img", image)
@@ -103,9 +97,7 @@ const DeliveryProof = ({ onSubmit }) => {
         pod_img: image.name
       }
 
-      const url = process.env.NODE_ENV === "production"
-      ? `${import.meta.env.VITE_API_BASE_URL}/pod/create_pod`
-      : "/v2/pod/create_pod";
+      const url =  `${import.meta.env.VITE_API_BASE_URL}/pod/create_pod`
 
       const response = await axios.post(url, proofForm)
       toast.success("Proof of Delivery is Successful", { // Display a success toast

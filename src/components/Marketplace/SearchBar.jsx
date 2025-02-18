@@ -18,9 +18,7 @@ const SearchBar = ({ setSearchResults }) => {
     if (!query.trim()) return; // Prevent empty search
 
     // Perform search logic here based on query
-    const url = process.env.NODE_ENV === 'production' 
-    ? `${import.meta.env.VITE_API_BASE_URL}/product/search_product_post`
-    : '/v2/product/search_product_post'
+    const url = `${import.meta.env.VITE_API_BASE_URL}/product/search_product_post`
 
     setLoading(true);
 

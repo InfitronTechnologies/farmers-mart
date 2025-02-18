@@ -57,9 +57,7 @@ const NewsSubcategory = () => {
 
     try {
       // Step 1: Upload the image
-      const uploadUrl = process.env.NODE_ENV === 'production'
-          ? `${import.meta.env.VITE_API_BASE_URL}/uploadimage`
-          : '/v2/uploadimage';
+      const uploadUrl = `${import.meta.env.VITE_API_BASE_URL}/uploadimage`
 
       const uploadData = new FormData();
       uploadData.append("upimg", picture);
@@ -87,9 +85,7 @@ const NewsSubcategory = () => {
       }
 
       // Step 2: Submit news Details    
-      const apiUrl = process.env.NODE_ENV === 'production'
-      ? `${import.meta.env.VITE_API_BASE_URL}/news/create_news`
-      : '/v2/news/create_news'
+      const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/news/create_news`
 
       console.log(updatednewsData)
       

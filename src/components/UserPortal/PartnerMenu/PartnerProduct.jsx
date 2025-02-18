@@ -56,9 +56,7 @@ function PartnerProduct() {
 
   useEffect(() => {
     const fetchProductType = async () => {
-      const url = process.env.NODE_ENV === 'production' 
-      ? `${import.meta.env.VITE_API_BASE_URL}/list_all_product_type`
-      : '/v2/list_all_product_type'
+      const url = `${import.meta.env.VITE_API_BASE_URL}/list_all_product_type`
 
       try {
         const response = await axios.get(url);
@@ -70,10 +68,7 @@ function PartnerProduct() {
     fetchProductType()
 
     const fetchCategories = async () => {
-      const categoriesUrl = process.env.NODE_ENV === 'production' 
-      ? `${import.meta.env.VITE_API_BASE_URL}/category/list_all_category`
-      : '/v2/category/list_all_category'
-
+      const categoriesUrl = `${import.meta.env.VITE_API_BASE_URL}/category/list_all_category`
       try {
         const response = await axios.get(categoriesUrl);
         setCategories(response.data.data); 
@@ -88,10 +83,7 @@ function PartnerProduct() {
   useEffect(() => {
     const fetchSubcategories = async () => {
       if (newProduct.category_id) {
-        const subcategoriesUrl =
-          process.env.NODE_ENV === "production"
-            ? `${import.meta.env.VITE_API_BASE_URL}/subcategory/select_by_cat_subcat?id=${newProduct.category_id}`
-            : `/v2/subcategory/select_by_cat_subcat?id=${newProduct.category_id}`;
+        const subcategoriesUrl =`${import.meta.env.VITE_API_BASE_URL}/subcategory/select_by_cat_subcat?id=${newProduct.category_id}`
   
         try {
           const response = await axios.get(subcategoriesUrl);
@@ -145,9 +137,7 @@ function PartnerProduct() {
 
       try {
         // 1. Upload Images
-        const uploadUrl = process.env.NODE_ENV === "production" 
-        ? `${import.meta.env.VITE_API_BASE_URL}/uploadimage`
-        : "/v2/uploadimage";
+        const uploadUrl = `${import.meta.env.VITE_API_BASE_URL}/uploadimage`
     
         const uploadData = new FormData();        
           uploadData.append("pf_img", pictures.front); // Front image
@@ -172,18 +162,14 @@ function PartnerProduct() {
     
 
         // 2. Create the Product
-        const createProductUrl = process.env.NODE_ENV === "production"
-        ? `${import.meta.env.VITE_API_BASE_URL}/product/create_partner_product`
-        : "/v2/product/create_partner_product";
+        const createProductUrl =`${import.meta.env.VITE_API_BASE_URL}/product/create_partner_product`
 
         console.log(updatedProduct)
         const response = await axios.post(createProductUrl, updatedProduct);
         console.log(response.data)
         const productId =  response.data.product_id
         try {
-          const itemUrl = process.env.NODE_ENV === "production"
-          ? `${import.meta.env.VITE_API_BASE_URL}/product_item/create_product_items`
-          : "/v2/product_item/create_product_items";        
+          const itemUrl = `${import.meta.env.VITE_API_BASE_URL}/product_item/create_product_items`
   
           async function sendItemsOneByOne(productItems, itemUrl, productId) {
             for (const item of productItems) {

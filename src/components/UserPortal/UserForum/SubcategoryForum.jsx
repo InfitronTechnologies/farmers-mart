@@ -56,9 +56,7 @@ const SubcategoryForum = () => {
 
     try {
       // Step 1: Upload the image
-      const uploadUrl = process.env.NODE_ENV === 'production'
-          ? `${import.meta.env.VITE_API_BASE_URL}/uploadimage`
-          : '/v2/uploadimage';
+      const uploadUrl = `${import.meta.env.VITE_API_BASE_URL}/uploadimage`
 
       const uploadData = new FormData();
       uploadData.append("upimg", picture);
@@ -86,9 +84,7 @@ const SubcategoryForum = () => {
       }
 
       // Step 2: Submit Forum Details    
-      const apiUrl = process.env.NODE_ENV === 'production'
-      ? `${import.meta.env.VITE_API_BASE_URL}/forum/create_forum`
-      : '/v2/forum/create_forum'
+      const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/forum/create_forum`
 
       console.log(updatedForumData)
       

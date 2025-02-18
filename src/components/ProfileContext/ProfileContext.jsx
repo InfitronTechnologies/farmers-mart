@@ -6,6 +6,7 @@ const ProfileContext = createContext();
 export const useProfile = () => useContext(ProfileContext);
 
 export const ProfileProvider = ({ children }) => {
+  const navigate = useNavigate()
 
   // State for profile data and additional user info
   const [selectedProfiles, setSelectedProfiles] = useState(() => {
@@ -65,7 +66,6 @@ export const ProfileProvider = ({ children }) => {
   };    
 
   const logout = () => {
-    const navigate = useNavigate()
     sessionStorage.clear();
     setUserToken(null);
     setUserId(null);

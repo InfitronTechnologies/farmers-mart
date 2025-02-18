@@ -17,10 +17,7 @@ const ForumCategories = () => {
 
   // Fetch all categories on component mount
   useEffect(() => {
-    const apiUrl =
-      process.env.NODE_ENV === "production"
-        ? `${import.meta.env.VITE_API_BASE_URL}/category/list_all_category`
-        : "/v2/category/list_all_category";
+    const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/category/list_all_category`
 
     axios
       .get(apiUrl)
@@ -35,10 +32,7 @@ const ForumCategories = () => {
   // Fetch subcategories when a category is selected
   const fetchSubcategories = (categoryId) => {
     setLoadingSubcategories(true);
-    const apiUrl =
-      process.env.NODE_ENV === "production"
-        ? `${import.meta.env.VITE_API_BASE_URL}/subcategory/select_by_cat_subcat?id=${categoryId}`
-        : `/v2/subcategory/select_by_cat_subcat?id=${categoryId}`;
+    const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/subcategory/select_by_cat_subcat?id=${categoryId}`
 
     axios
       .get(apiUrl)

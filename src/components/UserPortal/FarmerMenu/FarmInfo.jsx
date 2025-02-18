@@ -80,9 +80,7 @@ function FarmInfo() {
     }
 
     const getFarmerId = async () => {
-      const farmerIdUrl = process.env.NODE_ENV === "production"
-      ? `${import.meta.env.VITE_API_BASE_URL}/farmer/select_farmer_post_user_id`
-      : "/v2/farmer/select_farmer_post_user_id"
+      const farmerIdUrl =  `${import.meta.env.VITE_API_BASE_URL}/farmer/select_farmer_post_user_id`
       
       try {
         const response = await axios.post(farmerIdUrl, {
@@ -97,9 +95,7 @@ function FarmInfo() {
 
         //Get the list of farms registered under this particular farmer
         const fetchFarms = async () => {
-          const farmUrl = process.env.NODE_ENV === 'production' 
-          ? `${import.meta.env.VITE_API_BASE_URL}/farm/select_farm_by_farmer_id`
-          : '/v2/farm/select_farm_by_farmer_id';
+          const farmUrl = `${import.meta.env.VITE_API_BASE_URL}/farm/select_farm_by_farmer_id`
 
     
           try {
@@ -121,9 +117,7 @@ function FarmInfo() {
  
 
     const fetchCountries = async () => {
-      const countriesUrl = process.env.NODE_ENV === 'production' 
-      ? `${import.meta.env.VITE_API_BASE_URL}/select_list_country`
-      : '/v2/select_list_country';
+      const countriesUrl = `${import.meta.env.VITE_API_BASE_URL}/select_list_country`
 
       try {
         const response = await axios.get(countriesUrl);
@@ -135,9 +129,7 @@ function FarmInfo() {
     fetchCountries();
 
     const farmlandType = async () => {
-      const landUrl = process.env.NODE_ENV === 'production' 
-      ? `${import.meta.env.VITE_API_BASE_URL}/list_all_farm_land_type`
-      : '/v2/list_all_farm_land_type';
+      const landUrl = `${import.meta.env.VITE_API_BASE_URL}/list_all_farm_land_type`
 
       try {
         const response =  await axios.get(landUrl)
@@ -153,9 +145,7 @@ function FarmInfo() {
   useEffect(() => {
     const fetchStates = async () => {
       if (newFarm.country) {
-        const statesUrl = process.env.NODE_ENV === "production"
-            ? `${import.meta.env.VITE_API_BASE_URL}/select_list_state_by_country_id?id=${newFarm.country}`
-            : `/v2/select_list_state_by_country_id?id=${newFarm.country}`;
+        const statesUrl = `${import.meta.env.VITE_API_BASE_URL}/select_list_state_by_country_id?id=${newFarm.country}`
   
         try {
           const response = await axios.get(statesUrl);
@@ -216,9 +206,7 @@ function FarmInfo() {
 
       try {
         // Step 1: Upload the image
-        const uploadUrl = process.env.NODE_ENV === 'production'
-            ? `${import.meta.env.VITE_API_BASE_URL}/uploadimage`
-            : '/v2/uploadimage';
+        const uploadUrl = `${import.meta.env.VITE_API_BASE_URL}/uploadimage`
 
         const uploadData = new FormData();
         uploadData.append("f_img", picture);
@@ -237,9 +225,8 @@ function FarmInfo() {
         };
 
         // Step 2: Submit Farm Information
-        const url = process.env.NODE_ENV === 'production'
-            ? `${import.meta.env.VITE_API_BASE_URL}/farm/create_farm`
-            : '/v2/farm/create_farm';
+        const url = `${import.meta.env.VITE_API_BASE_URL}/farm/create_farm`
+
         const response = await axios.post(url, updatedFarm);
         toast.success("Farm Created!", { // Display a success toast
           position: "top-right", // Customize position

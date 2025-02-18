@@ -8,10 +8,7 @@ const FarmerProductDetails = () => {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const url =
-        process.env.NODE_ENV === "production"
-          ? `${import.meta.env.VITE_API_BASE_URL}/product/select_by_id_get_product?id=${id}`
-          : `/v2/product/select_by_id_get_product?id=${id}`;
+      const url = `${import.meta.env.VITE_API_BASE_URL}/product/select_by_id_get_product?id=${id}`
 
       try {
         const response = await axios.get(url);

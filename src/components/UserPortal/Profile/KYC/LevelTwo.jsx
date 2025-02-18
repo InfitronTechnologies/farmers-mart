@@ -30,9 +30,7 @@ const LevelTwo = ({userId, userToken}) => {
   });
 
   useEffect(() => {
-      const countriesUrl = process.env.NODE_ENV === 'production' 
-      ? `${import.meta.env.VITE_API_BASE_URL}/select_list_country`
-      : '/v2/select_list_country';
+      const countriesUrl = `${import.meta.env.VITE_API_BASE_URL}/select_list_country`     
 
       const fetchCountries = async () => {
 
@@ -57,10 +55,7 @@ const LevelTwo = ({userId, userToken}) => {
   useEffect(() => {
     const fetchStates = async () => {
       if (formData.country_id) {
-        const statesUrl =
-          process.env.NODE_ENV === "production"
-            ? `${import.meta.env.VITE_API_BASE_URL}/select_list_state_by_country_id?id=${formData.country_id}`
-            : `/v2/select_list_state_by_country_id?id=${formData.country_id}`;
+        const statesUrl = `${import.meta.env.VITE_API_BASE_URL}/select_list_state_by_country_id?id=${formData.country_id}`
   
         try {
           const response = await axios.get(statesUrl);
@@ -81,9 +76,7 @@ const LevelTwo = ({userId, userToken}) => {
     setLoading(true)
 
     try {
-      const apiUrl = process.env.NODE_ENV === 'production'
-          ? `${import.meta.env.VITE_API_BASE_URL}/kyc/level_two`
-          : '/v2/kyc/level_two';
+      const apiUrl =  `${import.meta.env.VITE_API_BASE_URL}/kyc/level_two`
 
       const response = await axios.post( apiUrl, formData);
       

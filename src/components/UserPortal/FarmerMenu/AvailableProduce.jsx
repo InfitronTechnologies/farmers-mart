@@ -15,10 +15,7 @@ function AvailableProduce() {
       setLoading(true); // Set loading to true before fetching
       setError(null);    // Clear any previous errors
 
-      const url =
-      process.env.NODE_ENV === 'production'
-        ? `${import.meta.env.VITE_API_BASE_URL}/product/select_by_farmer_id_get_product?id=${farmerId}`
-        : `/v2/product/select_by_farmer_id_get_product?id=${farmerId}`;
+      const url = `${import.meta.env.VITE_API_BASE_URL}/product/select_by_farmer_id_get_product?id=${farmerId}`
 
       try {
         const response = await axios.get(url);

@@ -20,9 +20,7 @@ const LevelFour = ({userId, userToken}) => {
     })
 
     useEffect(() => {
-        const bankUrl =  process.env.NODE_ENV === 'production' 
-        ?`${import.meta.env.VITE_API_BASE_URL}/list_all_bank`
-        :'/v2/list_all_bank'
+        const bankUrl =  `${import.meta.env.VITE_API_BASE_URL}/list_all_bank`
 
         const getBanks = async () => {
             try {
@@ -57,9 +55,7 @@ const LevelFour = ({userId, userToken}) => {
             return;
         }
 
-        const apiUrl =  process.env.NODE_ENV === 'production' 
-        ?`${import.meta.env.VITE_API_BASE_URL}/kyc/level_four`
-        :'/v2/kyc/level_four'
+        const apiUrl =  `${import.meta.env.VITE_API_BASE_URL}/kyc/level_four`
 
         try {
             const response = await axios.post(apiUrl, formData)

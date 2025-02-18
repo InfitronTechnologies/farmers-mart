@@ -27,9 +27,7 @@ const LevelOne = ({ userId, userToken, goToNextLevel }) => {
 
     try {
       // Step 1: Upload the image
-      const uploadUrl = process.env.NODE_ENV === 'production'
-          ? `${import.meta.env.VITE_API_BASE_URL}/uploadimage`
-          : '/v2/uploadimage';
+      const uploadUrl = `${import.meta.env.VITE_API_BASE_URL}/uploadimage`
 
       const uploadData = new FormData();
       uploadData.append("upimg", picture);
@@ -47,9 +45,7 @@ const LevelOne = ({ userId, userToken, goToNextLevel }) => {
       }
 
       // Step 2: Submit KYC Level One
-      const kycUrl = process.env.NODE_ENV === 'production'
-          ? `${import.meta.env.VITE_API_BASE_URL}/kyc/level_one`
-          : '/v2/kyc/level_one';
+      const kycUrl =  `${import.meta.env.VITE_API_BASE_URL}/kyc/level_one`
 
       const kycResponse = await axios.post(kycUrl, {
           users_id: userId,

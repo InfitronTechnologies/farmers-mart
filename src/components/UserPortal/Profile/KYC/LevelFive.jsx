@@ -23,9 +23,7 @@ const LevelFive = ({userId, userToken}) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const apiUrl =  process.env.NODE_ENV === 'production' 
-        ?`${import.meta.env.VITE_API_BASE_URL}/kyc/level_five`
-        :'/v2/kyc/level_five'
+        const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/kyc/level_five`
 
         try {
             const response = await axios.post(apiUrl, formData)

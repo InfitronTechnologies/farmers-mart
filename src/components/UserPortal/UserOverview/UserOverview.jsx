@@ -18,9 +18,7 @@ const UserOverview = () => {
 
   useEffect(() => {
       const getWallet = async () => {
-          const walletUrl = process.env.NODE_ENV === "production"
-          ? `${API_BASE_URL}/wallet/select_wallet_by_user_id?users_id=${userId}&users_token=${userToken}`
-          : `/v2/wallet/select_wallet_by_user_id?users_id=${userId}&users_token=${userToken}`;
+          const walletUrl = `${API_BASE_URL}/wallet/select_wallet_by_user_id?users_id=${userId}&users_token=${userToken}`
           
           try {
               const response = await axios.get(walletUrl)
@@ -35,9 +33,7 @@ const UserOverview = () => {
 
   useEffect(() => {
       const getWalletTransactions = async () => {
-          const transactionsUrl = process.env.NODE_ENV === "production"
-          ? `${API_BASE_URL}/transaction/select_by_wallet_id?id=${walletData.id}&users_id=${userId}&users_token=${userToken}`
-          : `/v2/transaction/select_by_wallet_id?id=${walletData.id}&users_id=${userId}&users_token=${userToken}`;
+          const transactionsUrl = `${API_BASE_URL}/transaction/select_by_wallet_id?id=${walletData.id}&users_id=${userId}&users_token=${userToken}`
 
           try {
               const response = await axios.get(transactionsUrl)
@@ -54,7 +50,7 @@ const UserOverview = () => {
     <div className="p-4">
       <ProfileSummary 
         userName= {` ${userFirstName} ${userLastName}`} 
-        userImage={`${API_BASE_URL}/images/users/profile/${userImage}`} 
+        userImage={`https://farmersmart.com.ng/images/users/profile/${userImage}`} 
       />
       {(kycLevel < 2) &&(
         <div className="flex flex-col items-center justify-center h-auto mt-16">

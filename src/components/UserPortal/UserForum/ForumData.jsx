@@ -28,9 +28,7 @@ const ForumData = () => {
     setError(null);
 
     const handleAllComments = async () => {
-        const url  = process.env.NODE_ENV === "production"
-        ? `${import.meta.env.VITE_API_BASE_URL}/forum_data/select_by_forum_id?id=${forumId}`
-        : `/v2/forum_data/select_by_forum_id?id=${forumId}`;
+        const url  = `${import.meta.env.VITE_API_BASE_URL}/forum_data/select_by_forum_id?id=${forumId}`
       
         try {
             const response = await axios.get(url);
@@ -73,9 +71,7 @@ const ForumData = () => {
       return;
     }
 
-    const commentUrl = process.env.NODE_ENV === 'production'
-      ? `${import.meta.env.VITE_API_BASE_URL}/forum_data/create_forum_data`
-      : '/v2/forum_data/create_forum_data';
+    const commentUrl = `${import.meta.env.VITE_API_BASE_URL}/forum_data/create_forum_data`
 
     setLoading(true);
     setError(null);
