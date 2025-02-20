@@ -39,7 +39,7 @@ const ProfileSelection = ({ onNext }) => {
       partner: String(selectedProfiles.includes('Partner') ? 1 : 0),
     };
 
-    const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/account/create_account_profile`
+    const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/account/create_acc_p`
 
     try {
       console.log(profileData)
