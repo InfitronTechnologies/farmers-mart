@@ -31,6 +31,7 @@ function PasswordReset() {
     const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/account/reset_password`
 
     try {
+      console.log(requestData)
       const response = await axios.post(apiUrl, requestData);
       
       if (response.data.status === 1) {
