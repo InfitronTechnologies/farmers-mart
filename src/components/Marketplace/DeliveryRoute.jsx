@@ -56,7 +56,7 @@ const DeliveryRoute = () => {
 
   const handleSubmit = async () => {
     const deliveryForm = { ...formData };
-         const url =`${import.meta.env.VITE_API_BASE_URL}/router/deli_move`
+         const url =`${import.meta.env.VITE_API_BASE_URL}/rdeli_move`
   
     try {
       console.log(deliveryForm)
