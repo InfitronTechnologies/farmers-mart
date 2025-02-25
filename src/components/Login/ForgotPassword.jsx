@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const ForgotPassword = () => {
   const [step, setStep] = useState(1); // Step 1: Email, Step 2: OTP, Step 3: New Password
@@ -13,8 +14,10 @@ const ForgotPassword = () => {
   const [usersId, setUsersId] = useState("");
   const [token, setToken] = useState("");
   const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(false);
 
-  const apiUrl =`${import.meta.env.VITE_API_BASE_URL}/account`
+
+  const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/account`
 
   // Step 1: Send OTP to Email
   const handleSendOtp = async () => {
@@ -39,7 +42,6 @@ const ForgotPassword = () => {
       const response = await axios.post(`${apiUrl}/select_by_forget_otp`, { otp });
 
       if (response.status === 200) {
-        console.log(response)
         toast.success("OTP verified! Set your new password.");
         setToken(response.data.data.token);
         setUsersId(response.data.data.users_id);
@@ -68,7 +70,6 @@ const ForgotPassword = () => {
         users_id: usersId,
       });
 
-      console.log(response)
 
       if (response.status === 200) {
         toast.success("Password reset successfully! Redirecting...");
@@ -135,23 +136,42 @@ const ForgotPassword = () => {
         {step === 3 && (
           <div>
             <label className="block mb-2 text-gray-600">New Password</label>
-            <input
-              type="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
-              placeholder="Enter new password"
-              required
-            />
+            <div className="relative">
+              <input
+                type={isVisible ? "text" : "password"}
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+                placeholder="Enter new password"
+                required
+              />
+              <span
+                className="absolute inset-y-0 right-1 top-2"
+                onClick={() => setIsVisible(!isVisible)}
+              >
+                {isVisible ? <VisibilityOff className='text-[#6D6969] font-thin text-sm' /> : <Visibility className='text-[#6D6969] font-thin text-sm' />}
+              </span>
+            </div>
+
             <label className="block mt-4 mb-2 text-gray-600">Confirm New Password</label>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
-              placeholder="Confirm new password"
-              required
-            />
+            <div className="relative">
+              <input
+                type={isVisible ? "text" : "password"}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+                placeholder="Confirm new password"
+                required
+              />
+              <span
+                className="absolute inset-y-0 right-1 top-2"
+                onClick={() => setIsVisible(!isVisible)}
+              >
+                {isVisible ? <VisibilityOff className='text-[#6D6969] font-thin text-sm' /> : <Visibility className='text-[#6D6969] font-thin text-sm' />}
+              </span>
+            </div>
+
+
             <button
               onClick={handleResetPassword}
               className="mt-4 w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"

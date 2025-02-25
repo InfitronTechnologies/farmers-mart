@@ -86,7 +86,6 @@ const DeliveryProof = ({ onSubmit }) => {
 
         try {
           const response = await axios.post(uploadUrl, uploadData)
-          console.log(response.data)
         } catch (error) {
           console.error("Error uploading image:", error.response?.data || error.message);
         }
@@ -113,7 +112,6 @@ const DeliveryProof = ({ onSubmit }) => {
         navigate("/user/wallet")
       }, 2500)      
     } catch (error) {
-      console.log("Errors must always happen", error)
     }finally{
       setLoading(false)
     }

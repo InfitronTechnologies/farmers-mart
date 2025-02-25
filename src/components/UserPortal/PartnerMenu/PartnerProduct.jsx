@@ -88,7 +88,6 @@ function PartnerProduct() {
         try {
           const response = await axios.get(subcategoriesUrl);
           setSubcategories(response.data.data);
-          // console.log(response.data.data);
         } catch (error) {
           console.error("Error fetching Subcategories:", error);
         }
@@ -147,7 +146,6 @@ function PartnerProduct() {
 
           try {
             const response = await axios.post(uploadUrl, uploadData)
-            console.log(response.data)
           } catch (error) {
             console.error("Error uploading image:", error.response?.data || error.message);
           }
@@ -164,9 +162,7 @@ function PartnerProduct() {
         // 2. Create the Product
         const createProductUrl =`${import.meta.env.VITE_API_BASE_URL}/product/create_partner_product`
 
-        console.log(updatedProduct)
         const response = await axios.post(createProductUrl, updatedProduct);
-        console.log(response.data)
         const productId =  response.data.product_id
         try {
           const itemUrl = `${import.meta.env.VITE_API_BASE_URL}/product_item/create_product_items`
@@ -181,7 +177,6 @@ function PartnerProduct() {
           
               try {
                 const response = await axios.post(itemUrl, data);
-                console.log("Item sent successfully:", response.data);
               } catch (error) {
                 console.error("Error sending item:", error);
               }

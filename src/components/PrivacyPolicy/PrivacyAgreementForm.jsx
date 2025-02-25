@@ -12,7 +12,6 @@ const PrivacyAgreementForm = () => {
       return;
     }
     navigate('/login')
-    console.log("Form submitted!");
   };
 
   return (

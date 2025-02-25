@@ -27,10 +27,8 @@ const LevelFive = ({userId, userToken}) => {
 
         try {
             const response = await axios.post(apiUrl, formData)
-            console.log("Submission successful:", response.data);
             
             if (response.data.status === 1) {
-                console.log(response)
                 toast.success("KYC Level 5 successfully updated!", { // Display a success toast
                     position: "top-right", // Customize position
                     autoClose: 2000, 

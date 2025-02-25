@@ -11,7 +11,6 @@ const KYC = () => {
   const { userId, userToken, kycLevel } = useProfile(); // Get user data from context
   const navigate = useNavigate();
 
-  console.log(kycLevel)
   
   // Handle progression to the next level (or success page)
   return (

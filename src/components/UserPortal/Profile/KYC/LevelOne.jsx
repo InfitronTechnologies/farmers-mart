@@ -38,7 +38,6 @@ const LevelOne = ({ userId, userToken, goToNextLevel }) => {
           'Content-Type': 'multipart/form-data',
           },
         });
-        console.log(uploadResponse.data); // Handle response
       }
       catch (error) {
         console.error("Error uploading image:", error.response?.data || error.message);
@@ -55,7 +54,6 @@ const LevelOne = ({ userId, userToken, goToNextLevel }) => {
 
       // Check if KYC submission was successful
       if (kycResponse.data.status === 1) {
-          console.log(kycResponse)
           toast.success("KYC Level 1 updated", { // Display a success toast
             position: "top-right", // Customize position
             autoClose: 2000, 

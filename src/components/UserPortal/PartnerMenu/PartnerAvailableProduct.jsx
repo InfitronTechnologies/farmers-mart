@@ -14,9 +14,6 @@ function PartnerAvailableProduce() {
     const fetchProducts = async () => {
       setLoading(true); // Set loading to true before fetching
       setError(null);    // Clear any previous errors
-
-console.log(partnerId)
-
       const url =`${import.meta.env.VITE_API_BASE_URL}/product/select_by_partner_id_get_product?id=${partnerId}`
       
       try {

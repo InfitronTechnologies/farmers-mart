@@ -31,7 +31,6 @@ const LevelThree = ({userId, userToken}) => {
             const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/kyc/level_three`
 
             const response = await axios.post(apiUrl, formData)
-            console.log("Submission successful:", response.data);
 
             if (response.data.status === 1) {
                 toast.success("KYC Level 3 successfully updated!", { // Display a success toast

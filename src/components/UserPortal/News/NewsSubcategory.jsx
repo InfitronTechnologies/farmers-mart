@@ -45,7 +45,6 @@ const NewsSubcategory = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(picture)
 
     if (!picture) {
       setError("Please upload a picture.");
@@ -73,7 +72,6 @@ const NewsSubcategory = () => {
             'Content-Type': 'multipart/form-data',
             },
         });
-        console.log(uploadResponse.data); // Handle response
       }
       catch (error) {
         console.error("Error uploading image:", error.response?.data || error.message);
@@ -87,7 +85,6 @@ const NewsSubcategory = () => {
       // Step 2: Submit news Details    
       const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/news/create_news`
 
-      console.log(updatednewsData)
       
       try{
         const response = await axios.post (apiUrl, updatednewsData, {
@@ -98,7 +95,6 @@ const NewsSubcategory = () => {
             'charset':'UFT-8'
           }
         })
-        console.log(response.data)
         navigate('/user/news')
       }catch(error){
         console.error("Error creating news:", error.response.data || error.message)

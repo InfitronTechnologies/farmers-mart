@@ -81,7 +81,6 @@ const CheckoutPage = () => {
     }, [formData]);
 
     const handleSuccess = async (reference) => {
-        console.log("Payment successful!", reference);
         // Proceed to submit form data to backend
         const checkoutData = {
             ...formData,
@@ -91,9 +90,7 @@ const CheckoutPage = () => {
         const url = `${import.meta.env.VITE_API_BASE_URL}/checkout/create_checkout`
 
         try {
-            console.log("Submitting checkout data:", checkoutData);
             const response = await axios.post(url, checkoutData);
-            console.log("Checkout response:", response.data);
         } catch (error) {
             console.error("Error submitting checkout data:", error);
         }

@@ -27,7 +27,6 @@ const ProductDetails = () => {
         const response = await axios.get(url);
         const productData = response.data.data;
         setProduct(productData);
-        console.log(productData);
         setMinQty(Number(productData.min_qty));
         setMaxQty(Number(productData.max_qty));
         setUnits(Number(productData.units))

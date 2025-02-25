@@ -7,7 +7,7 @@ import axios from "axios";
 
 const DeliveryRoute = () => {
   const location = useLocation();
-  const navigate = useNavigate(); // Use `useNavigate` for programmatic navigation
+  const navigate = useNavigate();
   const { product, quantity, id } = location.state || {}; // Safely access state
   const { userId, userToken } = useProfile();
   const [deliveryRoute, setDeliveryRoute] = useState([]);

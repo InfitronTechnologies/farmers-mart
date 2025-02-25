@@ -9,7 +9,6 @@ const PaystackPayment = ({ amount, email, metadata, onSuccess, onClose }) => {
     const publicKey = import.meta.env.VITE_PAYSTACK_SECRET_KEY; // Accessing env variable in Vite
 
     const handlePaystackSuccess = (reference) => {
-        console.log(reference);
         if (onSuccess) {
             onSuccess(reference);
             toast.success("Payment successfully made!", { // Display a success toast
@@ -28,7 +27,6 @@ const PaystackPayment = ({ amount, email, metadata, onSuccess, onClose }) => {
     };
 
     const handlePaystackClose = () => {
-        console.log('Payment closed');
         if (onClose) {
             setTimeout(() => {
                 navigate("/marketplace")

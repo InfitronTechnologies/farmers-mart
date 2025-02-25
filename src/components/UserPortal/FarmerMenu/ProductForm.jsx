@@ -79,7 +79,6 @@ function ProductForm() {
         try {
           const response = await axios.get(subcategoriesUrl);
           setSubcategories(response.data.data);
-          // console.log(response.data.data);
         } catch (error) {
           console.error("Error fetching Subcategories:", error);
         }
@@ -135,7 +134,6 @@ function ProductForm() {
 
       try {
         const response = await axios.post(uploadUrl, uploadData)
-        console.log(response.data)
       } catch (error) {
         console.error("Error uploading image:", error.response?.data || error.message);
       }
@@ -166,7 +164,6 @@ function ProductForm() {
 
             try {
               const response = await axios.post(itemUrl, data);
-              console.log("Item sent successfully:", response.data);
             } catch (error) {
               console.error("Error sending item:", error);
             }

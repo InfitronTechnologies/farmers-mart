@@ -131,8 +131,6 @@ const Signup = () => {
 
     setLoading(true);
     try {
-      console.log(apiUrl)
-      console.log(formData)
       const response = await axios.post(apiUrl, formData);
 
       if (response.data.status == 0) {
@@ -168,7 +166,6 @@ const Signup = () => {
 
     try {
       const response = await axios.post(apiUrl, { code: otpCode.join('') });
-      console.log(response.data)
       if (response.status === 200) {
         setSuccess(true);
         if (response.data.status === 1) {

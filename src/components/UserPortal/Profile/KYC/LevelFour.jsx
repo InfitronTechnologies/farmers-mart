@@ -25,7 +25,6 @@ const LevelFour = ({userId, userToken}) => {
         const getBanks = async () => {
             try {
                 const response = await axios.get(bankUrl)
-                console.log(response.data.data)            
                 setBanks(response.data.data)            
             } catch (error) {
                 console.error(error)
@@ -59,10 +58,8 @@ const LevelFour = ({userId, userToken}) => {
 
         try {
             const response = await axios.post(apiUrl, formData)
-            console.log("Submission successful:", response.data);
 
             if (response.data.status === 1) {
-                console.log(response)
                 toast.success("KYC Level 4 successfully updated!", { // Display a success toast
                     position: "top-right", // Customize position
                     autoClose: 2000, 

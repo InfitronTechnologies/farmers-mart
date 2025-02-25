@@ -22,7 +22,6 @@ const Wallet = () => {
 
             try {
                 const response = await axios.get(walletUrl)
-                console.log(response)
                 const walletDetails = response.data.data
                 setWalletData(walletDetails)
             } catch (error) {
@@ -39,7 +38,6 @@ const Wallet = () => {
             try {
                 const response = await axios.get(transactionsUrl)
                 setTransactions(response.data.data)
-                console.log(response.data.data)
             } catch (error) {
                 console.error(error, "Error getting transactions")
             }
@@ -57,9 +55,7 @@ const Wallet = () => {
         if (walletData.balance > withdrawData.amount) {
             try {
                 const url = `${import.meta.env.VITE_API_BASE_URL}/wallet/create_wallet_withdrawal`
-
                 const response = await axios.post(url, withdrawData)
-                console.log(response.data)
             } catch (error) {
                 console.error("Error withdrawing:", error.response?.data || error.message);
             }

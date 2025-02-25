@@ -42,9 +42,7 @@ const ProfileSelection = ({ onNext }) => {
     const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/account/create_acc_p`
 
     try {
-      console.log(profileData)
       const response = await axios.post(apiUrl, profileData);
-      console.log(response.data)
 
       if (response.status === 200) {
         localStorage.setItem("selectedProfiles", JSON.stringify(selectedProfiles));

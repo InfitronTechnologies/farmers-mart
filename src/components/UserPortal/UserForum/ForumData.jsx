@@ -82,9 +82,7 @@ const ForumData = () => {
         users_id: userId,
         users_token: userToken
       });
-      
-      console.log(response.data);
-      
+            
       // Reset form after successful submission
       setForumComment({
         users_id: userId,

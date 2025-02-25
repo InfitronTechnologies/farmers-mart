@@ -44,7 +44,6 @@ const SubcategoryForum = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(picture)
 
     if (!picture) {
       setError("Please upload a picture.");
@@ -72,7 +71,6 @@ const SubcategoryForum = () => {
             'Content-Type': 'multipart/form-data',
             },
         });
-        console.log(uploadResponse.data); // Handle response
       }
       catch (error) {
         console.error("Error uploading image:", error.response?.data || error.message);
@@ -86,7 +84,6 @@ const SubcategoryForum = () => {
       // Step 2: Submit Forum Details    
       const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/forum/create_forum`
 
-      console.log(updatedForumData)
       
       try{
         const response = await axios.post (apiUrl, updatedForumData, {
@@ -97,7 +94,6 @@ const SubcategoryForum = () => {
             'charset':'UFT-8'
           }
         })
-        console.log(response.data)
         navigate('/user/forums')
       }catch(error){
         console.error("Error creating forum:", error.response.data || error.message)

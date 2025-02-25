@@ -33,7 +33,6 @@ const Forums = () => {
     fetchForums();
   }, []);
 
-  console.log(forums)
 
   if (loading) return <p>Loading forums...</p>;
   if (error) return <p className="text-red-500">{error}</p>;

@@ -38,7 +38,6 @@ const UserOverview = () => {
           try {
               const response = await axios.get(transactionsUrl)
               setTransactions(response.data.data)
-              console.log(response.data.data)
           } catch (error) {
               console.error(error, "Error getting transactions")
           }            

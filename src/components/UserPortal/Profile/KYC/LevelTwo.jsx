@@ -5,16 +5,16 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const LevelTwo = ({userId, userToken}) => {
+const LevelTwo = ({ userId, userToken }) => {
   const [countries, setCountries] = useState([])
   const [states, setStates] = useState([])
-  const {kycLevel, setKycLevel, logout} = useProfile()
+  const { kycLevel, setKycLevel, logout } = useProfile()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
-    users_id : userId,
-    users_token	: userToken,
+    users_id: userId,
+    users_token: userToken,
     fname: "",
     lname: "",
     oname: "",
@@ -30,60 +30,59 @@ const LevelTwo = ({userId, userToken}) => {
   });
 
   useEffect(() => {
-      const countriesUrl = `${import.meta.env.VITE_API_BASE_URL}/select_list_country`     
+    const countriesUrl = `${import.meta.env.VITE_API_BASE_URL}/select_list_country`
 
-      const fetchCountries = async () => {
+    const fetchCountries = async () => {
 
-        try {
-          const response = await axios.get(countriesUrl);
-          setCountries(response.data.data); // Assuming response contains array of states
-        } catch (error) {
-          console.error("Error fetching countries", error);
-        }
-      };
-      fetchCountries();
-    }, 
-  []);
+      try {
+        const response = await axios.get(countriesUrl);
+        setCountries(response.data.data); // Assuming response contains array of states
+      } catch (error) {
+        console.error("Error fetching countries", error);
+      }
+    };
+    fetchCountries();
+  },
+    []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
- 
-   // Fetch states when country_id changes
+
+  // Fetch states when country_id changes
   useEffect(() => {
     const fetchStates = async () => {
       if (formData.country_id) {
         const statesUrl = `${import.meta.env.VITE_API_BASE_URL}/select_list_state_by_country_id?id=${formData.country_id}`
-  
+
         try {
           const response = await axios.get(statesUrl);
           setStates(response.data.data);
-          // console.log(response.data.data);
         } catch (error) {
           console.error("Error fetching states:", error);
         }
       }
     };
-  
+
     fetchStates();
   }, [formData.country_id]); // Trigger this effect whenever country_id changes
-  
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true)
 
     try {
-      const apiUrl =  `${import.meta.env.VITE_API_BASE_URL}/kyc/level_two`
+      const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/kyc/level_two`
 
-      const response = await axios.post( apiUrl, formData);
-      
+      const response = await axios.post(apiUrl, formData);
+
       if (response.data.status === 1) {
         toast.success("KYC Level 2 successfully updated!", { // Display a success toast
           position: "top-right", // Customize position
-          autoClose: 2000, 
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -95,7 +94,7 @@ const LevelTwo = ({userId, userToken}) => {
           navigate("/login")
         }, 2500)
       } else {
-          throw new Error(response.data.message || 'KYC submission failed');
+        throw new Error(response.data.message || 'KYC submission failed');
       }
     } catch (err) {
       console.error(err);
@@ -203,9 +202,13 @@ const LevelTwo = ({userId, userToken}) => {
               required
             >
               <option value="">Select country</option>
-              {countries.map((country) => (
-              <option key={country.id} value={country.id}>{country.country_name}</option>
-              ))}
+              {countries
+                .filter((country) => country.id === '162') // Filter the countries array
+                .map((country) => (
+                  <option key={country.id} value={country.id}>
+                    {country.country_name}
+                  </option>
+                ))}
             </select>
           </div>
         </div>
@@ -223,7 +226,7 @@ const LevelTwo = ({userId, userToken}) => {
             >
               <option value="">Select state</option>
               {states.map((state) => (
-              <option key={state.id} value={state.id}>{state.state_name}</option>
+                <option key={state.id} value={state.id}>{state.state_name}</option>
               ))}
             </select>
           </div>

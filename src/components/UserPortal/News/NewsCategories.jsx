@@ -28,9 +28,7 @@ const NewsCategories = () => {
         console.error("Error fetching categories:", error);
       });
   }, []);
-
-  console.log(newsData)
-
+  
   // Fetch subcategories when a category is selected
   const fetchSubcategories = (categoryId) => {
     setLoadingSubcategories(true);
