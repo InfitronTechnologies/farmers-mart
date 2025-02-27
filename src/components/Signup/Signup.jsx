@@ -169,7 +169,11 @@ const Signup = () => {
       if (response.status === 200) {
         setSuccess(true);
         if (response.data.status === 1) {
-          navigate('/select_profile');
+          navigate('/select_profile', {
+            state:{
+              email:formData.users_email
+            }
+          });
         }
         setError('');
       }

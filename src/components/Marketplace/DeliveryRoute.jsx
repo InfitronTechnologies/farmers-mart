@@ -4,6 +4,18 @@ import Footer from "../LandingPage/Footer";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useProfile } from "../ProfileContext/ProfileContext";
 import axios from "axios";
+import {
+  setKey,
+  setDefaults,
+  setLanguage,
+  setRegion,
+  fromAddress,
+  fromLatLng,
+  fromPlaceId,
+  setLocationType,
+  geocode,
+  RequestType,
+} from "react-geocode";
 
 const DeliveryRoute = () => {
   const location = useLocation();
@@ -56,8 +68,16 @@ const DeliveryRoute = () => {
 
   const handleSubmit = async () => {
     const deliveryForm = { ...formData };
-         const url =`${import.meta.env.VITE_API_BASE_URL}/rdeli`
-  
+    const url = `${import.meta.env.VITE_API_BASE_URL}/rdeli`
+
+    setKey(import.meta.env.VITE_GOOGLE_MAPS_API_KEY)
+    geocode(RequestType.ADDRESS, deliveryForm.address)
+      .then(({ results }) => {
+        const { lat, lng } = results[0].geometry.location;
+        console.log(lat, lng);
+      })
+      .catch(console.error);
+
     try {
       console.log(deliveryForm)
       const response = await axios.post(url, deliveryForm);
@@ -68,11 +88,11 @@ const DeliveryRoute = () => {
       return { success: false }; // Return failure status
     }
   };
-  
+
   const handleNavigateToCheckout = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
     const { success, pricing, deliveryForm } = await handleSubmit(); // Destructure the success status and pricing data
-  
+
     if (success) {
       navigate("/checkout", {
         state: {
@@ -87,7 +107,7 @@ const DeliveryRoute = () => {
       alert("Failed to submit delivery data. Please try again.");
     }
   };
-  
+
 
   return (
     <div>
