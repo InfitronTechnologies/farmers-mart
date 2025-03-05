@@ -82,7 +82,8 @@ const Wallet = () => {
                 </div>
 
                 <div className="flex items-center space-x-3">
-                    <MonetizationOn className="text-green-500" fontSize="large" />
+                    {/* <MonetizationOn className="text-green-500" fontSize="large" /> */}
+                    <div className="font-bold text-lg">NGN</div>
                     <span className="text-2xl font-bold text-gray-900">
                         {walletData.currency} {parseFloat(walletData.balance).toLocaleString()}
                     </span>
