@@ -146,7 +146,6 @@ const LevelTwo = ({ userId, userToken }) => {
             onChange={handleChange}
             className="w-full p-2 border rounded-md focus:ring focus:ring-green-200 focus:outline-none"
             placeholder="Enter other name"
-            required
           />
         </div>
 

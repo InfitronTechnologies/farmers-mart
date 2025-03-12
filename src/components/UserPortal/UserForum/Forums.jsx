@@ -58,7 +58,7 @@ const Forums = () => {
               <li key={forum.id} className="p-4 border rounded shadow">
                 <h2 className="text-lg font-semibold">{forum.forum_name}</h2>
                 <p>{forum.forum_desc}</p>
-                <p>Category: {forum.category}, Subcategory:{forum.subcategory}</p>
+                <p>Category: {forum.category}, Subcategory:{forum.sub_category}</p>
                 <p className="text-gray-500 text-sm">
                   Created by: {forum.forum_user}
                 </p>

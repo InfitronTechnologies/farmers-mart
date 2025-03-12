@@ -137,10 +137,10 @@ function SideBar() {
                       <Sidebar.Item href="/user/createforum" >Create Forum </Sidebar.Item>
                       <Sidebar.Item href="/user/forums" >Your Forums </Sidebar.Item>
                     </Sidebar.Collapse>
-                    <Sidebar.Collapse icon={Newspaper} label='News'>
+                    {/* <Sidebar.Collapse icon={Newspaper} label='News'>
                       <Sidebar.Item href="/user/create-news" >Create News </Sidebar.Item>
                       <Sidebar.Item href="/user/news" >Your News </Sidebar.Item>
-                    </Sidebar.Collapse>
+                    </Sidebar.Collapse> */}
                   </div>
                 )}
                 <Sidebar.Item href="" onClick={handleLogout} icon={Logout}>

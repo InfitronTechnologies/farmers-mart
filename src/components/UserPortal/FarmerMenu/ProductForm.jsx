@@ -69,6 +69,7 @@ function ProductForm() {
     };
     fetchCategories();
   }, []);
+  console.log(categories)
 
   // Fetch Subcategories when categories changes
   useEffect(() => {

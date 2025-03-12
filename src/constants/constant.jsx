@@ -29,6 +29,7 @@ export const farmcategories = [
     { name: 'Produce', icon: <StorefrontIcon /> }, 
     { name: 'Egg', icon: <EggIcon/> }, 
     { name: 'Farming', icon: <AgricultureIcon /> }, 
+
     { name: 'Produce', icon: <StorefrontIcon /> }, 
 ];
 

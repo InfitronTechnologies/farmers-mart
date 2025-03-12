@@ -86,14 +86,7 @@ const SubcategoryForum = () => {
 
       
       try{
-        const response = await axios.post (apiUrl, updatedForumData, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Headers': '*',
-            'Access-Control-Allow-Origin': '*',
-            'charset':'UFT-8'
-          }
-        })
+        const response = await axios.post (apiUrl, updatedForumData)
         navigate('/user/forums')
       }catch(error){
         console.error("Error creating forum:", error.response.data || error.message)
@@ -111,12 +104,6 @@ const SubcategoryForum = () => {
   return (
     <div className="subcategory-forum">
       <h1 className="text-2xl font-bold mb-4">{subcategoryName} Forum</h1>
-      <div className="subcategory-info mb-4">
-        <p className="text-gray-600">Category: {categoryName}</p>
-        <p className="text-gray-600">Subcategory ID: {subcategoryId}</p>
-        <p className="text-gray-600">Category ID: {categoryId}</p>
-      </div>
-
       {/* Create Post Section */}
       <div className="create-post mb-6">
         {!showForm && ( // Show button only if the form is not visible
@@ -190,36 +177,6 @@ const SubcategoryForum = () => {
           </form>
         </div>
       )}
-
-      {/* Display Posts */}
-      {/* <div>
-        <h2 className="text-xl font-semibold mb-4">Posts</h2>
-        {loadingPosts ? (
-          <div className="flex justify-center items-center">
-            <p>Loading posts...</p>
-          </div>
-        ) : posts.length > 0 ? (
-          <div>
-            {posts.map((post) => (
-              <div
-                key={post.id}
-                className="post-item border-b py-4 px-2 mb-4 rounded shadow hover:shadow-lg"
-              >
-                <h3 className="text-xl font-semibold">{post.title}</h3>
-                <p className="text-gray-600">{post.content}</p>
-                <button
-                  onClick={() => alert(`Navigate to post detail with ID: ${post.id}`)}
-                  className="text-blue-500 hover:underline mt-2"
-                >
-                  View Comments
-                </button>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="text-gray-500">No posts available for this subcategory.</p>
-        )}
-      </div> */}
     </div>
   );
 };
