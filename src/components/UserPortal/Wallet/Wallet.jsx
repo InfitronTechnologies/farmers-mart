@@ -54,8 +54,9 @@ const Wallet = () => {
         e.preventDefault()
         if (walletData.balance > withdrawData.amount) {
             try {
-                const url = `${import.meta.env.VITE_API_BASE_URL}/wallet/create_wallet_withdrawal`
+                const url = `${import.meta.env.VITE_API_BASE_URL}/wallet/create_withdrawal_request`
                 const response = await axios.post(url, withdrawData)
+                console.log(response.data)
             } catch (error) {
                 console.error("Error withdrawing:", error.response?.data || error.message);
             }
