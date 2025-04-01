@@ -90,8 +90,9 @@ const LevelTwo = ({ userId, userToken }) => {
           progress: undefined,
         });
         setTimeout(() => {
-          logout(); // Clears session storage and context state
-          navigate("/login")
+          // logout(); // Clears session storage and context state
+          // navigate("/login")
+          setKycLevel(Number(kycLevel) + 1)
         }, 2500)
       } else {
         throw new Error(response.data.message || 'KYC submission failed');

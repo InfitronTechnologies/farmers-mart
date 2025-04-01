@@ -18,7 +18,7 @@ function Home() {
         <HeroSection/>
         <WhatWeStandFor/>
         <Deals/>
-        <FarmCategories/>
+        {/* <FarmCategories/> */}
         {/* <CustomerProcess/> */}
         <Assistance/>
         {/* <FarmerProcess/> */}

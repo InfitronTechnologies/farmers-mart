@@ -5,27 +5,28 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
-const LevelFour = ({userId, userToken}) => {
-    const {kycLevel, setKycLevel, logout} = useProfile()
+const LevelFour = ({ userId, userToken }) => {
+    const { kycLevel, setKycLevel, logout } = useProfile()
     const navigate = useNavigate()
     const [banks, setBanks] = useState([])
     const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null); // Error message state for validation errors
     const [formData, setFormData] = useState({
-        users_id : userId,
-        users_token	: userToken,
-        bank_id : "",
-        account_name : "",
-        account_number : "",
+        users_id: userId,
+        users_token: userToken,
+        bank_id: "",
+        account_name: "",
+        account_number: "",
     })
 
     useEffect(() => {
-        const bankUrl =  `${import.meta.env.VITE_API_BASE_URL}/list_all_bank`
+        const bankUrl = `${import.meta.env.VITE_API_BASE_URL}/list_all_bank`
 
         const getBanks = async () => {
             try {
                 const response = await axios.get(bankUrl)
-                setBanks(response.data.data)            
+                setBanks(response.data.data)
             } catch (error) {
                 console.error(error)
             }
@@ -34,10 +35,10 @@ const LevelFour = ({userId, userToken}) => {
     }, [])
 
     const handleChange = (e) => {
-        const {name, value} = e.target
+        const { name, value } = e.target
         setFormData({
-            ...formData, 
-            [name]:value
+            ...formData,
+            [name]: value
         })
     }
 
@@ -47,6 +48,7 @@ const LevelFour = ({userId, userToken}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
         // Validate account number
         if (!validateAccountNumber(formData.account_number)) {
@@ -54,7 +56,7 @@ const LevelFour = ({userId, userToken}) => {
             return;
         }
 
-        const apiUrl =  `${import.meta.env.VITE_API_BASE_URL}/kyc/level_four`
+        const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/kyc/level_four`
 
         try {
             const response = await axios.post(apiUrl, formData)
@@ -62,7 +64,7 @@ const LevelFour = ({userId, userToken}) => {
             if (response.data.status === 1) {
                 toast.success("KYC Level 4 successfully updated!", { // Display a success toast
                     position: "top-right", // Customize position
-                    autoClose: 2000, 
+                    autoClose: 2000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
@@ -71,8 +73,9 @@ const LevelFour = ({userId, userToken}) => {
                 });
                 setTimeout(() => {
                     setErrorMessage(null); // Clear error message after successful submission
-                    logout(); // Clears session storage and context state
-                    navigate('/login');
+                    // logout(); // Clears session storage and context state
+                    // navigate('/login');
+                    setKycLevel(Number(kycLevel) + 1)
                 }, 2500)
             } else {
                 throw new Error(response.data.message || 'KYC submission failed');
@@ -86,23 +89,23 @@ const LevelFour = ({userId, userToken}) => {
 
     }
 
-    return(
+    return (
         <div>
             <h2 className="text-2xl font-semibold text-green-800 mb-4">KYC Level 4</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                     <div className='relative'>
                         <select
-                        className="w-full p-2 border rounded-md focus:ring focus:ring-green-200 focus:outline-none"
-                        name="bank_id"
-                        value={formData.bank_id}
-                        onChange={(e) => setFormData({ ...formData, bank_id: e.target.value })}
-                        required
+                            className="w-full p-2 border rounded-md focus:ring focus:ring-green-200 focus:outline-none"
+                            name="bank_id"
+                            value={formData.bank_id}
+                            onChange={(e) => setFormData({ ...formData, bank_id: e.target.value })}
+                            required
                         >
-                        <option value="">Select bank</option>
-                        {banks.map((bank) => (
-                        <option key={bank.id} value={bank.id}>{bank.bank_name}</option>
-                        ))}
+                            <option value="">Select bank</option>
+                            {banks.map((bank) => (
+                                <option key={bank.id} value={bank.id}>{bank.bank_name}</option>
+                            ))}
                         </select>
                     </div>
                 </div>
@@ -133,9 +136,10 @@ const LevelFour = ({userId, userToken}) => {
                 </div>
                 <button
                     type="submit"
+                    disabled={loading}
                     className="w-full bg-green-800 text-white font-medium py-2 px-4 rounded-md hover:bg-green-700 focus:ring focus:ring-green-300"
                 >
-                    Submit
+                    {loading ? "Submitting" : "Submit"}
                 </button>
             </form>
         </div>

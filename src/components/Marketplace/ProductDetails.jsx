@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import MarketNav from "./MarketNav";
 import Footer from "../LandingPage/Footer";
 import axios from "axios";
 import ProductItemsDisplay from "./ProductItemsDisplay";
 import Loading from '../Loading'
+import { useProfile } from "../ProfileContext/ProfileContext";
+import KycModal from "../UserPortal/KycModal/KycModal";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -17,6 +19,9 @@ const ProductDetails = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [productItemsData, setProductItemsData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const navigate = useNavigate()
+  const { userId, kycLevel } = useProfile()
+  const [isKycModalOpen, setIsKycModalOpen] = useState(false);
 
   // Fetch product details
   useEffect(() => {
@@ -49,15 +54,15 @@ const ProductDetails = () => {
 
     const fetchProductItems = async () => {
       const url = `${import.meta.env.VITE_API_BASE_URL}/product_item/select_by_product_id_product_items`
-      try{
-        const response =  await axios.post(url, {
+      try {
+        const response = await axios.post(url, {
           id: id
         });
         setProductItemsData(response.data.data)
-      } catch (error){
-        console.error ("Error fetching product items", error)
+      } catch (error) {
+        console.error("Error fetching product items", error)
       }
-    } 
+    }
     fetchProductItems()
 
     setTimeout(() => {
@@ -65,10 +70,19 @@ const ProductDetails = () => {
     }, 2000);
   }, [id]);
 
+  //KYC MODAL CONTROL
+  const handleOpenModal = () => {
+    setIsKycModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsKycModalOpen(false);
+  };
+
   // Handle quantity adjustments
   const handleIncrease = () =>
     setQuantity((prev) => Math.min(maxQty, prev + 1));
-  
+
   const handleDecrease = () =>
     setQuantity((prev) => Math.max(minQty, prev - 1));
 
@@ -79,6 +93,24 @@ const ProductDetails = () => {
     setCurrentImageIndex((prev) =>
       prev === 0 ? productImages.length - 1 : prev - 1
     );
+
+  const handleBuy = () => {
+    if (userId) {
+      if (kycLevel < 3) {
+        handleOpenModal()//Open the modal
+      } else {
+        navigate('/delivery-route', {
+          state: {
+            product: product,
+            quantity: quantity,
+            id: id,
+          },
+        });
+      }
+    } else {
+      navigate('/login')
+    }
+  }
 
   return (
     <div>
@@ -92,7 +124,7 @@ const ProductDetails = () => {
       >
         Product Details
       </div>
-    
+
       <div className="flex flex-col lg:flex-row items-start px-6 lg:px-16 my-20 space-y-12 lg:space-y-0 lg:space-x-16">
         {/* Product Image Slideshow */}
         <div className="p-4 lg:mr-8 flex justify-center items-center lg:w-1/2">
@@ -124,7 +156,7 @@ const ProductDetails = () => {
             )}
           </div>
         </div>
-    
+
         {/* Product Details */}
         <div className="lg:w-1/2 p-6 text-gray-800 space-y-6">
           <div className="flex flex-col lg:flex-row justify-between items-center lg:items-start">
@@ -153,70 +185,62 @@ const ProductDetails = () => {
               {product?.product_long_desc || "No description available."}
             </p>
           </div>
-    
+
           {/* Quantity Selector */}
           <div className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0 sm:space-x-8">
-          <div className="flex items-center border border-farmersmartLightGreen rounded-full">
-            <button
-              onClick={handleDecrease}
-              disabled={quantity <= minQty}
-              className={`p-3 ${
-                quantity > minQty
+            <div className="flex items-center border border-farmersmartLightGreen rounded-full">
+              <button
+                onClick={handleDecrease}
+                disabled={quantity <= minQty}
+                className={`p-3 ${quantity > minQty
                   ? "bg-farmersmartLightGreen text-farmersmartDarkGreen hover:bg-farmersmartGreen hover:text-white transition"
                   : "bg-gray-200 text-gray-500 cursor-not-allowed"
-              } rounded-l-full`}
-            >
-              -
-            </button>
-            <input
-              type="number"
-              value={quantity}
-              onChange={(e) => {
-                let newQty = parseInt(e.target.value) || minQty;
-                newQty = Math.max(minQty, Math.min(maxQty, newQty)); // Ensure within limits
-                setQuantity(newQty);
-              }}
-              className="w-16 text-center bg-white text-lg font-semibold focus:outline-none"
-              min={minQty}
-              max={maxQty}
-            />
-            <button
-              onClick={handleIncrease}
-              disabled={quantity >= maxQty || quantity >= units}
-              className={`p-3 ${
-                quantity < maxQty && quantity <units
-                  ? "bg-farmersmartLightGreen text-farmersmartDarkGreen hover:bg-farmersmartGreen hover:text-white transition"
-                  : "bg-gray-200 text-gray-500 cursor-not-allowed"
-              } rounded-r-full`}
-            >
-              +
-            </button>
-          </div>
-            <Link
-              to="/delivery-route"
-              state={{
-                product: product,
-                quantity: quantity,
-                id: id,
-              }}
-            >
-              <button 
-                className={`${units>=1 ? "bg-[#ff7300]" : "bg-gray-700"} text-white text-lg font-semibold px-12 py-3 rounded-full shadow-md hover:bg-[#ff8c33] transition duration-300`}
-                disabled={units<1}
+                  } rounded-l-full`}
               >
-                {units<1 ? 'Out of Stock' : "Buy"}
+                -
               </button>
-            </Link>
+              <input
+                type="number"
+                value={quantity}
+                onChange={(e) => {
+                  let newQty = parseInt(e.target.value) || minQty;
+                  newQty = Math.max(minQty, Math.min(maxQty, newQty)); // Ensure within limits
+                  setQuantity(newQty);
+                }}
+                className="w-16 text-center bg-white text-lg font-semibold focus:outline-none"
+                min={minQty}
+                max={maxQty}
+              />
+              <button
+                onClick={handleIncrease}
+                disabled={quantity >= maxQty || quantity >= units}
+                className={`p-3 ${quantity < maxQty && quantity < units
+                  ? "bg-farmersmartLightGreen text-farmersmartDarkGreen hover:bg-farmersmartGreen hover:text-white transition"
+                  : "bg-gray-200 text-gray-500 cursor-not-allowed"
+                  } rounded-r-full`}
+              >
+                +
+              </button>
+            </div>
+            <button
+              onClick={handleBuy}
+              className={`${units >= 1 ? "bg-[#ff7300]" : "bg-gray-700"} text-white text-lg font-semibold px-12 py-3 rounded-full shadow-md hover:bg-[#ff8c33] transition duration-300`}
+              disabled={units < 1}
+            >
+              {units < 1 ? 'Out of Stock' : "Buy"}
+            </button>
           </div>
         </div>
       </div>
-    
+
+      <KycModal isOpen={isKycModalOpen} onClose={handleCloseModal} />
+
       <div className="px-6 lg:px-16 mb-12">
         <ProductItemsDisplay items={productItemsData} />
       </div>
       <Footer />
     </div>
-  
+
   );
 };
 

@@ -39,7 +39,7 @@ const HeroSection = () => {
           />
           <button 
             className="absolute right-2 top-1/2 transform -translate-y-1/2"
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/marketplace")}
           >
             <SearchIcon className='text-farmersmartDarkGreen'/>
           </button>

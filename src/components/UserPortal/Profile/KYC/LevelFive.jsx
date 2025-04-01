@@ -4,34 +4,37 @@ import { useProfile } from '../../../ProfileContext/ProfileContext';
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
-const LevelFive = ({userId, userToken}) => {
-    const {kycLevel, setKycLevel} = useProfile()
+const LevelFive = ({ userId, userToken }) => {
+    const { kycLevel, setKycLevel } = useProfile()
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
     const [formData, setFormData] = useState({
-        users_id : userId,
-        users_token	: userToken,
-        bvn : ""
+        users_id: userId,
+        users_token: userToken,
+        bvn: ""
     })
 
     const handleChange = (e) => {
-        const {name, value} = e.target
+        const { name, value } = e.target
         setFormData({
-            ...formData, 
-            [name]:value
+            ...formData,
+            [name]: value
         })
-    }       
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
         const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/kyc/level_five`
 
         try {
             const response = await axios.post(apiUrl, formData)
-            
+
             if (response.data.status === 1) {
                 toast.success("KYC Level 5 successfully updated!", { // Display a success toast
                     position: "top-right", // Customize position
-                    autoClose: 2000, 
+                    autoClose: 2000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
@@ -53,7 +56,7 @@ const LevelFive = ({userId, userToken}) => {
 
     }
 
-    return(
+    return (
         <div>
             <h2 className="text-2xl font-semibold text-green-800 mb-4">KYC Level 5</h2>
             <form onSubmit={handleSubmit}>
@@ -71,9 +74,10 @@ const LevelFive = ({userId, userToken}) => {
                 </div>
                 <button
                     type="submit"
+                    disabled={loading}
                     className="w-full bg-green-800 text-white font-medium py-2 px-4 rounded-md hover:bg-green-700 focus:ring focus:ring-green-300"
                 >
-                    Submit
+                    {loading ? "Submitting" : "Submit"}
                 </button>
             </form>
         </div>

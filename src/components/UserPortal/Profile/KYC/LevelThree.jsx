@@ -5,23 +5,23 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
-const LevelThree = ({userId, userToken}) => {
-    const {kycLevel, setKycLevel, logout} = useProfile()
+const LevelThree = ({ userId, userToken }) => {
+    const { kycLevel, setKycLevel, logout } = useProfile()
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
     const [formData, setFormData] = useState({
-        users_id : userId,
-        users_token	: userToken,
-        nin : ""
+        users_id: userId,
+        users_token: userToken,
+        nin: ""
     })
 
     const handleChange = (e) => {
-        const {name, value} = e.target
+        const { name, value } = e.target
         setFormData({
-            ...formData, 
-            [name]:value
+            ...formData,
+            [name]: value
         })
-    }       
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -35,7 +35,7 @@ const LevelThree = ({userId, userToken}) => {
             if (response.data.status === 1) {
                 toast.success("KYC Level 3 successfully updated!", { // Display a success toast
                     position: "top-right", // Customize position
-                    autoClose: 2000, 
+                    autoClose: 2000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
@@ -43,8 +43,9 @@ const LevelThree = ({userId, userToken}) => {
                     progress: undefined,
                 });
                 setTimeout(() => {
-                    logout(); // Clears session storage and context state
-                    navigate("/login")
+                    // logout(); // Clears session storage and context state
+                    // navigate("/login")
+                    setKycLevel(Number(kycLevel) + 1)
                 }, 2500)
             } else {
                 throw new Error(response.data.message || 'KYC submission failed');
@@ -58,7 +59,7 @@ const LevelThree = ({userId, userToken}) => {
         }
     }
 
-    return(
+    return (
         <div>
             <h2 className="text-2xl font-semibold text-green-800 mb-4">KYC Level 3</h2>
             <form onSubmit={handleSubmit}>
@@ -79,7 +80,7 @@ const LevelThree = ({userId, userToken}) => {
                     disabled={loading}
                     className="w-full bg-green-800 text-white font-medium py-2 px-4 rounded-md hover:bg-green-700 focus:ring focus:ring-green-300"
                 >
-                 {loading ? "Submitting" : "Submit"}
+                    {loading ? "Submitting" : "Submit"}
                 </button>
             </form>
         </div>

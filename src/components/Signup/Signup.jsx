@@ -42,6 +42,7 @@ const Signup = () => {
   const navigate = useNavigate();  // Hook to navigate between pages
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
     const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/select_list_state`
@@ -115,6 +116,7 @@ const Signup = () => {
     setConfirmPassword(confirmPwd);
     setPasswordMatch(formData.users_password === confirmPwd); // Ensure match check
     setFormData({ ...formData, users_retp_password: e.target.value });
+    setIsActive(true)
 
   };
 
@@ -385,8 +387,8 @@ const Signup = () => {
                     <input
                       className={`w-full p-2 border-1 rounded-xl text-black bg-white focus:border-farmersmartDarkGreen 
                       focus:outline-none focus:ring-0 focus:border-2 
-                        ${passwordMatch === false ? 'border-2 border-red-600' : ''} 
-                        ${passwordMatch === true ? 'border-2 border-green-600' : ''}`}
+                        ${isActive && passwordMatch === false ? 'border-2 border-red-600' : ''} 
+                        ${isActive && passwordMatch === true ? 'border-2 border-green-600' : ''}`}
                       type={isVisible ? "text" : "password"}
                       id="users_retp_password"
                       placeholder="Confirm password"

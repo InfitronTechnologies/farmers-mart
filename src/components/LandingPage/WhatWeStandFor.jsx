@@ -15,7 +15,7 @@ const WhatWeStandFor = () => {
             <AgricultureIcon fontSize="large" className="mb-4" />
             <h3 className="text-xl font-semibold mb-2">Supporting Farmers</h3>
             <p className="text-sm">
-              Empowering farmers with resources, tools, and a marketplace to sell their produce efficiently.
+              Providing a platform for farmers to connect with buyers effortlessly and sell their produce without the cost of the middlemen
             </p>
           </div>
 
