@@ -22,6 +22,7 @@ function ProductForm() {
     right: null,
   });
   const [productItems, setProductItems] = useState([])
+  const [minimumItem, setMinimumItem] = useState(false)
   const [newProduct, setNewProduct] = useState({
     users_id: userId,
     users_token: userToken,
@@ -69,7 +70,6 @@ function ProductForm() {
     };
     fetchCategories();
   }, []);
-  console.log(categories)
 
   // Fetch Subcategories when categories changes
   useEffect(() => {
@@ -89,6 +89,11 @@ function ProductForm() {
     fetchSubcategories();
   }, [newProduct.category_id]); // Trigger this effect whenever category_id changes
 
+  //Set the minimum required Product Items to be 1 item
+  const handleMinimumProductItem = (updatedItems) => {
+    setProductItems(updatedItems)
+    setMinimumItem(updatedItems.length >= 1)
+  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -107,6 +112,19 @@ function ProductForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    if (!minimumItem) {
+      toast.error("Please add at least one product item.", {
+        position: "top-right", // Customize position
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
 
     if (!pictures.front || !pictures.left || !pictures.right) {
       setError("Please upload all required pictures (Front, Left, and Right).");
@@ -272,6 +290,7 @@ function ProductForm() {
               onChange={handleInputChange}
               className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
               placeholder="Enter Product Name"
+              required
             />
           </div>
         </div>
@@ -285,6 +304,7 @@ function ProductForm() {
             onChange={handleInputChange}
             className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
             placeholder="Enter Short Description"
+            required
           ></textarea>
         </div>
 
@@ -297,6 +317,7 @@ function ProductForm() {
             onChange={handleInputChange}
             className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
             placeholder="Enter Long Description"
+            required
           ></textarea>
         </div>
 
@@ -311,6 +332,7 @@ function ProductForm() {
               onChange={handleInputChange}
               className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
               placeholder="Enter Normal Price"
+              required
             />
           </div>
 
@@ -323,6 +345,7 @@ function ProductForm() {
               onChange={handleInputChange}
               className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
               placeholder="Enter Promo Price"
+              required
             />
           </div>
 
@@ -335,6 +358,7 @@ function ProductForm() {
               onChange={handleInputChange}
               className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
               placeholder="Enter Units"
+              required
             />
           </div>
         </div>
@@ -349,6 +373,7 @@ function ProductForm() {
               value={newProduct.min_qty}
               onChange={handleInputChange}
               className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              required
             />
           </div>
 
@@ -360,6 +385,7 @@ function ProductForm() {
               value={newProduct.max_qty}
               onChange={handleInputChange}
               className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              required
             />
           </div>
 
@@ -372,6 +398,7 @@ function ProductForm() {
               onChange={handleInputChange}
               className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
               placeholder="Enter weight"
+              required
             />
           </div>
         </div>
@@ -385,6 +412,7 @@ function ProductForm() {
               accept="image/*"
               onChange={(e) => handleFileChange(e, "front")}
               className="w-full border rounded-lg p-2 bg-gray-50 shadow-sm focus:outline-none"
+              required
             />
           </div>
 
@@ -395,6 +423,7 @@ function ProductForm() {
               accept="image/*"
               onChange={(e) => handleFileChange(e, "left")}
               className="w-full border rounded-lg p-2 bg-gray-50 shadow-sm focus:outline-none"
+              required
             />
           </div>
 
@@ -405,20 +434,30 @@ function ProductForm() {
               accept="image/*"
               onChange={(e) => handleFileChange(e, "right")}
               className="w-full border rounded-lg p-2 bg-gray-50 shadow-sm focus:outline-none"
+              required
             />
           </div>
         </div>
 
-        <ProductItems productItems={productItems} setProductItems={setProductItems} />
+        <ProductItems
+          productItems={productItems}
+          setProductItems={setProductItems}
+          handleItemChange={handleMinimumProductItem}
+        />
+
+        
 
         {/* Submit Button */}
         <div className="text-center mt-8">
+        {error && (
+          <p className='text-sm text-[#de3f47] mb-2'>{error}</p>
+        )}
           <button
             type="submit"
             disabled={loading}
             className={`w-full md:w-auto px-6 py-3 text-white rounded-lg shadow-md ${loading
-                ? "bg-blue-300 cursor-not-allowed"
-                : "bg-blue-500 hover:bg-blue-600 transition"
+              ? "bg-blue-300 cursor-not-allowed"
+              : "bg-blue-500 hover:bg-blue-600 transition"
               }`}
           >
             {loading ? "Creating..." : "Create Product"}

@@ -46,7 +46,6 @@ function Deals() {
     setLoading(true)
   }, 2500)
 
-  console.log(recentProducts)
   return (
     <div>
       <div
@@ -56,7 +55,7 @@ function Deals() {
         <div className="py-8 md:mx-auto">
           <div className="md:w-2/3 mb-12">
             <h1 className="text-xl md:text-3xl font-semibold leading-snug">
-              Discover great deals in our Marketplace! 
+              Discover great deals in our Marketplace!
             </h1>
           </div>
 
@@ -214,6 +213,7 @@ function Deals() {
         </div >
       </div >
       <button
+        onClick={() => navigate("/marketplace")}
         className='bg-farmersmartDarkGreen font-bold p-4 mb-12 block mx-auto items-center justify-center rounded-full text-center text-white text-xl'
       >
         View Produces

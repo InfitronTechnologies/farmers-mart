@@ -59,7 +59,7 @@ const Footer = () => {
         <div>
           <h4 className="text-lg font-semibold mb-4">OFFICE ADDRESS</h4>
           <p className="text-sm text-gray-700">
-            Number 8, Olarewaju Street, off Billings Way Oregun, Lagos State
+             # 8, Olarewaju Street, off Billings Way Oregun, Lagos State
           </p>
           
         </div>

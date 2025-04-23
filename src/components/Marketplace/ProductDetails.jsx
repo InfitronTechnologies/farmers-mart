@@ -31,6 +31,7 @@ const ProductDetails = () => {
       try {
         const response = await axios.get(url);
         const productData = response.data.data;
+        console.log(productData)
         setProduct(productData);
         setMinQty(Number(productData.min_qty));
         setMaxQty(Number(productData.max_qty));
@@ -176,8 +177,18 @@ const ProductDetails = () => {
           <p className="text-lg text-center lg:text-left">
             <span className="font-bold text-farmersmartDarkGreen">Weight:</span>{" "}
             {product?.product_weight || "N/A"} kg
+          </p><p className="text-lg text-center lg:text-left">
+            <span className="font-bold text-farmersmartDarkGreen">Weight:</span>{" "}
+            {product?.product_weight || "N/A"} kg
           </p>
           <div>
+            <h3 className="text-xl sm:text-2xl text-farmersmartDarkGreen font-bold mb-2 text-center lg:text-left">
+              Product Information
+            </h3>
+            <p className="text-md text-gray-600 leading-relaxed text-justify lg:text-left">
+              {product?.product_short_desc || "No description available."}
+            </p>
+          </div><div>
             <h2 className="text-xl sm:text-2xl text-farmersmartDarkGreen font-bold mb-2 text-center lg:text-left">
               Description
             </h2>

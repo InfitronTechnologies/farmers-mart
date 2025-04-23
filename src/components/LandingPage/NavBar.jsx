@@ -63,6 +63,11 @@ function NavBar({ bgColor }) {
                 </Link>
               </div>
               <div className='mx-4 hover:cursor-pointer'>
+                <Link to='/marketplace'>
+Marketplace
+                </Link>
+              </div>
+              <div className='mx-4 hover:cursor-pointer'>
                 <Link to='/updates'>
                   What's New?
                 </Link>
@@ -105,6 +110,11 @@ function NavBar({ bgColor }) {
                 <div className='my-2 hover:cursor-pointer'>
                   <Link to='/services'>
                     Services
+                  </Link>
+                </div>
+                <div className='my-2 hover:cursor-pointer'>
+                  <Link to='/marketplace'>
+                    Marketplace
                   </Link>
                 </div>
                 <div className='my-2 hover:cursor-pointer'>

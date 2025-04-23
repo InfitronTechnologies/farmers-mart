@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
 
-const ProductItems = ({ productItems, setProductItems }) => {
+const ProductItems = ({ productItems, setProductItems, handleItemChange }) => {
   const maxItems = 3;
 
   const handleInputChange = (index, field, value) => {
     const updatedItems = [...productItems];
     updatedItems[index][field] = value;
     setProductItems(updatedItems);
+    handleItemChange(updatedItems)
   };
 
   const addItemField = () => {
     if (productItems.length < maxItems) {
       setProductItems([...productItems, { name: '', desc: '' }]);
+      handleItemChange([...productItems, { name: '', desc: '' }]);
     }
   };
 
   const handleRemoveItem = (index) => {
-    setProductItems(productItems.filter((_, i) => i !== index));
+    const filteredItems = productItems.filter((_, i) => i !== index);
+    setProductItems(filteredItems);
+    handleItemChange(filteredItems);
   };
 
   return (
@@ -44,11 +48,11 @@ const ProductItems = ({ productItems, setProductItems }) => {
               ></textarea>
             </div>
             <button
-                type="button"
-                onClick={() => handleRemoveItem(index)}
-                className="text-red-500 hover:text-red-700 text-sm border-red-700"
+              type="button"
+              onClick={() => handleRemoveItem(index)}
+              className="text-red-500 hover:text-red-700 text-sm border-red-700"
             >
-                Remove
+              Remove
             </button>
           </div>
         ))}

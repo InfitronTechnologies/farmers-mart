@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useProfile } from "../../ProfileContext/ProfileContext";
 import { AccountBalanceWallet, MonetizationOn, ArrowCircleDown, ArrowCircleUp } from "@mui/icons-material";
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Wallet = () => {
     const { userId, userToken } = useProfile()
@@ -57,17 +59,22 @@ const Wallet = () => {
                 const url = `${import.meta.env.VITE_API_BASE_URL}/wallet/create_withdrawal_request`
                 const response = await axios.post(url, withdrawData)
                 console.log(response.data)
+                if (response.status === 200) {
+                    toast.success("Withdrawal request sent, Payment will be processed in 24 hours.");
+                } else {
+                    toast.error(response.data.message || "Error sending withdrawal request.");
+                }
             } catch (error) {
                 console.error("Error withdrawing:", error.response?.data || error.message);
             }
         } else {
-            
+
             setError('Requested amount is greater than wallet balance')
             setTimeout(() => {
                 setError('')
             }, 5000);
             setWithdrawData({
-                amount : '',
+                amount: '',
                 reason: ''
             })
         }
