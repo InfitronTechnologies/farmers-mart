@@ -61,7 +61,7 @@ const ProductDetails = () => {
         });
         setProductItemsData(response.data.data)
       } catch (error) {
-        console.error("Error fetching product items", error)
+        console.error("Error fetching product features", error)
       }
     }
     fetchProductItems()
@@ -177,9 +177,6 @@ const ProductDetails = () => {
           <p className="text-lg text-center lg:text-left">
             <span className="font-bold text-farmersmartDarkGreen">Weight:</span>{" "}
             {product?.product_weight || "N/A"} kg
-          </p><p className="text-lg text-center lg:text-left">
-            <span className="font-bold text-farmersmartDarkGreen">Weight:</span>{" "}
-            {product?.product_weight || "N/A"} kg
           </p>
           <div>
             <h3 className="text-xl sm:text-2xl text-farmersmartDarkGreen font-bold mb-2 text-center lg:text-left">
@@ -236,9 +233,9 @@ const ProductDetails = () => {
             <button
               onClick={handleBuy}
               className={`${units >= 1 ? "bg-[#ff7300]" : "bg-gray-700"} text-white text-lg font-semibold px-12 py-3 rounded-full shadow-md hover:bg-[#ff8c33] transition duration-300`}
-              disabled={units < 1}
+              disabled={units<1 || units < minQty}
             >
-              {units < 1 ? 'Out of Stock' : "Buy"}
+              {units < minQty || units<1 ? 'Out of Stock' : "Buy"}
             </button>
           </div>
         </div>

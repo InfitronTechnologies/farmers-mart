@@ -407,14 +407,14 @@ function FarmInfo() {
                 <th className='text-left'>S/N</th>
                 {/* <th className='text-left'>Farm Image</th> */}
                 <th className='text-left'>Farm Address</th>
-                <th className='text-left'>Farm Land Type</th>
+                <th className='text-left'>Farm Type</th>
                 <th className='text-left'>Number</th>
                 <th className='text-left'>Country</th>
                 <th className='text-left'>State</th>
                 <th className='text-left'>Created Date</th>
                 {/* <th className='text-left'>Action</th>
                 <th className='text-left'>Action</th> */}
-                <th className='text-left'>Add</th>
+                <th className='text-left'></th>
               </tr>
             </thead>
             <tbody>
@@ -437,8 +437,8 @@ function FarmInfo() {
                         farmId: farm.id,
                       }}
                     >
-                      <button className="bg-red-500 text-white px-4 py-2">
-                        Product
+                      <button className="bg-red-500 text-white rounded-lg px-4 py-2">
+                       Add Product
                       </button>
                     </Link>
                   </td>

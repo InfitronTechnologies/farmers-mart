@@ -137,11 +137,18 @@ const DeliveryRoute = () => {
               required
             >
               <option value="">Select Delivery Type</option>
+              {deliveryRoute.length > 0 && (
+                <option key={deliveryRoute[0].id} value={deliveryRoute[0].id}>
+                  {deliveryRoute[0].delivery_type_name}
+                </option>
+              )}
+
+              {/* <option value="">Select Delivery Type</option>
               {deliveryRoute.map((route) => (
                 <option key={route.id} value={route.id}>
                   {route.delivery_type_name}
                 </option>
-              ))}
+              ))} */}
             </select>
           </div>
 

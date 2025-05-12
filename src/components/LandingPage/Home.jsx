@@ -3,7 +3,7 @@ import NavBar from './NavBar'
 import HeroSection from './HeroSection'
 import WhatWeStandFor from './WhatWeStandFor'
 import Deals from './Deals'
-import FarmCategories from './FarmCategories'
+import UserCount from './UserCount'
 import DirectFromFarm from './DirectFromFarm'
 import Footer from './Footer'
 import JoinUs from './JoinUs'
@@ -18,7 +18,7 @@ function Home() {
         <HeroSection/>
         <WhatWeStandFor/>
         <Deals/>
-        {/* <FarmCategories/> */}
+        <UserCount/>
         {/* <CustomerProcess/> */}
         <Assistance/>
         {/* <FarmerProcess/> */}

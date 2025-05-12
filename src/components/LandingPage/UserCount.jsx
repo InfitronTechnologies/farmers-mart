@@ -41,6 +41,7 @@ const FarmCategories = () => {
     getProfileCount()
   }, [])
 
+  console.log(profileCount)
   return (
     <div className='mx-auto py-2 md:py-8'>
       <section className="flex flex-col mx-auto md:w-5/6 md:mb-8 md:flex-row items-center justify-between px-6 py-8 md:py-12 bg-white">
@@ -71,40 +72,6 @@ const FarmCategories = () => {
           </div>
         </div>
       </section>
-      <div className="relative flex items-center justify-between bg-white p-6">
-        {/* Left Arrow */}
-        <button
-          className="p-2 bg-gray-300 rounded-full hover:bg-gray-400"
-          onClick={scrollLeft}
-        >
-          <ArrowBackIcon />
-        </button>
-
-        {/* Categories list */}
-        <div
-          className="grid grid-rows-4 lg:grid-rows-2 grid-flow-col gap-6 overflow-x-auto no-scrollbar"
-          ref={scrollRef}
-        >
-          {farmcategories.map((category, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center w-20 h-20 md:w-32 md:h-32
-                    rounded-full bg-gray-200 justify-center"
-            >
-              <div className=" text-sm md:text-3xl text-gray-700">{category.icon}</div>
-              <span className="text-xs mt-2 text-center">{category.name}</span>
-            </div>
-          ))}
-        </div>
-
-        {/* Right Arrow */}
-        <button
-          className="p-2 bg-gray-300 rounded-full hover:bg-gray-400"
-          onClick={scrollRight}
-        >
-          <ArrowForwardIcon />
-        </button>
-      </div>
     </div>
   );
 };

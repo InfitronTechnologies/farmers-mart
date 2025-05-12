@@ -44,7 +44,7 @@ function Deals() {
 
   setTimeout(() => {
     setLoading(true)
-  }, 2500)
+  }, 5000)
 
   return (
     <div>

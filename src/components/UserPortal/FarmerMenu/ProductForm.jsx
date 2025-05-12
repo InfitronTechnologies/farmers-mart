@@ -89,7 +89,7 @@ function ProductForm() {
     fetchSubcategories();
   }, [newProduct.category_id]); // Trigger this effect whenever category_id changes
 
-  //Set the minimum required Product Items to be 1 item
+  //Set the minimum required Product Features to be 1 item
   const handleMinimumProductItem = (updatedItems) => {
     setProductItems(updatedItems)
     setMinimumItem(updatedItems.length >= 1)
@@ -225,7 +225,7 @@ function ProductForm() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Product Type */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">Product Type</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">Farming Type</label>
             <select
               className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
               name="product_type_id"
@@ -233,7 +233,7 @@ function ProductForm() {
               onChange={(e) => setNewProduct({ ...newProduct, product_type_id: e.target.value })}
               required
             >
-              <option value="">Select product type</option>
+              <option value="">Select agriculture type</option>
               {productType.map((product) => (
                 <option key={product.id} value={product.id}>
                   {product.product_type_name}
@@ -350,9 +350,9 @@ function ProductForm() {
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">Units</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">Units (Number of Produce)</label>
             <input
-              type="text"
+              type="number"
               name="units"
               value={newProduct.units}
               onChange={handleInputChange}
@@ -392,7 +392,7 @@ function ProductForm() {
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">Product Weight (kg)</label>
             <input
-              type="text"
+              type="number"
               name="product_weight"
               value={newProduct.product_weight}
               onChange={handleInputChange}
@@ -443,9 +443,7 @@ function ProductForm() {
           productItems={productItems}
           setProductItems={setProductItems}
           handleItemChange={handleMinimumProductItem}
-        />
-
-        
+        />       
 
         {/* Submit Button */}
         <div className="text-center mt-8">
@@ -460,7 +458,7 @@ function ProductForm() {
               : "bg-blue-500 hover:bg-blue-600 transition"
               }`}
           >
-            {loading ? "Creating..." : "Create Product"}
+            {loading ? "Saving..." : "Save"}
           </button>
         </div>
       </form>

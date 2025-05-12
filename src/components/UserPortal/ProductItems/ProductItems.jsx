@@ -25,7 +25,7 @@ const ProductItems = ({ productItems, setProductItems, handleItemChange }) => {
 
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-xl font-bold mb-4">Add Product Items</h2>
+      <h2 className="text-xl font-bold mb-4">Add Product Features</h2>
       <div className="space-y-4">
         {productItems.map((item, index) => (
           <div key={index} className="bg-gray-100 p-4 rounded shadow-md">
@@ -63,7 +63,7 @@ const ProductItems = ({ productItems, setProductItems, handleItemChange }) => {
             onClick={addItemField}
             className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
           >
-            Add Another Item
+            Add Another Feature
           </button>
         )}
       </div>

@@ -33,6 +33,8 @@ const Forums = () => {
     fetchForums();
   }, []);
 
+  console.log(forums)
+
 
   if (loading) return <p>Loading forums...</p>;
   if (error) return <p className="text-red-500">{error}</p>;
@@ -52,16 +54,27 @@ const Forums = () => {
                 forumCategory: forum.category,
                 forumSubCategory: forum.sub_category,
                 forumDescription: forum.forum_desc,
-                forumOwner: forum.forum_user
+                forumOwner: forum.forum_user,
+                forumImage: forum.forum_image
               }}
             >
               <li key={forum.id} className="p-4 border rounded shadow">
-                <h2 className="text-lg font-semibold">{forum.forum_name}</h2>
-                <p>{forum.forum_desc}</p>
-                <p>Category: {forum.category}, Subcategory:{forum.sub_category}</p>
-                <p className="text-gray-500 text-sm">
-                  Created by: {forum.forum_user}
-                </p>
+                <div className="flex h-36 my-2">
+                  <img
+                    src={`https://farmersmart.com.ng/images/forum/${forum.forum_image}`}
+                    className="mr-4"
+                    alt=""
+                  />
+                  <div>
+                    <h2 className="text-lg font-semibold">{forum.forum_name}</h2>
+                    <p>{forum.forum_desc}</p>
+                    <p>Category: {forum.category}, Subcategory:{forum.sub_category}</p>
+                    <p className="text-gray-500 text-sm">
+                      Created by: {forum.forum_user}
+                    </p>
+                  </div>
+                </div>
+
               </li>
             </Link>
           ))}

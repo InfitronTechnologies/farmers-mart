@@ -4,7 +4,7 @@ const ProductItemsDisplay = ({ items }) => {
   return (
     <div className="mt-6">
       <h3 className="text-xl font-semibold mb-4 text-center text-farmersmartDarkGreen">
-        Product Items
+        Product Features
       </h3>
       <div className="flex flex-wrap gap-4 justify-center">
         {items.map((item) => (
